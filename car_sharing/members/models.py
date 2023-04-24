@@ -19,6 +19,7 @@ def path_and_rename(instance, filename):
 
 class CustomUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default = uuid4, editable=False)
+    email = models.EmailField(unique=True)
     creation_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     avatar = models.ImageField(upload_to=path_and_rename, max_length=255, null=True, blank=True)
