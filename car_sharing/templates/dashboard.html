@@ -6,4 +6,10 @@
 
 <a href="{% url 'logout' %}">Logout</a>
 
+{% if request.user.car %}
+<p>Voiture</p>
+{% else %}
+<p>Add voiture</p>
+
+{% endif %}
 {% endblock %}

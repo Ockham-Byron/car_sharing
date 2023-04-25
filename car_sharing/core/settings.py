@@ -41,13 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #3rd party
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    
 
     #Locals
     'members',
     'pages',
+    'cars',
 ]
 
 MIDDLEWARE = [

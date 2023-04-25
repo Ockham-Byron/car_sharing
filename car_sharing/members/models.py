@@ -24,6 +24,7 @@ class CustomUser(AbstractUser):
     updated_at = models.DateTimeField(auto_now=True)
     avatar = models.ImageField(upload_to=path_and_rename, max_length=255, null=True, blank=True)
     is_rgpd = models.BooleanField(default=False)
+    
 
     # resizing images
     def save(self, *args, **kwargs):
