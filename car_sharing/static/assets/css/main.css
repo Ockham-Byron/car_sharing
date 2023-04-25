@@ -62,7 +62,7 @@ h1, h2 {
    ========================================================================== */
 
 .rounded-btn {
-	width: 150px;
+	min-width: 150px;
 	
 	border: none;
 	outline: none;
@@ -75,6 +75,11 @@ h1, h2 {
 	cursor: pointer;
 	transition: 0.5s;
 }
+
+a.rounded-btn {
+	padding:5px 10px;
+}
+
 
 
 
@@ -100,8 +105,10 @@ h1, h2 {
     color: var(--light-color);
 }
 
-.btn-kdark:hover {
+.btn-kdark:hover, a.btn-dark:hover {
 	background-color: var(--brand-color);
+	text-decoration:none;
+	color:var(--dark-color);
 }
 
 /* ==========================================================================

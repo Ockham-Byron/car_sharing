@@ -8,6 +8,8 @@
     --dark-color: #000022;
     --mid-color: #B09F8B;
     --light-color: #FFFAF3;
+    --blue-light-color: #8ecae6;
+    --blue-mid-color: #219ebc;
       }
   
 /* Fonts */
@@ -149,3 +151,17 @@
     padding:5px 10px;
     border-radius:20px;
    }
+
+  .chart-container {
+    width: 400px;
+    height: 400px;
+    margin:20px auto;
+  }
+
+  @media only screen and (max-width: 768px){
+    .chart-container {
+      
+      width: 300px;
+      height: 300px;
+    }
+  }

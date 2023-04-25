@@ -52,3 +52,74 @@
 
 </div>
 {% endblock %}
+
+{% block extrajs %}
+
+<script>
+// jquery function
+$(document).ready(function(){
+        
+        var ctx = document.getElementById('totalCharges').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: [{%for data in car_paid_by%}'{{data.user}}',{%endfor%}], //loop through queryset, 
+                datasets: [{
+                    label: '',
+                    data: [{%for data in car_paid_by%}{{data.price_paid}},{%endfor%}],
+                    backgroundColor: [
+                        '#E28413', 
+                        '#000022',
+                        '#B09F8B',
+                        '#219ebc',
+                        '#8ecae6',
+                        
+                    ],
+                    
+                }]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+});
+        var ctx_repart = document.getElementById('repartCharges').getContext('2d');
+        var repartChart = new Chart(ctx_repart, {
+            
+            type: 'doughnut',
+            data: {
+                labels: ['car', 'insurance', 'energy', 'repairs'], //loop through queryset, 
+                datasets: [{
+                    label: '',
+                    data: [{{car.price}}, {{insurance_price}}, 2000, 3450],
+                    backgroundColor: [
+                        '#E28413', 
+                        '#000022',
+                        '#B09F8B',
+                        '#219ebc',
+                        '#8ecae6',
+                        
+                    ],
+                    
+                }]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+});
+    });
+</script>
+
+
+{% endblock %}

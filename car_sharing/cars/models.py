@@ -77,3 +77,11 @@ class Insurance(models.Model):
     price = models.FloatField(max_length=100, null=False, blank=False)
     paid_by = models.ForeignKey(CustomUser, null=False, blank=False, on_delete=models.PROTECT)
     renewal_date = models.DateField(auto_now_add=False, null=True, blank=True)
+
+class Trip(models.Model):
+    car = models.ForeignKey(Car, related_name="trip", null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_trip", on_delete=models.PROTECT)
+    nb_km_start = models.IntegerField(null=False, blank=False)
+    nb_km_end = models.IntegerField(null=False, blank=False)
+    start = models.DateField(null=False, blank=False, auto_now_add=False)
+    end = models.DateField(null=False, blank=False, auto_now_add=False)
