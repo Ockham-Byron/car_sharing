@@ -1,0 +1,5 @@
+Authentification:
+    ☐ prévoir gestion des erreurs en frontend
+    ☐ verification du compte par email
+    ☐ vérification compte non existant
+    ☐ verification passwords identiques

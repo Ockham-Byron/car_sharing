@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -13,7 +14,7 @@
           <form action="#" class="sign-in-form" method="POST">
           {% csrf_token %}
           {{ login_form.login_user}}
-            <h2 class="title">Sign in<span class="brand-color">.</span></h2>
+            <h2 class="title">{% trans 'En route' %}<span class="brand-color">.</span></h2>
             <div class="input-field">
               <span class="icon mail-icon" data-icon="&#193;"></span>
               {{login_form.email}}
@@ -23,26 +24,30 @@
               <span class="icon lock-icon" data-icon="&#95;"></span>
               {{login_form.password}}
             </div>
-            <button type="submit"  class="rounded-btn btn-kdark solid" value="login">Login</button>
+            <button type="submit"  class="rounded-btn btn-kdark solid" value="login">{% trans "C'est parti" %}</button>
             
           </form>
           <form action="#" class="sign-up-form" method="POST">
           {% csrf_token %}
-          {{ signup_form.as_p}}
-            <h2 class="title">Sign up<span class="brand-color">.</span></h2>
+          {{ signup_form.register_user}}
+            <h2 class="title">{% trans 'Monter à bord' %}<span class="brand-color">.</span></h2>
             <div class="input-field">
               <i class="fas fa-user"></i>
-              <input type="text" placeholder="Username" />
+              {{ signup_form.username}}
             </div>
             <div class="input-field">
               <i class="fas fa-envelope"></i>
-              <input type="email" placeholder="Email" />
+              {{ signup_form.email}}
             </div>
             <div class="input-field">
               <i class="fas fa-lock"></i>
-              <input type="password" placeholder="Password" />
+              {{ signup_form.password1}}
             </div>
-            <button type="submit" class="rounded-btn btn-kdark" value="Sign up">Sign up</button>
+            <div class="input-field">
+              <i class="fas fa-lock"></i>
+              {{ signup_form.password2}}
+            </div>
+            <button type="submit" class="rounded-btn btn-kdark" value="Sign up">{% trans "C'est parti" %}</button>
            
           </form>
         </div>
@@ -51,26 +56,26 @@
       <div class="panels-container">
         <div class="panel left-panel">
           <div class="content">
-            <h3>New here ?</h3>
+            <h3>{% trans 'Ici pour la première fois ?' %}</h3>
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
               ex ratione. Aliquid!
             </p>
             <button class="rounded-btn transparent" id="sign-up-btn">
-              Sign up
+              {% trans 'Monter à bord' %}
             </button>
           </div>
           
         </div>
         <div class="panel right-panel">
           <div class="content">
-            <h3>One of us ?</h3>
+            <h3>{% trans "Déjà des nôtres ?" %} </h3>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
               laboriosam ad deleniti.
             </p>
             <button class="rounded-btn transparent" id="sign-in-btn">
-              Sign in
+              {% trans 'En route' %}
             </button>
           </div>
           
@@ -78,9 +83,7 @@
       </div>
     </div>
 
-  <p>You are not logged in</p>
-  <a href="{% url 'account_login' %}">Log In</a> |
-  <a href="{% url 'account_signup' %}">Sign Up</a>
+ 
 {% endif %}
 
 {% endblock %}
