@@ -3,10 +3,7 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
-  Hi {{ user.email }}!
-  <p><a href="{% url 'account_logout' %}">Log Out</a></p>
-{% else %}
+
 
 <div class="auth-container">
       <div class="forms-auth-container">
@@ -84,7 +81,7 @@
     </div>
 
  
-{% endif %}
+
 
 {% endblock %}
 

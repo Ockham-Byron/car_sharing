@@ -1,0 +1,151 @@
+/* ==========================================================================
+   Variables
+   ========================================================================== */
+
+/* Colors */   
+:root {
+    --brand-color: #E28413;
+    --dark-color: #000022;
+    --mid-color: #B09F8B;
+    --light-color: #FFFAF3;
+      }
+  
+/* Fonts */
+
+@font-face {
+	font-family: 'icon-worksregular';
+	src: url('../fonts/icon-works/icon-works-webfont.eot');
+	src: url('../fonts/icon-works/icon-works-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icon-works/icon-works-webfont.woff') format('woff'),
+		url('../fonts/icon-works/icon-works-webfont.ttf') format('truetype'),
+		url('../fonts/icon-works/icon-works-webfont.svg#icon-worksregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+
+}
+  @font-face {
+    font-family: 'Poppins';
+    src: url("../fonts/poppins/Poppins-Regular.otf");
+  }
+
+  @font-face {
+    font-family: 'Droid-Serif';
+    src: url("../fonts/droid-serif.regular.ttf");
+  }
+
+  /* ==========================================================================
+   Navbars
+   ========================================================================== */
+  .header-navbar {
+    min-width: 300px;
+    max-width: 500px;
+    background-color: var(--mid-color);
+    border-radius:25px;
+  }
+
+   .footer-navbar {
+    position: fixed;
+    bottom:10px;
+    min-width: 300px;
+    max-width: 500px;
+    background-color: var(--mid-color);
+    border-radius:25px;
+   }
+
+   .navbar a > .icon {
+    color:var(--light-color);
+    font-size: 2em;
+    padding:0px 5px;
+   }
+
+   .navbar a  {
+    font-size: 10px;
+    color:var(--light-color);
+   }
+
+   .navbar a:hover, .navbar a > .icon:hover {
+    color: var(--brand-color);
+    text-decoration: none;
+   }
+
+   /* ==========================================================================
+   Typography
+   ========================================================================== */
+
+   .title-sketch-highlight{
+    position:relative;
+    
+  }
+
+    .title-sketch-highlight:before{
+      content:"";
+      z-index:-1;
+      left:-0.5em;
+      top:0.1em;
+      border-width:2px;
+      border-style:solid;
+      border-color:#ef8c22;
+      position:absolute;
+      border-right-color:transparent;
+      margin-left:43%;
+      width:200px;
+      height:1em;
+      transform:rotate(2deg);
+      opacity:0.7;
+      border-radius:50%;
+      padding:0.1em 0.25em;
+    }
+    .title-sketch-highlight:after{
+      content:"";
+      z-index:-1;
+      left:-0.5em;
+      top:0.25em;
+      padding:0.1em 0.25em;
+      border-width:2px;
+      border-style:solid;
+      border-color:#ef8c22;
+      border-left-color:transparent;
+      border-top-color:transparent;
+      position:absolute;
+      margin-left:43%;
+      width:200px;
+      height:1em;
+      transform:rotate(-1deg);
+      opacity:0.7;
+      border-radius:50%;
+    }
+
+    @media only screen and (max-width:768px) {
+      .title-sketch-highlight:after, .title-sketch-highlight:before{
+        margin-left:28%;
+      }
+    }
+   
+
+    /* ==========================================================================
+   Profile
+   ========================================================================== */
+
+   .profile-minicard {
+    display: inline-block;
+    font-size:12px;
+   }
+
+   .profile-minicard img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+   }
+
+      /* ==========================================================================
+   Infos
+   ========================================================================== */
+   
+   .amount-info {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    width: fit-content;
+    margin: 0px auto;
+    padding:5px 10px;
+    border-radius:20px;
+   }

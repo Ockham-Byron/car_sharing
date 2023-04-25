@@ -1,6 +1,10 @@
 Authentification:
     ☐ prévoir gestion des erreurs en frontend
+    ☐ ajouter icônes signup
     ☐ verification du compte par email
     ☐ vérification compte non existant
     ☐ verification passwords identiques
     ☐ add rgpd check
+
+Medias:
+    ☐ suppimer photo auqnd supprimer instance
