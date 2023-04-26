@@ -81,7 +81,7 @@ class Insurance(models.Model):
 class Trip(models.Model):
     car = models.ForeignKey(Car, related_name="trip", null=False, blank=False, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_trip", on_delete=models.PROTECT)
-    nb_km_start = models.IntegerField(null=False, blank=False)
-    nb_km_end = models.IntegerField(null=False, blank=False)
+    nb_km_start = models.IntegerField(null=False, blank=False, default=0)
+    nb_km_end = models.IntegerField(null=False, blank=False, default=0)
     start = models.DateField(null=False, blank=False, auto_now_add=False)
     end = models.DateField(null=False, blank=False, auto_now_add=False)

@@ -35,6 +35,9 @@
 
 {% include 'cars/charges.html' %}
 
+
+
+
 {% include 'cars/kilometers.html' %}
 
 
@@ -59,7 +62,16 @@
 // jquery function
 $(document).ready(function(){
         
+        var backgroundColors = [
+                        'rgba(226, 132, 19, 0.8)', //brand-color
+                        'rgba(0, 0, 34, 0.8)', //dark-color
+                        'rgba(176, 159, 139, 0.8)', //mid-color
+                        'rgba(33, 158, 188, 0.8)', //light-blue
+                        'rgba(142, 202, 230, 0.8)', //blue
+                        
+                    ];
         var ctx = document.getElementById('totalCharges').getContext('2d');
+       
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
@@ -67,14 +79,7 @@ $(document).ready(function(){
                 datasets: [{
                     label: '',
                     data: [{%for data in car_paid_by%}{{data.price_paid}},{%endfor%}],
-                    backgroundColor: [
-                        '#E28413', 
-                        '#000022',
-                        '#B09F8B',
-                        '#219ebc',
-                        '#8ecae6',
-                        
-                    ],
+                    backgroundColor: backgroundColors,
                     
                 }]
             },
@@ -97,20 +102,46 @@ $(document).ready(function(){
                 datasets: [{
                     label: '',
                     data: [{{car.price}}, {{insurance_price}}, 2000, 3450],
-                    backgroundColor: [
-                        '#E28413', 
-                        '#000022',
-                        '#B09F8B',
-                        '#219ebc',
-                        '#8ecae6',
-                        
-                    ],
+                    backgroundColor: backgroundColors,
                     
                 }]
             },
             options: {
                 responsive:true,
                 maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+});
+        var ctx_km = document.getElementById('kilometers').getContext('2d');
+        var kmChart = new Chart(ctx_km, {
+            
+            type: 'bar',
+            data: {
+                labels: [{%for data in trips_by_user %}'{{data.user}}',{%endfor%}], //loop through queryset, 
+                datasets: [{
+                    label: '',
+                    data: [{%for data in trips_by_user %}{{data.nb_km_trip }},{%endfor%}],
+                    backgroundColor: backgroundColors,
+                    
+                }]
+            },
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                skipNull: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: false
+                    }
+                },
+
                 scales: {
                     y: {
                         beginAtZero: true

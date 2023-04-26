@@ -13,6 +13,10 @@ class InsuranceAdmin(admin.ModelAdmin):
     list_display = ('car', 'price', 'paid_by', 'company', 'renewal_date')
 
 class TripAdmin(admin.ModelAdmin):
+    readonly_fields = ('nb_km',)
+    def nb_km(self, obj):
+        return obj.nb_km_end - obj.nb_km_start
+
     list_display = ('car', 'user', 'nb_km', 'start', 'end')
 
 
