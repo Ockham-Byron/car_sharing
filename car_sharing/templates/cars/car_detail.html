@@ -75,10 +75,10 @@ $(document).ready(function(){
         var myChart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: [{%for data in car_paid_by%}'{{data.user}}',{%endfor%}], //loop through queryset, 
+                labels: [{%for data in totals_paid_by_user%}'{{data.user}}',{%endfor%}], //loop through queryset, 
                 datasets: [{
                     label: '',
-                    data: [{%for data in car_paid_by%}{{data.price_paid}},{%endfor%}],
+                    data: [{%for data in totals_paid_by_user%}{{data.paid_by_user}},{%endfor%}],
                     backgroundColor: backgroundColors,
                     
                 }]
@@ -101,7 +101,7 @@ $(document).ready(function(){
                 labels: ['car', 'insurance', 'energy', 'repairs'], //loop through queryset, 
                 datasets: [{
                     label: '',
-                    data: [{{car.price}}, {{insurance_price}}, 2000, 3450],
+                    data: [{{car.price}}, {{insurance_price}}, {{total_energy}}, {{total_repairs}}],
                     backgroundColor: backgroundColors,
                     
                 }]

@@ -11,8 +11,22 @@ def path_and_rename(instance, filename):
     upload_to = 'cars_pictures'
     ext = filename.split('.')[-1]
     # get filename
-    if instance.pk:
+    if instance.slug:
+        filename = '{}.{}'.format(instance.slug, ext)
+    elif instance.pk:
         filename = '{}.{}'.format(instance.pk, ext)
+    else:
+        # set filename as random string
+        filename = '{}.{}'.format(uuid4().hex, ext)
+    # return the whole path to the file
+    return os.path.join(upload_to, filename)
+
+def path_and_rename_bill(instance, filename):
+    upload_to = 'bills_pictures'
+    ext = filename.split('.')[-1]
+    # get filename
+    if instance.pk:
+        filename = '{}.{}'.format(instance.car, ext)
     else:
         # set filename as random string
         filename = '{}.{}'.format(uuid4().hex, ext)
@@ -60,7 +74,7 @@ class Car(models.Model):
         else:
             pass
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name + '_' + self.uuid)
         super(Car, self).save(*args, **kwargs)
 
     def __str__(self):
@@ -85,3 +99,71 @@ class Trip(models.Model):
     nb_km_end = models.IntegerField(null=False, blank=False, default=0)
     start = models.DateField(null=False, blank=False, auto_now_add=False)
     end = models.DateField(null=False, blank=False, auto_now_add=False)
+
+class Energy(models.Model):
+    ESSENCE= _('essence')
+    DIESEL = _('diesel')
+    ÉLECTRICITÉ = _('électricité')
+    GPL = _('gpl')
+    ENERGY = [
+        (ESSENCE, _("essence")),
+        (DIESEL, _("diesel")),
+        (ÉLECTRICITÉ, _("kwatt")),
+        (GPL, _("GPL")),
+    ]
+    car = models.ForeignKey(Car, related_name="energy_bill", null=False, blank=False, on_delete=models.CASCADE)
+    price = models.FloatField(max_length=100, null=False, blank=False, default=0)
+    quantity = models.FloatField(max_length=100, null=False, blank=False, default=0)
+    paid_by = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_energy_bill", on_delete=models.PROTECT)
+    paid_day = models.DateField(auto_now_add=False)
+    type_energy = models.CharField(max_length=32, choices = ENERGY, default=ESSENCE)
+    picture = models.ImageField(upload_to=path_and_rename_bill, max_length=255, null=True, blank = True)
+    slug = models.SlugField(max_length=255, unique= True, default=None, null=True)
+
+    def save(self, *args, **kwargs):
+        super().save()
+        if self.picture:
+            img = Image.open(self.picture.path)
+
+            if img.height > 600 or img.width > 200:
+                new_img = (600, 200)
+                img.thumbnail(new_img)
+                img.save(self.picture.path)
+        else:
+            pass
+        if not self.slug:
+            self.slug = slugify(self.car + '_' + self.paid_day)
+        super(Energy, self).save(*args, **kwargs)
+
+class Repair(models.Model):
+    ENTRETIEN= _('entretien')
+    IMPORTANT = _('importante')
+    
+    TYPE = [
+        (ENTRETIEN, _("entretien")),
+        (IMPORTANT, _("réparation importante")),
+        
+    ]
+    car = models.ForeignKey(Car, related_name="repair_bill", null=False, blank=False, on_delete=models.CASCADE)
+    price = models.FloatField(max_length=100, null=False, blank=False, default=0)
+    description = models.TextField(max_length=500)
+    paid_by = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_repair_bill", on_delete=models.PROTECT)
+    paid_day = models.DateField(auto_now_add=False)
+    type_repair = models.CharField(max_length=32, choices = TYPE, default=ENTRETIEN)
+    picture = models.ImageField(upload_to=path_and_rename_bill, max_length=255, null=True, blank = True)
+    slug = models.SlugField(max_length=255, unique= True, default=None, null=True)
+
+    def save(self, *args, **kwargs):
+        super().save()
+        if self.picture:
+            img = Image.open(self.picture.path)
+
+            if img.height > 600 or img.width > 200:
+                new_img = (600, 200)
+                img.thumbnail(new_img)
+                img.save(self.picture.path)
+        else:
+            pass
+        if not self.slug:
+            self.slug = slugify(self.car + '_' + self.paid_day)
+        super(Repair, self).save(*args, **kwargs)

@@ -9,6 +9,15 @@
     {% if car_paid_by == " " %}
     <p>Précisez qui a payé</p>
     {% else %}
+    {% for total_by_user in totals_paid_by_user %}
+    <div class="profile-minicard mt-3">
+        <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
+                    <p>{{ total_by_user.user.username }}</p>
+                    <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
+                    </div>
+
+     
+    {% endfor %}
     <div class="chart-container">
     <canvas id="totalCharges" width="100%" height="100%"></canvas>
     </div>

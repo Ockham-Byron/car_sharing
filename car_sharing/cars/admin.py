@@ -19,8 +19,12 @@ class TripAdmin(admin.ModelAdmin):
 
     list_display = ('car', 'user', 'nb_km', 'start', 'end')
 
+class EnergyAdmin(admin.ModelAdmin):
+    list_display = ('car', 'price', 'paid_by', 'paid_day')
+
 
 admin.site.register(Car, CarAdmin)
 admin.site.register(PurchaseParticipation, PurchaseParticipationAdmin)
 admin.site.register(Insurance, InsuranceAdmin)
 admin.site.register(Trip, TripAdmin)
+admin.site.register(Energy, EnergyAdmin)
