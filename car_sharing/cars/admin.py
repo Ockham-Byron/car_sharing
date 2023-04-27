@@ -10,7 +10,10 @@ class PurchaseParticipationAdmin(admin.ModelAdmin):
     list_display = ('car', 'user', 'price_paid')
 
 class InsuranceAdmin(admin.ModelAdmin):
-    list_display = ('car', 'price', 'paid_by', 'company', 'renewal_date')
+    list_display = ('car', 'price', 'company', 'renewal_date')
+
+class InsuranceParticipationAdmin(admin.ModelAdmin):
+    list_display = ('insurance', 'user', 'price_paid')
 
 class TripAdmin(admin.ModelAdmin):
     readonly_fields = ('nb_km',)
@@ -26,5 +29,6 @@ class EnergyAdmin(admin.ModelAdmin):
 admin.site.register(Car, CarAdmin)
 admin.site.register(PurchaseParticipation, PurchaseParticipationAdmin)
 admin.site.register(Insurance, InsuranceAdmin)
+admin.site.register(InsuranceParticipation, InsuranceParticipationAdmin)
 admin.site.register(Trip, TripAdmin)
 admin.site.register(Energy, EnergyAdmin)

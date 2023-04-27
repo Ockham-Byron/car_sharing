@@ -27,7 +27,7 @@
     </div>
     {% endif %}
     
-<a href="#" class="rounded-btn btn-kdark">{% trans 'Regarder sous le capot' %}</a>
+<a href="{% url 'costs_detail' car.slug car.id %}" class="rounded-btn btn-kdark">{% trans 'Regarder sous le capot' %}</a>
 
 
 </section>

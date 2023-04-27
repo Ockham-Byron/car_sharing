@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Charges' %}{% endblock %}
+
+{% block content %}
+<div class="container pt-5 pb-5 mb-5">
+    {% include 'includes/header.html' %}
+
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-md-5 text-center details-card">
+            <h4 class="dark-color">{% trans 'Achat' %}</h4>
+            <p class="text-center amount-info">{{car.price}} €</p>
+            {% if car_paid_by == None %}
+                <p>Précisez qui a payé</p>
+            {% else %}
+                {% for i in car_paid_by %}
+                    <div class="profile-minicard mt-3">
+                        <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                        <p>{{ i.user.username }}</p>
+                        <p class="amount-info">{{i.price_paid}} €</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <!-- Insurance Card -->
+        <div class="col-md-5 text-center details-card">
+       
+            <h4 class="dark-color">
+                {% if current_assurance == None %}
+                    <span class="icon alert-icon brand-color" data-icon="&#228;"></span>
+                {% endif%}
+                {% trans 'Assurance' %}
+            </h4>
+            {% if current_insurance == None %}
+                <a href="#" class="rounded-btn transparent">{% trans 'Ajouter Assurance en cours' %}</a>
+            {% endif %}
+            {% if insurances %}
+            <table class="table table-border-less mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col"><span class="icon alert-icon brand-color" data-icon="&#70;"></span></th>
+                        <th scope="col"><span class="icon alert-icon brand-color" data-icon="&#126;"></span></th>
+                        {% for user in users %}
+                        <th scope="col"><img class="profile-table" src={{user.avatar.url}} alt={{user.username}}></th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for insurance in insurances%}
+                    <tr>
+                        <th><p>{{insurance.renewal_date | date:'d-m-Y '}}</p></th>
+                        <th><p>{{insurance.price}} €</p></th>
+                        {% for user_part in users%}
+                            {% for i in insurances_by_user %}
+                                {% if i.user == user_part and i.insurance == insurance %}
+                                    <th>{{i.price_paid}} €</th>
+                                    
+                               {% endif %}
+                            {% endfor %}
+                        {% endfor %}
+                        <th><a><span class="icon alert-icon dark-color" data-icon="&#110;"></span></a></th>
+                    <tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+            {% if is_more_insurances %}
+            <a href="#" class="rounded-btn btn-kdark">{% trans 'Voir plus' %}</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'includes/navbar-footer.html' %}
+
+</div>
+{% endblock %}

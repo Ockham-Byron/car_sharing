@@ -5,14 +5,7 @@
 {% block content %}
 
 <div class="container pt-5 pb-5 mb-5">
-    <div class="row d-flex justify-content-center">
-        <div class="navbar header-navbar">
-        <a class="active text-center" href="#"><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
-        <a class="text-center" href="#"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
-        <a class="text-center" href="{% url 'logout' %}"><span class="icon" data-icon="&#73;"></span></br>{% trans 'Descendre' %}</a>
-        <a  class= "text-center" href="#"><span class="icon" data-icon="&#74;"></span></br>{% trans 'Notifs' %}</a>
-        </div>
-    </div>
+    {% include 'includes/header.html' %}
 
 
 
@@ -43,7 +36,6 @@
 
 
 
-
 <div class="row d-flex justify-content-center">
     <div class="navbar footer-navbar">
     <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
@@ -52,6 +44,7 @@
     <a  class= "text-center" href="#"><span class="icon" data-icon="&#113;"></span></br>{% trans 'Post-it' %}</a>
     </div>
 </div>
+
 
 </div>
 {% endblock %}
@@ -119,7 +112,7 @@ $(document).ready(function(){
         var ctx_km = document.getElementById('kilometers').getContext('2d');
         var kmChart = new Chart(ctx_km, {
             
-            type: 'bar',
+            type: 'doughnut',
             data: {
                 labels: [{%for data in trips_by_user %}'{{data.user}}',{%endfor%}], //loop through queryset, 
                 datasets: [{

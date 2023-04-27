@@ -1,0 +1,10 @@
+{% load i18n %}
+
+<div class="row d-flex justify-content-center">
+        <div class="navbar header-navbar">
+        <a class="active text-center" href="#"><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
+        <a class="text-center" href="#"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
+        <a class="text-center" href="{% url 'logout' %}"><span class="icon" data-icon="&#73;"></span></br>{% trans 'Descendre' %}</a>
+        <a  class= "text-center" href="#"><span class="icon" data-icon="&#74;"></span></br>{% trans 'Notifs' %}</a>
+        </div>
+</div>

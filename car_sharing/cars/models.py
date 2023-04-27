@@ -89,8 +89,17 @@ class Insurance(models.Model):
     car = models.ForeignKey(Car, related_name="insurance", blank=False, null=False, on_delete=models.CASCADE)
     company = models.CharField(max_length=255, blank=False, null=False)
     price = models.FloatField(max_length=100, null=False, blank=False)
-    paid_by = models.ForeignKey(CustomUser, null=False, blank=False, on_delete=models.PROTECT)
     renewal_date = models.DateField(auto_now_add=False, null=True, blank=True)
+
+    def __str__(self):
+        return self.car.name + '_' + str(self.renewal_date)
+
+class InsuranceParticipation(models.Model):
+    insurance = models.ForeignKey(Insurance, related_name="insurance_participation", null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name="user_insurance_participation", blank=False, null=False, on_delete=models.PROTECT)
+    price_paid = models.FloatField(max_length=100, null=False, blank=False)
+
+    
 
 class Trip(models.Model):
     car = models.ForeignKey(Car, related_name="trip", null=False, blank=False, on_delete=models.CASCADE)

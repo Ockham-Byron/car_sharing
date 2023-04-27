@@ -41,7 +41,7 @@ body {
     font-family: 'Poppins';
 }
 
-h1, h2 {
+h1, h2, h3, h4 {
     font-family: 'Droid-Serif';
 }
  
@@ -55,6 +55,10 @@ h1, h2 {
 
 .brand-color {
     color: var(--brand-color);
+}
+
+.dark-color {
+	color: var(--dark-color);
 }
 
 /* ==========================================================================
@@ -94,18 +98,22 @@ a.rounded-btn {
 	font-size: 0.8rem;
 }
 
-.rounded-btn.transparent:hover {
+.rounded-btn.transparent:hover, a.rounded-btn-transparent:hover {
 	background: var(--brand-color);
 	border: 2px solid var(--brand-color);
     color:var(--light-color);
+	text-decoration: none;
+	
 }
 
-.btn-kdark {
+
+
+.btn-kdark, a.btn-kdark, a.rounded-btn.btn-kdark {
     background-color: var(--dark-color);
     color: var(--light-color);
 }
 
-.btn-kdark:hover, a.btn-dark:hover {
+.btn-kdark:hover, a.btn-kdark:hover {
 	background-color: var(--brand-color);
 	text-decoration:none;
 	color:var(--dark-color);

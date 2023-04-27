@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from datetime import date
 from .models import *
 from members.models import CustomUser
 
@@ -12,10 +13,6 @@ def car_detail_view(request, id, slug):
     if Insurance.objects.filter(car=car).exists():
         insurance = Insurance.objects.get(car=car)
         insurance_price = insurance.price
-
-    
-
-    
 
     car_paid_by=None
     if PurchaseParticipation.objects.filter(car=car).exists():
@@ -58,10 +55,10 @@ def car_detail_view(request, id, slug):
             user_participation = PurchaseParticipation.objects.filter(car = car, user = user)
             for i in user_participation:
                 paid_by_user += i.price_paid
-        if Insurance.objects.filter(car = car, paid_by = user).exists():
-            user_insurance = Insurance.objects.filter(car = car, paid_by = user)
+        if InsuranceParticipation.objects.filter(insurance = insurance, user = user).exists():
+            user_insurance = InsuranceParticipation.objects.filter(insurance = insurance, user = user)
             for i in user_insurance:
-                paid_by_user += i.price
+                paid_by_user += i.price_paid
         if Energy.objects.filter(car=car, paid_by = user).exists():
             user_energy_paid = Energy.objects.filter(car = car, paid_by = user)
             for i in user_energy_paid:
@@ -114,3 +111,49 @@ def car_detail_view(request, id, slug):
     }
 
     return render(request, 'cars/car_detail.html', context=context)
+
+def costs_detail_view(request, slug, id):
+    car = Car.objects.get(id=id)
+    users = car.users.all()
+
+    car_paid_by=None
+    if PurchaseParticipation.objects.filter(car=car).exists():
+        car_paid_by = PurchaseParticipation.objects.filter(car=car)
+    
+    all_insurances = None
+    insurances = None
+    current_insurance = None
+    insurances_by_user = []
+    if Insurance.objects.filter(car=car).exists():
+        all_insurances = Insurance.objects.filter(car=car)
+        insurances = all_insurances.order_by('renewal_date')[:3]
+        latest_insurance = all_insurances.latest('renewal_date')
+        if latest_insurance.renewal_date > date.today():
+            current_insurance = latest_insurance
+        for user in users:
+            for insurance in insurances:
+                if InsuranceParticipation.objects.filter(insurance = insurance, user = user).exists():
+                    insurances_paid_by_user = InsuranceParticipation.objects.filter(insurance = insurance, user = user)
+                    for i in insurances_paid_by_user:
+                        insurance_paid_by_user = ({'insurance':i.insurance, 'user':user, 'price_paid':i.price_paid})
+                        insurances_by_user.append(insurance_paid_by_user)
+    print(insurances_by_user)
+    is_more_insurances = False
+    if all_insurances.count() > 3:
+        is_more_insurances = True
+
+    
+    
+
+
+    context = {
+        'car': car,
+        'users': users,
+        'car_paid_by': car_paid_by,
+        'insurances': insurances,
+        'current_insurance': current_insurance,
+        'insurances_by_user':insurances_by_user,
+        'is_more_insurances' : is_more_insurances
+    }
+
+    return render(request, 'cars/charges_detail.html', context=context)

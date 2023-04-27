@@ -165,3 +165,42 @@
       height: 300px;
     }
   }
+
+   /* ==========================================================================
+   Card Details
+   ========================================================================== */
+
+   .details-card{
+    border:1px solid var(--dark-color);
+    border-radius:20px;
+    box-shadow: 4px 4px 4px var(--dark-color);
+    margin:5px;
+    padding:20px 10px;
+   }
+
+   .details-card > .profile-minicard img {
+    width: 50px;
+    height: 50px;
+   }
+
+   .details-card > .profile-minicard > p.amount-info {
+    padding:5px 5px !important;
+   }
+
+   img.profile-table {
+     width:20px;
+     height: 20px;
+      border-radius:50%;
+   }
+
+   .details-card > table {
+    font-size: 12px;
+   }
+   .table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none !important;
+}
