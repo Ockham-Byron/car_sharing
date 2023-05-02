@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static mathfilters %}
+{% load i18n l10n static mathfilters %}
 {% block title %}{{car.name}}{% endblock %}
 
 {% block content %}
@@ -11,14 +11,24 @@
 
 
         <div class="row text-center">
-        {% for post_it in post_its %}
-            <div class='post-it' style="background-color:{{post_it.color}};">
-	<p>{{post_it.message}}</p>
-    <p class="post_it-sender text-center">{{post_it.sender}}</p>
- 
-      
-</div>
-        {% endfor%}
+            <!-- Post -it -->
+            <div class="col-12 post-it-container">
+            {% for post_it in post_its %}
+                <div class='post-it' style="background-color:{{post_it.color}};">
+                    <p>{{post_it.sent_at | date:'d-m-Y '}}</p>
+                    <p>{{post_it.message}} !</p>
+                    <p class="post_it-sender mx-auto">{{post_it.sender}}</p>
+                    <div class="float-right post-it-edit">
+                        {% if post_it.sender == request.user%}
+                        <a class="" href="#edit"><span class="icon" data-icon="&#110;"></span></a>
+                        {% endif %}
+                        <a class="" href="#edit"><span class="icon" data-icon="&#111;"></span></a>
+                    </div>
+                </div>
+            {% endfor%}
+            </div>
+            <!-- Post-it End -->
+
             <div class="col-12 mt-5">
                 <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
                 <p class="">{{ car.name }}</p>

@@ -35,6 +35,11 @@
     src: url("../fonts/droid-serif.regular.ttf");
   }
 
+  @font-face {
+    font-family: 'PencilChild';
+    src: url("../fonts/bobamilky/PencilChild.otf");
+  }
+
   /* ==========================================================================
    Navbars
    ========================================================================== */
@@ -310,18 +315,23 @@
    Post It
    ========================================================================== */
 
+   div.post-it-container{
+    position:fixed;
+    top:100px;
+    left:0;
+    z-index: 10;
+   }
+
    .post-it {
     width: 250px;
-    height: 240px;
     position: relative;
-    background: #ffa;
     overflow: hidden;
     margin: 30px auto;
     padding: 20px;
     border-radius: 0 0 0 30px/45px;
     box-shadow: inset 0 -40px 40px rgba(0, 0, 0, 0.2),
       inset 0 25px 10px rgba(0, 0, 0, 0.2), 0 5px 6px 5px rgba(0, 0, 0, 0.2);
-    font-family: "Permanent Marker", cursive;
+    font-family: 'PencilChild', 'Comic Sans MS', 'Helvetica Neue';
     line-height: 1.7em;
     font-size: 19px;
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
@@ -346,12 +356,26 @@
   
   .post_it-sender {
     padding-bottom:30px;
-    display: block;
-    position: absolute;
+    margin-top:20px;
     width: 55%;
     height: 20px;
     border-bottom: 3px solid var(--dark-color);
-    border-radius: 40%;
-    bottom: 0px;
-    left: 20%;
+    transform: rotate(350deg);
+    
+    
+  }
+
+  .post-it-edit {
+    width:50px;
+    background-color: var(--mid-color);
+    border-radius: 10px;
+    padding:0 5px;
+  }
+
+  .post-it-edit a{
+    color:var(--light-color);
+  }
+
+  .post-it-edit a:hover{
+    color:var(--brand-color);
   }
