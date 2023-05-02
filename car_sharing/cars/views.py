@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import date
+from postit.models import PostIt
 from .models import *
 from members.models import CustomUser
 
@@ -93,7 +94,11 @@ def car_detail_view(request, id, slug):
             trips = ({'user': user, 'nb_km_trip': nb_km_total_user})
             trips_by_user.append(trips)
 
-
+    #Postit
+    post_its = None
+    if PostIt.objects.filter(car=car).exists():
+        post_its = PostIt.objects.filter(car=car)
+    
 
     context={
         'car': car,
@@ -107,7 +112,8 @@ def car_detail_view(request, id, slug):
         'energy_by_user': energy_by_user,
         'repairs_by_user': repairs_by_user,
         'total_repairs': total_repairs,
-        'trips_by_user': trips_by_user
+        'trips_by_user': trips_by_user,
+        'post_its':post_its
     }
 
     return render(request, 'cars/car_detail.html', context=context)

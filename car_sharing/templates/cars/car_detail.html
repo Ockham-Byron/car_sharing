@@ -11,6 +11,14 @@
 
 
         <div class="row text-center">
+        {% for post_it in post_its %}
+            <div class='post-it' style="background-color:{{post_it.color}};">
+	<p>{{post_it.message}}</p>
+    <p class="post_it-sender text-center">{{post_it.sender}}</p>
+ 
+      
+</div>
+        {% endfor%}
             <div class="col-12 mt-5">
                 <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
                 <p class="">{{ car.name }}</p>
