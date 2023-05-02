@@ -120,6 +120,7 @@ def costs_detail_view(request, slug, id):
     if PurchaseParticipation.objects.filter(car=car).exists():
         car_paid_by = PurchaseParticipation.objects.filter(car=car)
     
+    # Insurances
     all_insurances = None
     insurances = None
     current_insurance = None
@@ -137,10 +138,28 @@ def costs_detail_view(request, slug, id):
                     for i in insurances_paid_by_user:
                         insurance_paid_by_user = ({'insurance':i.insurance, 'user':user, 'price_paid':i.price_paid})
                         insurances_by_user.append(insurance_paid_by_user)
-    print(insurances_by_user)
+    
     is_more_insurances = False
     if all_insurances.count() > 3:
         is_more_insurances = True
+
+    #Energy
+    all_energy = None
+    if Energy.objects.filter(car = car).exists():
+        all_energy = Energy.objects.filter(car=car)
+
+    energy_by_user = []
+    for user in users:
+        if Energy.objects.filter(car=car, paid_by = user).exists():
+            total_paid = 0
+            energy_bills_user = Energy.objects.filter(car=car, paid_by=user)
+            for bill in energy_bills_user:
+                total_paid += bill.price
+            energy_bill_user = ({'total_paid': total_paid, 'user':user})
+            energy_by_user.append(energy_bill_user)
+
+
+    
 
     
     
@@ -153,7 +172,38 @@ def costs_detail_view(request, slug, id):
         'insurances': insurances,
         'current_insurance': current_insurance,
         'insurances_by_user':insurances_by_user,
-        'is_more_insurances' : is_more_insurances
+        'is_more_insurances' : is_more_insurances,
+        'all_energy':all_energy,
+        'energy_by_user':energy_by_user,
     }
 
     return render(request, 'cars/charges_detail.html', context=context)
+
+def trips_detail_view(request, id, slug):
+    car = Car.objects.get(id=id)
+    users = car.users.all()
+
+    trips = None
+    trips_by_user = []
+    if Trip.objects.filter(car=car).exists():
+        trips = Trip.objects.filter(car=car).order_by('-end')
+
+    for user in users:
+        if trips.filter(user=user).exists():
+            total_trips_by_user = trips.filter(user=user)
+            nb_trips_by_user = 0
+            nb_km_by_user = 0
+            for trip in total_trips_by_user:
+                nb_trips_by_user += 1
+                nb_km = trip.nb_km_end - trip.nb_km_start
+                nb_km_by_user += nb_km
+            trips_user = ({'user': user, 'nb_trips_by_user': nb_trips_by_user, 'nb_km_by_user':nb_km_by_user})
+            trips_by_user.append(trips_user)
+
+    context = {
+    'car': car,
+    'users': users,
+    'trips':trips,
+    'trips_by_user': trips_by_user
+}
+    return render(request, 'cars/trips_detail.html', context=context)

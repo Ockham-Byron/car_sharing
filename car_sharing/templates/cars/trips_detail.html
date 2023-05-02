@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static i18n mathfilters %}
+
+{% block title %}{% trans 'Trajets' %}{% endblock %}
+
+{% block content %}
+<div class="container pt-5 pb-5 mb-5">
+    {% include 'includes/header.html' %}
+    <div class="text-center mt-3">
+    <img src="{% static 'assets/img/top-illustration/trips.svg' %}" alt="Charges sharing" class="page-top-illustration">
+    <h2 class="mt-5">{% trans "Trajets" %}</h2>
+    {% for i in trips_by_user %}
+                    <div class="profile-minicard mt-3">
+                        <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                        <p>{{ i.user.username }}</p>
+                        <p class="amount-info">{{i.nb_km_by_user}} km <br/> {% trans 'pour' %} {{i.nb_trips_by_user}} {% trans 'trajets' %}</p>
+                    </div>
+                {% endfor %}
+    </div>
+
+    <div class="row d-flex justify-content-center mt-5">
+    {% if trips %}
+    {% for trip in trips %}
+        <div class="col-12">
+            <div class="trip-card mb-5">
+                <div class="row">
+                    <div class="col-4 text-left">
+                        <span class="icon info-icon dark-color" data-icon="&#47;"></span>
+                        <p class="date-info">{{trip.start | date:'d-m-Y '}}</p>
+                        <fieldset class="counter">
+                            <legend>{% trans 'Compteur' %}</legend>
+                            <p>{{trip.nb_km_start}}</p>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-4 text-center">
+                    <div class="profile-miniminicard mt-3">
+                        <img src={{trip.user.avatar.url}} alt="{{ trip.user.username }}">
+                        <p>{{ trip.user.username }}</p>
+                       
+                    </div>
+                        <p class="amount-info">{{trip.nb_km_end|sub:trip.nb_km_start}} km </p>
+                    </div>
+
+                    <div class="col-4 text-right">
+                        <span class="icon info-icon dark-color" data-icon="&#47;"></span>
+                        
+                        <p class="date-info">{{trip.end | date:'d-m-Y '}}</p>
+                        
+                        <fieldset class="counter">
+                            <legend>{% trans 'Compteur' %}</legend>
+                            <p>{{trip.nb_km_end}}</p>
+                        </fieldset>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    {% endfor %}
+    {% else %}
+    
+    //TODO : Call to action 
+    {% endif %}
+    </div>
+
+    
+
+    {% include 'includes/navbar-footer.html' %}
+
+</div>
+{% endblock %}

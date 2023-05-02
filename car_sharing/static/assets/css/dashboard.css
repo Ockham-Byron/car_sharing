@@ -122,8 +122,15 @@
         margin-left:28%;
       }
     }
-   
 
+      /* ==========================================================================
+   Illustrations
+   ========================================================================== */
+   
+  img.page-top-illustration {
+    height: auto;
+    max-width:90%;
+  }
     /* ==========================================================================
    Profile
    ========================================================================== */
@@ -137,6 +144,17 @@
     width: 80px;
     height: 80px;
     border-radius: 50%;
+   }
+
+   .profile-miniminicard img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+   }
+
+   .profile-miniminicard {
+    display: inline-block;
+    font-size:10px;
    }
 
       /* ==========================================================================
@@ -171,12 +189,22 @@
    ========================================================================== */
 
    .details-card{
-    border:1px solid var(--dark-color);
+    /* border:1px solid var(--dark-color);
     border-radius:20px;
-    box-shadow: 4px 4px 4px var(--dark-color);
+    box-shadow: 4px 4px 4px var(--dark-color); */
+    position: relative;
     margin:5px;
     padding:20px 10px;
    }
+
+   .kborder-bottom {
+    border-bottom: 4px solid var(--dark-color);
+    position:absolute;
+    left: 25%;
+    right: 25%;
+   }
+
+   
 
    .details-card > .profile-minicard img {
     width: 50px;
@@ -196,11 +224,68 @@
    .details-card > table {
     font-size: 12px;
    }
-   .table-borderless > tbody > tr > td,
-.table-borderless > tbody > tr > th,
-.table-borderless > tfoot > tr > td,
-.table-borderless > tfoot > tr > th,
-.table-borderless > thead > tr > td,
-.table-borderless > thead > tr > th {
-    border: none !important;
-}
+
+  .table thead th, .table th {
+    border-bottom: none !important;
+    border-top: none !important;
+  }
+
+ 
+  
+  .paper {
+   
+    margin: 5px auto;
+    padding-top: 10px;
+    position: relative;
+  }
+
+  .paper-rounded {
+    background: #e5e5e5;
+    border-top-left-radius: 250px 15px;
+    border-bottom-left-radius: 20px 115px;
+    border-bottom-right-radius: 105px 15px;
+  }
+
+  .trip-card {
+    border-bottom: 4px dashed var(--brand-color);
+    margin-left: 50px;
+    padding-bottom:10px;
+    
+  }
+
+  .trip-card::before{
+    content:'';
+    background:url("/static/assets/img/trip_icon.png") no-repeat center center/contain;
+    position: absolute;
+    bottom:40px;
+    left:10px;
+    height: 40px;
+    width: 40px;
+
+  }
+
+  .trip-card  p.date-info {
+    font-size:10px;
+  }
+
+  .trip-card p.amount-info {
+    font-size:10px !important;
+  }
+
+  fieldset.counter {
+    border:2px solid var(--dark-color);
+    padding:0px 3px;
+    
+  }
+
+  fieldset.counter > legend {
+    font-size:9px;
+    color: var(--dark-color);
+    width:fit-content;
+
+  }
+
+  fieldset.counter > p {
+    color:var(--dark-color);
+    margin-bottom: 0px !important;
+  }
