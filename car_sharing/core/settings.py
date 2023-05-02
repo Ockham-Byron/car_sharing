@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'members',
     'pages',
     'cars',
+    'postit',
 ]
 
 MIDDLEWARE = [

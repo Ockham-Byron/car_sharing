@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n mathfilters %}
 
 <section id="charges" class="text-center mb-3 mt-5">
 
@@ -14,6 +14,7 @@
         <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
                     <p>{{ total_by_user.user.username }}</p>
                     <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
+                    <p>{{total_by_user.paid_by_user|mul:100|div:total_charges|floatformat:2}} %</p>
                     </div>
 
      

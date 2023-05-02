@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static mathfilters %}
 {% block title %}{{car.name}}{% endblock %}
 
 {% block content %}
@@ -22,7 +22,14 @@
                     <p>{{ user.username }}</p>
                     </div>
                {% endfor %}
+               <h2 class="title-sketch-highlight big-title text-center mt-5">{% trans 'Statistiques générales' %}</h2>
             </div>
+
+            
+
+            <div class="chart-container">
+        <canvas id="comparatif" width="400" height="400"></canvas>
+    </div>
         </div>
    
 
@@ -63,6 +70,40 @@ $(document).ready(function(){
                         'rgba(142, 202, 230, 0.8)', //blue
                         
                     ];
+        const labels = [{%for data in totals_paid_by_user%}'{{data.user}}',{%endfor%}];
+const data = {
+  labels: labels,
+  datasets: [{
+    label: '% {% trans 'Charges' %}',
+    data: [{%for data in totals_paid_by_user%}{{data.paid_by_user|mul:100|div:total_charges|floatformat:2}},{%endfor%}],
+    backgroundColor: 'rgba(226, 132, 19, 0.8)',
+    
+  }, {
+    label: '% {% trans 'Kilomètres' %}',
+    data: [{%for data in trips_by_user%}{{data.nb_km_trip|mul:100|div:nb_km_total|floatformat:2}},{%endfor%}],
+    backgroundColor: 'rgba(0, 0, 34, 0.8)',
+    
+    
+  }
+  
+  ]
+};
+        
+        var ctx_compar = document.getElementById('comparatif').getContext('2d');
+        
+        var myChart = new Chart(ctx_compar, {
+            type: 'bar',
+            data: data,
+            options: {
+                responsive:true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+});
         var ctx = document.getElementById('totalCharges').getContext('2d');
        
         var myChart = new Chart(ctx, {

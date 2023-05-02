@@ -123,21 +123,21 @@
         <!-- Repairs Card -->
         <div class="col-md-5 text-center details-card mb-5">
             <h4 class="dark-color">{% trans 'Entretien & Réparations' %}</h4>
+            {% for i in repair_by_user %}
+                    <div class="profile-minicard mt-3">
+                        <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                        <p>{{ i.user.username }}</p>
+                        <p class="amount-info">{{i.total_paid}} €</p>
+                    </div>
+                {% endfor %}
             <div class="row justify-content-center mt-3">
             
-            {% for bill in all_energy %}
-            <div class="col-md-5 col-6">
+            {% for bill in all_repairs %}
+            <div class="col-12">
             
                 <div class="paper paper-rounded">
                 <p>
-                    {% if bill.type_energy == "essence" %}
-                        <span class="icon energy-icon" data-icon="&#203;"></span>
-                    {% endif %}
-                        <span class="brand-color">{{bill.quantity}}
-                        {% if bill.type_energy == "essence" %}
-                        L
-                        {% endif %}
-                        </span>
+                   {{bill.description}}
                 </p>
                     <p class="amount-info mb-3"><span class="icon" data-icon="&#67;"> {{ bill.price }} €</p>
                     <p><span class="icon energy-icon dark-color" data-icon="&#80;"> <span class="brand-color">{{bill.paid_by.username}}</span></p>

@@ -2,8 +2,8 @@
 
 <div class="row d-flex justify-content-center">
     <div class="navbar footer-navbar">
-    <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
-    <a class="text-center" href="#kilometers"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>
+    <a class="active text-center" href="{% url 'costs_detail' car.slug car.id %}"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
+    <a class="text-center" href="{% url 'trips_detail' car.slug car.id %}"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>
     <a class="text-center" href="#"><span class="icon" data-icon="&#70;"></span></br>{% trans 'Résa' %}</a>
     <a  class= "text-center" href="#"><span class="icon" data-icon="&#113;"></span></br>{% trans 'Post-it' %}</a>
     </div>

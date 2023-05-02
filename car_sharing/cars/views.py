@@ -159,7 +159,20 @@ def costs_detail_view(request, slug, id):
             energy_by_user.append(energy_bill_user)
 
 
-    
+    #Repairs
+    all_repairs = None
+    if Repair.objects.filter(car=car).exists():
+        all_repairs = Repair.objects.filter(car=car)
+
+    repair_by_user = []
+    for user in users:
+        if all_repairs.filter(paid_by=user).exists():
+            total_paid = 0
+            repair_bills_user = all_repairs.filter(paid_by = user)
+            for bill in repair_bills_user:
+                total_paid += bill.price
+            repair_bill_user = ({'total_paid': total_paid, 'user':user})
+            repair_by_user.append(repair_bill_user)
 
     
     
@@ -175,6 +188,8 @@ def costs_detail_view(request, slug, id):
         'is_more_insurances' : is_more_insurances,
         'all_energy':all_energy,
         'energy_by_user':energy_by_user,
+        'all_repairs':all_repairs,
+        'repair_by_user': repair_by_user,
     }
 
     return render(request, 'cars/charges_detail.html', context=context)

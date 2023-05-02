@@ -155,7 +155,7 @@ class Repair(models.Model):
     ]
     car = models.ForeignKey(Car, related_name="repair_bill", null=False, blank=False, on_delete=models.CASCADE)
     price = models.FloatField(max_length=100, null=False, blank=False, default=0)
-    description = models.TextField(max_length=500)
+    description = models.TextField(max_length=500, blank=True, null=True)
     paid_by = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_repair_bill", on_delete=models.PROTECT)
     paid_day = models.DateField(auto_now_add=False)
     type_repair = models.CharField(max_length=32, choices = TYPE, default=ENTRETIEN)
