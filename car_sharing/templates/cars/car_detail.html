@@ -40,10 +40,17 @@
                     <p>{{ user.username }}</p>
                     </div>
                {% endfor %}
-               <h2 class="title-sketch-highlight big-title text-center mt-5">{% trans 'Statistiques générales' %}</h2>
+               
             </div>
 
-            
+            <!-- Calendar -->
+            <div class="col-12">
+                <div id='calendar'></div>
+            </div>
+
+            <div class="col-12">
+                <h2 class="title-sketch-highlight big-title text-center mt-5">{% trans 'Statistiques générales' %}</h2>
+            </div>
 
             <div class="chart-container">
         <canvas id="comparatif" width="400" height="400"></canvas>
@@ -203,6 +210,18 @@ const data = {
 });
     });
 </script>
+
+<script>
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          initialView: 'dayGridMonth'
+        });
+        calendar.render();
+      });
+
+    </script>
 
 
 {% endblock %}
