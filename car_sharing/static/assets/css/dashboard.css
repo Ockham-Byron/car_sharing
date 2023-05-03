@@ -476,7 +476,7 @@ a.cost__slide__item {
   }
 
   .post-it-edit {
-    width:50px;
+    width:80px;
     background-color: var(--mid-color);
     border-radius: 10px;
     padding:0 5px;
@@ -488,4 +488,12 @@ a.cost__slide__item {
 
   .post-it-edit a:hover{
     color:var(--brand-color);
+  }
+
+  .tooltip-inner {
+    background-color: var(--brand-color) !important;
+  }
+
+  .arrow {
+    display: none !important;
   }

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from datetime import date
-from postit.models import PostIt
+from postit.models import PostIt, PostItNotShowed
 from .models import *
 from members.models import CustomUser
 
@@ -96,8 +96,15 @@ def car_detail_view(request, id, slug):
 
     #Postit
     post_its = None
+    
     if PostIt.objects.filter(car=car).exists():
         post_its = PostIt.objects.filter(car=car)
+        for post_it in post_its:
+            if PostItNotShowed.objects.filter(post_it = post_it, user= request.user).exists():
+                print("True")
+                print(post_it.id)
+                post_its = post_its.exclude(id = post_it.id)
+
 
     #Reservations
     reservations = None

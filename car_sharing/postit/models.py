@@ -13,6 +13,12 @@ class PostIt(models.Model):
     color = ColorField(default='#219ebc')
     sent_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
+
 
     def __str__(self):
         return(self.car.name + ' - ' + self.sender.username + ' - ' + str(self.sent_at))
+    
+class PostItNotShowed(models.Model):
+    user = models.ForeignKey(CustomUser, related_name="showed", on_delete=models.CASCADE)
+    post_it = models.ForeignKey(PostIt, related_name="showed", on_delete=models.CASCADE)
