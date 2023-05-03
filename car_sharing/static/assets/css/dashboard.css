@@ -44,19 +44,35 @@
    Navbars
    ========================================================================== */
   .header-navbar {
-    min-width: 300px;
-    max-width: 500px;
+    position:fixed;
+    width: 100%;
     background-color: var(--mid-color);
-    border-radius:25px;
+    z-index: 20;
+  }
+
+  @media screen and (min-width:768px) {
+    .header-navbar {
+      margin-top:40px;
+      min-width: 300px;
+      max-width: 500px;
+      border-radius:25px;
+    }
+    
   }
 
    .footer-navbar {
     position: fixed;
-    bottom:10px;
+    bottom:0px;
     min-width: 300px;
     max-width: 500px;
     background-color: var(--mid-color);
     border-radius:25px;
+    z-index: 30;
+   }
+
+   .footer-navbar.bordered {
+    border:2px solid var(--brand-color);
+    box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
    }
 
    .navbar a > .icon {
@@ -68,12 +84,91 @@
    .navbar a  {
     font-size: 10px;
     color:var(--light-color);
+    z-index: 1000;
    }
 
    .navbar a:hover, .navbar a > .icon:hover {
     color: var(--brand-color);
     text-decoration: none;
    }
+
+ 
+
+   /*
+ * SLIDING MENU PANEL
+ */
+.menu__slide {
+  position: absolute;
+  top:0;
+  left: -30%;
+  
+  color: #005c9c;
+  opacity: 0;
+  background-color: var(--mid-color);
+  -webkit-clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 85% 100%, 0% 100%);
+  
+  height: 100vh;
+  padding: 100px 50px 10px 5px;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center; */
+  transition: 300ms left cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.cost__slide {
+  position: absolute;
+ 
+  margin-bottom:-250px;
+  padding-bottom:50px;
+  transition: 300ms top cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.cost__slide.active{
+  margin-bottom: 150px;
+}
+@media only screen and (max-width: 600px) {
+  .menu__slide {
+    width: 250px;
+    left: -250px;
+    padding: 80px 50px 10px 15px;
+  }
+}
+.menu__slide.active {
+  left: 0;
+  opacity: 1 !important;
+}
+.menu__slide p {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.slide-item {
+  display: block;
+  padding:5px;
+}
+
+.cost__slide__item {
+  display: block;
+  background-color: var(--mid-color);
+  
+  height: 50px;
+  width: 50px;
+  border-radius:50%;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.5) 0px 7px 29px 0px;
+  
+}
+
+a.cost__slide__item {
+  text-align: center;
+}
+
+   
+
 
    /* ==========================================================================
    Typography
@@ -310,6 +405,21 @@
     margin-bottom: 0px !important;
   }
 
+   /* ==========================================================================
+   Calendar
+   ========================================================================== */
+
+   .fc-event-img {
+    display: inline;
+    padding: 0 5px;
+   }
+
+  img.profile-calendar {
+    width:20px;
+    height: 20px;
+    border-radius: 50%;
+    
+  }
 
   /* ==========================================================================
    Post It

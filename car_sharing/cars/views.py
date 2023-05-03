@@ -98,6 +98,11 @@ def car_detail_view(request, id, slug):
     post_its = None
     if PostIt.objects.filter(car=car).exists():
         post_its = PostIt.objects.filter(car=car)
+
+    #Reservations
+    reservations = None
+    if Reservation.objects.filter(car=car).exists():
+        reservations = Reservation.objects.filter(car=car)
     
 
     context={
@@ -113,7 +118,8 @@ def car_detail_view(request, id, slug):
         'repairs_by_user': repairs_by_user,
         'total_repairs': total_repairs,
         'trips_by_user': trips_by_user,
-        'post_its':post_its
+        'post_its':post_its,
+        'reservations':reservations,
     }
 
     return render(request, 'cars/car_detail.html', context=context)

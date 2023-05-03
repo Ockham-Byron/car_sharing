@@ -3,9 +3,9 @@
 {% block title %}{{car.name}}{% endblock %}
 
 {% block content %}
-
+{% include 'includes/header.html' %}
 <div class="container pt-5 pb-5 mb-5">
-    {% include 'includes/header.html' %}
+    
 
 
 
@@ -45,6 +45,7 @@
 
             <!-- Calendar -->
             <div class="col-12">
+            <h2 class="title-sketch-highlight big-title text-center mt-5">{% trans 'Réservations' %}</h2>
                 <div id='calendar'></div>
             </div>
 
@@ -68,14 +69,16 @@
 
 
 
-<div class="row d-flex justify-content-center">
+{% comment %} <div class="row d-flex justify-content-center">
     <div class="navbar footer-navbar">
     <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
     <a class="text-center" href="#kilometers"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>
     <a class="text-center" href="#"><span class="icon" data-icon="&#70;"></span></br>{% trans 'Résa' %}</a>
     <a  class= "text-center" href="#"><span class="icon" data-icon="&#113;"></span></br>{% trans 'Post-it' %}</a>
     </div>
-</div>
+</div> {% endcomment %}
+
+{% include 'includes/navbar-footer.html' %}
 
 
 </div>
@@ -216,8 +219,58 @@ const data = {
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          initialView: 'dayGridMonth'
+          initialView: 'dayGridMonth',
+          events: [
+                {% for reservation in reservations %}
+                    {
+                        id: 'reservation',
+                        title:  "{{ reservation.user }}",
+                        image_url: "{{ reservation.user.avatar.url}}",
+                        start: '{{ reservation.reservation_start | date:"Y-m-d" }}',
+                        end: '{{ reservation.reservation_end | date:"Y-m-d" }}',
+                        
+                        {% if reservation.status == "pending" %}
+                        backgroundColor: 'orange',
+                        {% elif reserva.status == "confirmed" %}
+                        backgroundColor: 'brown',
+                        {% elif reserva.status == "returned" %}
+                        backgroundColor: 'pink',
+                        {% elif reserva.status == "on_going" %}
+                        backgroundColor: 'green' ,
+                        {% else %}
+                        backgroundColor: 'blue',
+                        {% endif %}
+                        borderColor: 'transparent',
+                        
+                    },
+
+                    
+                {% endfor %}
+                
+            ],
+            eventContent: function(arg) {
+                let arrayOfDomNodes = []
+                // title event
+                let titleEvent = document.createElement('div')
+                if(arg.event._def.title) {
+                  titleEvent.innerHTML = arg.event._def.title
+                  titleEvent.classList = "fc-event-title fc-sticky"
+                }
+    
+                // image event
+                let imgEventWrap = document.createElement('div')
+                if(arg.event.extendedProps.image_url) {
+                  let imgEvent = '<img class="profile-calendar" src="'+arg.event.extendedProps.image_url+'" >'
+                  imgEventWrap.classList = "fc-event-img"
+                  imgEventWrap.innerHTML = imgEvent;
+                }
+    
+                arrayOfDomNodes = [ imgEventWrap, titleEvent ]
+    
+                return { domNodes: arrayOfDomNodes }
+              },
         });
+       
         calendar.render();
       });
 

@@ -2,7 +2,14 @@
 
 <div class="row d-flex justify-content-center">
         <div class="navbar header-navbar">
-        <a class="active text-center" href="#"><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
+        
+        <a class="active text-center menu__toggler " href="#" ><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
+                <div class="menu__slide">
+                        <a class="slide-item" href="{% url 'dashboard' %}">{% trans 'Accueil' %}</a>
+                        <a class="slide-item" href="#">{% trans 'À propos' %}</a>
+                        <a class="slide-item" href="#">{% trans 'Offrez-moi un café' %}</a>
+                </div>
+        
         <a class="text-center" href="#"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
         <a class="text-center" href="{% url 'logout' %}"><span class="icon" data-icon="&#73;"></span></br>{% trans 'Descendre' %}</a>
         <a  class= "text-center" href="#"><span class="icon" data-icon="&#74;"></span></br>{% trans 'Notifs' %}</a>

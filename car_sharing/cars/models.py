@@ -109,6 +109,34 @@ class Trip(models.Model):
     start = models.DateField(null=False, blank=False, auto_now_add=False)
     end = models.DateField(null=False, blank=False, auto_now_add=False)
 
+class Reservation(models.Model):
+    PENDING = 'pending'
+    CONFIRMED = 'confirmed'
+    REJECTED = 'rejected'
+    CANCELLED = 'cancelled'
+    ON_GOING = 'on_going'
+    RETURNED = 'returned'
+    STATUS = [
+        (PENDING, ('Waiting for confirmation')),
+        (CONFIRMED, ('Confirmed')),
+        (REJECTED, ('Cancelled by owner')),
+        (CANCELLED, ('Cancelled by requester')),
+        (ON_GOING, ('Product actually borrowed by requester ')),
+        (RETURNED, ('Product returned by the borrower')),
+    ]
+    id = models.UUIDField(primary_key=True, default = uuid4, editable=False)
+    car = models.ForeignKey(Car, related_name="reservation", null=False, blank=False, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_reservation", on_delete=models.PROTECT)
+    demand_date = models.DateField(auto_now_add=True)
+    reservation_start = models.DateTimeField(null=False, blank=False, auto_now_add=False)
+    reservation_end = models.DateTimeField(null=False, blank=False, auto_now_add=False)
+    status = models.CharField(max_length=32, choices = STATUS, default=PENDING)
+
+    def __str__(self):
+        return self.car.name + ' - ' + self.user.username + ' - ' + str(self.reservation_start)
+
+
+
 class Energy(models.Model):
     ESSENCE= _('essence')
     DIESEL = _('diesel')
