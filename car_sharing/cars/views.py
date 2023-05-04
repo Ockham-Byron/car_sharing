@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from datetime import date
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from postit.models import PostIt, PostItNotShowed
 from .models import *
+from .forms import *
 from members.models import CustomUser
 
-# Create your views here.
+@login_required
 def car_detail_view(request, id, slug):
     car = Car.objects.get(id=id)
     users = car.users.all()
@@ -134,6 +137,7 @@ def car_detail_view(request, id, slug):
 
     return render(request, 'cars/car_detail.html', context=context)
 
+@login_required
 def costs_detail_view(request, slug, id):
     car = Car.objects.get(id=id)
     users = car.users.all()
@@ -216,6 +220,7 @@ def costs_detail_view(request, slug, id):
 
     return render(request, 'cars/charges_detail.html', context=context)
 
+@login_required
 def trips_detail_view(request, id, slug):
     car = Car.objects.get(id=id)
     users = car.users.all()
@@ -244,3 +249,23 @@ def trips_detail_view(request, id, slug):
     'trips_by_user': trips_by_user
 }
     return render(request, 'cars/trips_detail.html', context=context)
+
+@login_required
+def add_car_view(request):
+    form = AddCarForm()
+    
+    user= request.user
+    if request.method == 'POST':
+        form = AddCarForm(request.POST, request.FILES)
+        
+        
+        if  form.is_valid():
+            car = form.save()
+            
+            car.users.add(user)
+            car.save()
+            
+            messages.success(request, f'Véhicule {car.name} est bien rentré au garage', extra_tags='Parfait !')
+            return redirect('dashboard')
+
+    return render(request, 'cars/forms/add_car_form.html', {'form': form,})

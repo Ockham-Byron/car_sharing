@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% trans 'Ajouter un véhicule' %}{% endblock title %}
+{% block content %}
+<div class="container" style="height:90vh;">
+  <div class="row h-100">
+    <div class="col-sm-12 my-auto">
+    <div class="abstract-form v-abstract-form">
+     {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <div id="form_errors">
+                {% for key, value in form.errors.items %}
+                <strong>{{ value }}</strong>
+                {% endfor %}
+            </div>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+        <div class="text-center">
+        <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="cta-top-illustration">
+        </div>
+    <h3 class="text-center">{% trans 'Ajouter un véhicule' %}</h3>
+    <div class="row justify-content-center">
+        
+       
+        <div class="form-content">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                    <div class="form-group">
+                        <label>{% trans 'Nom du véhicule' %}<span class="">*</span>:</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="form-group">
+                        <label>{% trans 'Immatriculation' %}:</label>
+                        {{ form.immatriculation }}
+                    </div>
+                    <div class="form-group">
+                        <label>{% trans "Prix d'achat" %}<span class="">*</span>:</label>
+                        {{ form.price }}
+                    </div>
+
+                    <div class="form-group">
+                        <label>{% trans "Énergie" %}<span class="">*</span>:</label>
+                        {{ form.energy }}
+                    </div>
+               
+                    <p>*  {% trans 'Champs obligatoires' %}</p>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
+{% endblock content %}

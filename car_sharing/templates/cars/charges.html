@@ -6,7 +6,7 @@
 <h4>{% trans 'Total des charges' %}</h4>
 
     <p class="text-center amount-info">{{total_charges}} €</p>
-    {% if car_paid_by == " " %}
+    {% if car_paid_by == None %}
     <p>Précisez qui a payé</p>
     {% else %}
     {% for total_by_user in totals_paid_by_user %}
@@ -14,7 +14,10 @@
         <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
                     <p>{{ total_by_user.user.username }}</p>
                     <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
+                    {% if total_charges != 0%}
                     <p>{{total_by_user.paid_by_user|mul:100|div:total_charges|floatformat:2}} %</p>
+                    
+                    {% endif %}
                     </div>
 
      

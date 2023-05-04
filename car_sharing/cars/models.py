@@ -74,7 +74,7 @@ class Car(models.Model):
         else:
             pass
         if not self.slug:
-            self.slug = slugify(self.name + '_' + self.uuid)
+            self.slug = slugify(self.name + '_' + str(self.id))
         super(Car, self).save(*args, **kwargs)
 
     def __str__(self):
