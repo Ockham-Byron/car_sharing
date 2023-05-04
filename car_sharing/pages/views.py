@@ -62,13 +62,17 @@ def home_page_view(request):
         return render(request, 'home.html', context=context)
 
 def dashboard_view(request):
-    cars = Car.objects.filter(users__id__contains = request.user.id)
+    cars = None
+    context = {
+                'cars': cars,
+            }
+    if Car.objects.filter(users__id__contains=request.user.id).exists():
+        cars = Car.objects.filter(users__id__contains = request.user.id)
     
-    if cars.count() > 1:
-        context = {
-            'cars': cars,
-        }
-        return render(request, 'dashboard.html', context=context)
-    else:
-        car = Car.objects.get(users__id__contains = request.user.id)
-        return redirect('car_detail', car.id, car.slug)
+        if cars.count() > 1:
+            
+            return render(request, 'dashboard.html', context=context)
+        else:
+            car = Car.objects.get(users__id__contains = request.user.id)
+            return redirect('car_detail', car.id, car.slug)
+    return render(request, 'dashboard.html', context=context)

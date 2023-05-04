@@ -1,22 +1,17 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block content %}
+{% include 'includes/header.html' %}
 
-<div class="container pt-5">
-    <div class="row d-flex justify-content-center">
-        <div class="navbar header-navbar">
-        <a class="active text-center" href="#"><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
-        <a class="text-center" href="#"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
-        <a class="text-center" href="{% url 'logout' %}"><span class="icon" data-icon="&#73;"></span></br>{% trans 'Descendre' %}</a>
-        <a  class= "text-center" href="#"><span class="icon" data-icon="&#74;"></span></br>{% trans 'Notifs' %}</a>
-        </div>
-    </div>
+   
 
 
 
 {% if cars %}
+<div class="container pt-5">
+<div class="row text-center mt-5 pt-5">
     {% for car in cars %}
-        <div class="row text-center">
+        <div class="col-md-6">
             <a href={% url 'car_detail' car.id car.slug %}>
                 <div class="col-12 mt-5">
                     <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
@@ -32,18 +27,39 @@
                     {% endfor %}
                 </div>
             </a>
-        </div>
+      </div>
     {% endfor %}
+  </div>
 
-{% include 'cars/charges.html' %}
 
-{% include 'cars/kilometers.html' %}
 
 {% else %}
-<p>Add voiture</p>
+<div class="container d-flex" style="height:100vh;">
+    <div class="cta-card my-auto mx-auto text-center">
+    <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="cta-top-illustration">
+      <h3 class="text-center">{% trans "C'est le moment de monter en voiture !" %}</h3>
+      <div class="row d-flex justify-content-center mt-5 ">
+       
+            <div class="col-6">
+                
+                    <a href="#" class="cta-btn">{% trans 'Ajouter un véhicule' %}</a>
+                
+            </div>
+
+            <div class="col-6">
+                
+                    <a href="#" class="cta-btn">{% trans 'Rejoindre un véhicule' %}</a>
+                
+            </div>
+        
+       
+      </div>
+      
+    </div>
+
 
 {% endif %}
-
+</div>
 <div class="row d-flex justify-content-center">
     <div class="navbar footer-navbar">
     <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
@@ -53,5 +69,5 @@
     </div>
 </div>
 
-</div>
+
 {% endblock %}

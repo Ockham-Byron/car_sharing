@@ -15,11 +15,15 @@
     <!-- Custom Css Files-->
     <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
      <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+
+    
   
-    <title>{% block title %} {% endblock %} </title>
+    
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/png" href="{% static 'assets/img/favicon.ico' %}"/>
+
+    <title>{% block title %} {% endblock %} </title>
 
     {% block style %}{% endblock %}
 </head>
@@ -42,7 +46,10 @@
       
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.4.min.js"
+  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+  crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
  
@@ -88,6 +95,20 @@ cost__toggler.addEventListener('click', () => {
   $('[data-toggle="tooltip"]').tooltip()
 })
    </script>
+
+   <!-- Custom JavaScript -->
+    <script>
+    function open_modal(url) {
+	$('#show_modal').load(url, function () {
+		$(this).modal('show');
+	});
+}
+
+
+function close_modal(){
+	$('#modal').modal('hide');
+}
+    </script>
   
 
 {% block extrajs %}{%endblock%}

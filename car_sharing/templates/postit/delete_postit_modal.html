@@ -1,0 +1,27 @@
+{% load i18n %}
+
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss = "modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            {%if post_it.sender == request.user%}
+            <div class="text-center pb-4">
+            <a class="modal-link border-kdark text-center" href="{% url 'delete_postit_for_everyone' post_it.id %}">{% trans "Supprimer pour tout le monde" %}</a>
+            </div>
+            {% endif %}
+            <div class="text-center pb-4">
+            <a class="modal-link border-brand text-center" href="{% url 'not_show' post_it.id  %}">{% trans "Supprimer pour moi" %}</a>
+           </div>
+            <div class="modal-footer">
+            
+                <button class="modal-btn" type="button" data-dismiss="modal">{% trans 'Annuler' %}</button>
+            
+            </div>
+               
+           
+    </div>
+</div>

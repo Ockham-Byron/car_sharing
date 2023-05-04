@@ -9,11 +9,14 @@ def car_detail_view(request, id, slug):
     car = Car.objects.get(id=id)
     users = car.users.all()
     insurance_price = 0
-    insurance = ""
-    
+    insurance = None
+
+    #Insurance
     if Insurance.objects.filter(car=car).exists():
         insurance = Insurance.objects.get(car=car)
         insurance_price = insurance.price
+    
+
 
     car_paid_by=None
     if PurchaseParticipation.objects.filter(car=car).exists():
