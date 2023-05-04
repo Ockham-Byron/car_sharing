@@ -27,6 +27,10 @@ class AddCarForm(forms.ModelForm):
     
     energy = forms.ChoiceField(choices=energy_choices)
 
-    class Meta:
-        model = Car
-        fields = ['name']
+    nb_users = forms.IntegerField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('oui, combien ?'),
+                                                        'class': 'form-control'
+                                }))
+
+    

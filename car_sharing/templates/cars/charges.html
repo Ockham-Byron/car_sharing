@@ -3,12 +3,16 @@
 <section id="charges" class="text-center mb-3 mt-5">
 
 <h2 class="title-sketch-highlight">{% trans 'Charges' %}</h2>
-<h4>{% trans 'Total des charges' %}</h4>
 
-    <p class="text-center amount-info">{{total_charges}} €</p>
-    {% if car_paid_by == None %}
-    <p>Précisez qui a payé</p>
+
+    
+    {% if total_charges == 0 %}
+    <div class="mt-3 mb-3">
+    <a href="#" class="rounded-btn btn-kbrand">{% trans "Ajouter une dépense" %}</a>
+    </div>
     {% else %}
+    <h4>{% trans 'Total des charges' %}</h4>
+    <p class="text-center amount-info">{{total_charges}} €</p>
     {% for total_by_user in totals_paid_by_user %}
     <div class="profile-minicard mt-3">
         <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">

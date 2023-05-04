@@ -150,6 +150,7 @@ def costs_detail_view(request, slug, id):
     all_insurances = None
     insurances = None
     current_insurance = None
+    is_more_insurances = False
     insurances_by_user = []
     if Insurance.objects.filter(car=car).exists():
         all_insurances = Insurance.objects.filter(car=car)
@@ -165,9 +166,9 @@ def costs_detail_view(request, slug, id):
                         insurance_paid_by_user = ({'insurance':i.insurance, 'user':user, 'price_paid':i.price_paid})
                         insurances_by_user.append(insurance_paid_by_user)
     
-    is_more_insurances = False
-    if all_insurances.count() > 3:
-        is_more_insurances = True
+    
+        if all_insurances.count() > 3:
+            is_more_insurances = True
 
     #Energy
     all_energy = None
@@ -192,13 +193,14 @@ def costs_detail_view(request, slug, id):
 
     repair_by_user = []
     for user in users:
-        if all_repairs.filter(paid_by=user).exists():
-            total_paid = 0
-            repair_bills_user = all_repairs.filter(paid_by = user)
-            for bill in repair_bills_user:
-                total_paid += bill.price
-            repair_bill_user = ({'total_paid': total_paid, 'user':user})
-            repair_by_user.append(repair_bill_user)
+        if all_repairs != None:
+            if all_repairs.filter(paid_by=user).exists():
+                total_paid = 0
+                repair_bills_user = all_repairs.filter(paid_by = user)
+                for bill in repair_bills_user:
+                    total_paid += bill.price
+                repair_bill_user = ({'total_paid': total_paid, 'user':user})
+                repair_by_user.append(repair_bill_user)
 
     
     
@@ -231,16 +233,17 @@ def trips_detail_view(request, id, slug):
         trips = Trip.objects.filter(car=car).order_by('-end')
 
     for user in users:
-        if trips.filter(user=user).exists():
-            total_trips_by_user = trips.filter(user=user)
-            nb_trips_by_user = 0
-            nb_km_by_user = 0
-            for trip in total_trips_by_user:
-                nb_trips_by_user += 1
-                nb_km = trip.nb_km_end - trip.nb_km_start
-                nb_km_by_user += nb_km
-            trips_user = ({'user': user, 'nb_trips_by_user': nb_trips_by_user, 'nb_km_by_user':nb_km_by_user})
-            trips_by_user.append(trips_user)
+        if trips != None:
+            if trips.filter(user=user).exists():
+                total_trips_by_user = trips.filter(user=user)
+                nb_trips_by_user = 0
+                nb_km_by_user = 0
+                for trip in total_trips_by_user:
+                    nb_trips_by_user += 1
+                    nb_km = trip.nb_km_end - trip.nb_km_start
+                    nb_km_by_user += nb_km
+                trips_user = ({'user': user, 'nb_trips_by_user': nb_trips_by_user, 'nb_km_by_user':nb_km_by_user})
+                trips_by_user.append(trips_user)
 
     context = {
     'car': car,

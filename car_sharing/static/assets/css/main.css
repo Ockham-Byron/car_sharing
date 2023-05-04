@@ -82,6 +82,11 @@ h1, h2, h3, h4 {
 
 a.rounded-btn {
 	padding:5px 10px;
+	text-decoration: none;
+}
+
+a.rounded-btn:hover{
+	text-decoration: none;
 }
 
 
@@ -106,7 +111,15 @@ a.rounded-btn {
 	
 }
 
+.btn-kbrand {
+	background-color: var(--brand-color);
+	color: var(--dark-color);
+}
 
+.btn-kbrand:hover {
+	background-color: var(--dark-color);
+	color: var(--light-color);
+}
 
 .btn-kdark, a.btn-kdark, a.rounded-btn.btn-kdark {
     background-color: var(--dark-color);

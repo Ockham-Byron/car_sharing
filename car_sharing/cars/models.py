@@ -52,6 +52,7 @@ class Car(models.Model):
     id = models.UUIDField(primary_key=True, default = uuid4, editable=False)
     name = models.CharField(max_length=255, null=False, blank = False)
     users = models.ManyToManyField(CustomUser, blank=False, related_name="car_users")
+    nb_users = models.IntegerField(null=False, blank = False, default=2)
     immatriculation = models.CharField(max_length=100, blank = True, null = True)
     energy = models.CharField(max_length=32, choices = ENERGY, default=ESSENCE)
     picture = models.ImageField(upload_to=path_and_rename, max_length=255, null=True, blank = True)
