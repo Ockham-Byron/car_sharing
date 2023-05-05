@@ -32,5 +32,9 @@ class AddCarForm(forms.ModelForm):
                             widget=forms.NumberInput(attrs={'placeholder': _('oui, combien ?'),
                                                         'class': 'form-control'
                                 }))
+    
+    class Meta:
+        model = Car
+        fields = ['name', 'immatriculation', 'price', 'energy', 'nb_users']
 
     

@@ -9,5 +9,8 @@ urlpatterns = [
 
     #edit cars
     path('add-car', add_car_view, name='add_car'),
+
+    #join car
+    path('<id>/invitation', invitation_view, name='invitation'),
    
 ]

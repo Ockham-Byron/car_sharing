@@ -3,10 +3,6 @@
 {% block content %}
 {% include 'includes/header.html' %}
 
-   
-
-
-
 {% if cars %}
 <div class="container pt-5">
 <div class="row text-center mt-5 pt-5">
@@ -36,6 +32,7 @@
 {% else %}
 <div class="container d-flex" style="height:100vh;">
     <div class="cta-card my-auto mx-auto text-center">
+    <h3 class="text-center">{% trans 'Bonjour' %} {{request.user.username}} ! </h3>
     <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="cta-top-illustration">
       <h3 class="text-center">{% trans "C'est le moment de monter en voiture !" %}</h3>
       <div class="row d-flex justify-content-center mt-5 ">
@@ -59,14 +56,6 @@
 
 
 {% endif %}
-</div>
-<div class="row d-flex justify-content-center">
-    <div class="navbar footer-navbar">
-    <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
-    <a class="text-center" href="#kilometers"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>
-    <a class="text-center" href="#"><span class="icon" data-icon="&#70;"></span></br>{% trans 'Résa' %}</a>
-    <a  class= "text-center" href="#"><span class="icon" data-icon="&#113;"></span></br>{% trans 'Post-it' %}</a>
-    </div>
 </div>
 
 

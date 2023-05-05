@@ -18,6 +18,8 @@
     background-color: var(--mid-color);
     padding:20px;
     color:var(--dark-color);
+    width:500px;
+    border-radius: 25px;
 }
 
 .abstract-form form {

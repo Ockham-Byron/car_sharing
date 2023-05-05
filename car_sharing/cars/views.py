@@ -254,20 +254,23 @@ def trips_detail_view(request, id, slug):
     return render(request, 'cars/trips_detail.html', context=context)
 
 @login_required
+def invitation_view(request, id):
+    car = Car.objects.get(id=id)
+    context = {'car': car,}
+
+    return render(request, 'cars/modals/invitation_modal.html', context=context)
+
+@login_required
 def add_car_view(request):
     form = AddCarForm()
     
-    user= request.user
+    
     if request.method == 'POST':
         form = AddCarForm(request.POST, request.FILES)
-        
-        
         if  form.is_valid():
             car = form.save()
-            
-            car.users.add(user)
+            car.users.add(request.user)
             car.save()
-            
             messages.success(request, f'Véhicule {car.name} est bien rentré au garage', extra_tags='Parfait !')
             return redirect('dashboard')
 

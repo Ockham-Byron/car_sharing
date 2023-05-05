@@ -52,11 +52,11 @@
             {% endfor %}
             {% if car.users.all.count < car.nb_users %}
                 <div class="col-3">
-                    <a href="#">
                     <div class="profile-minicard">
-                    <img src="{% static 'assets/img/icons/add-100.png' %}" alt="invite_icon">
-                    </a>
-                    <p>Inviter</p>
+                        <button href="#" data-toggle="modal" data-target="#invitation-modal">
+                            <img src="{% static 'assets/img/icons/add-100.png' %}" alt="invite_icon">
+                        </button>
+                        <p>{% trans 'Inviter' %}</p>
                     </div>
                     
                 </div>
@@ -105,19 +105,34 @@
 </div>
 
 
-{% comment %} <div class="row d-flex justify-content-center">
-    <div class="navbar footer-navbar">
-    <a class="active text-center" href="#charges"><span class="icon" data-icon="&#40;"></span></br>{% trans 'Charges' %}</a>
-    <a class="text-center" href="#kilometers"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>
-    <a class="text-center" href="#"><span class="icon" data-icon="&#70;"></span></br>{% trans 'Résa' %}</a>
-    <a  class= "text-center" href="#"><span class="icon" data-icon="&#113;"></span></br>{% trans 'Post-it' %}</a>
-    </div>
-</div> {% endcomment %}
+
 
 <!-- Modals -->
 
 <div class="modal fade" id="show_modal" role="dialog">
 </div>
+ <!-- Invitation modal-->
+ <div class="modal fade" id="invitation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">{% trans "Invite other people to join your circle" %}</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+            
+            <p class="text-center">{{car.id}}</p>
+            <button id="copy-btn" class="btn-kdark btn-rounded" data={{car.id}}>{% trans "Copy the invitation" %}</button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-kdark btn-rounded" data-dismiss="modal">{% trans 'Close' %}</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
 
 {% include 'includes/navbar-footer.html' %}
 
@@ -126,6 +141,32 @@
 {% endblock %}
 
 {% block extrajs %}
+
+
+<script>
+
+  const copyBtn = document.getElementById('copy-btn')
+  const url = document.location.href
+  
+  console.log(copyBtn)
+  if(copyBtn) {
+    copyBtn.addEventListener('click', () => {
+        
+        const code= copyBtn.getAttribute('data')
+        
+        invitation = "I suggest you to join the car I have created on \n"
+        line = "\n ********************* \n" 
+        code_invit = "\n The code to join {{car.username}} is:\n " + code
+        navigator.clipboard.writeText(invitation + url + line + code_invit)
+        
+    
+    
+        copyBtn.textContent = "Copied !"
+    })
+  }
+</script>
+
+
 
 <script>
 // jquery function
