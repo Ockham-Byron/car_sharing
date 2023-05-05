@@ -44,6 +44,15 @@ body {
 h1, h2, h3, h4 {
     font-family: 'Droid-Serif';
 }
+
+span.underline-brand {
+	text-decoration: underline;
+	text-decoration-color: var(--brand-color);
+	text-decoration-style: dotted;
+	text-underline-offset: 8px;
+	text-decoration-thickness: 3px;
+
+}
  
 /* ==========================================================================
    Colors
@@ -60,6 +69,10 @@ h1, h2, h3, h4 {
 .dark-color {
 	color: var(--dark-color);
 }
+
+.light-color {
+	color:var(--light-color) !important;
+	}
 
 /* ==========================================================================
    Buttons

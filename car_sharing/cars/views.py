@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+import uuid
 from datetime import date
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -275,3 +276,84 @@ def add_car_view(request):
             return redirect('dashboard')
 
     return render(request, 'cars/forms/add_car_form.html', {'form': form,})
+
+@login_required
+def join_car_view(request):
+    
+    if request.method == 'POST':
+        car_code = request.POST.get('uuid')
+
+        def is_valid_uuid(value):
+            try:
+                uuid.UUID(str(value))
+                return True
+            except ValueError:
+                return False
+        
+        def car_exists(value):
+            try:
+                Car.objects.get(id=value)
+                return True
+            except Car.DoesNotExist:
+                return False
+
+        if is_valid_uuid(car_code):
+            if car_exists(car_code):
+                car = Car.objects.get(id=car_code)
+                users = car.users.all()
+                if request.user in users:
+                    messages.error(request, f'Vous faites partie de ce groupe')
+                else:
+                    car.users.add(request.user)    
+                    car.save()
+                    
+                    return redirect('dashboard')
+            
+            else:
+                messages.error(request, f'Ce groupe non')
+                
+
+        else:
+            messages.error(request, f'Invalide')
+            
+
+    return render(request, 'cars/forms/join_car.html')
+
+@login_required
+def add_insurance_view(request, id):
+    car = Car.objects.get(id=id)
+    form = AddInsuranceForm()
+    
+    
+    if request.method == 'POST':
+        form = AddInsuranceForm(request.POST)
+        if  form.is_valid():
+            insurance = form.save()
+            insurance.car = car
+            insurance.save()
+            
+            
+            return redirect('dashboard')
+
+    return render(request, 'cars/forms/add_insurance_form.html', {'form': form,})
+
+@login_required
+def add_insurance_participation_view(request, car_id, insurance_id):
+    car = Car.objects.get(id=car_id)
+    users = car.users.all()
+    insurance = Insurance.objects.get(id=insurance_id)
+    form = AddInsuranceParticipationForm()
+    
+    
+    if request.method == 'POST':
+        form = AddInsuranceParticipationForm(request.POST)
+        if  form.is_valid():
+            insurance_participation = form.save()
+            insurance_participation.insurance = insurance
+            insurance.save()
+            
+            
+            return redirect('dashboard')
+    
+
+    return render(request, 'cars/forms/add_insurance_form.html', {'users':users, 'form': form,})

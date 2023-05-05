@@ -24,8 +24,8 @@
         {% endfor%}
         </div>
         <!-- Post-it End -->
-<div class="container pt-5 pb-5 mb-5">
-    <div class="row text-center pt-md-5 mt-md-5 d-flex justify-content-center">
+        <div class="container pt-5 pb-5 mb-5">
+        <div class="row text-center pt-md-5 mt-md-5 d-flex justify-content-center">
        
 
         <!-- Car informations -->
@@ -36,9 +36,9 @@
             <p class="">{{ car.immatriculation }}</p>
             {% endif %}
             {% if insurance %}
-            <p>{% trans 'Assurance à renouveler le' %} : {{insurance.renewal_date}}</p>
+            <p>{% trans 'Assurance à renouveler le' %} : <span class="underline-brand">{{insurance.renewal_date | date:"d/ m/Y" }}</span></p>
             {% else %}
-            <a href="#" class="amount-info">{% trans 'Ajouter assurance' %}</a>
+            <a href="{% url 'add_insurance' car.id %}" class="amount-info">{% trans 'Ajouter assurance' %}</a>
             {% endif %}
             <p class="mt-3">{% trans 'Partagée entre' %}
             <div class="row d-flex justify-content-center">
@@ -53,9 +53,9 @@
             {% if car.users.all.count < car.nb_users %}
                 <div class="col-3">
                     <div class="profile-minicard">
-                        <button href="#" data-toggle="modal" data-target="#invitation-modal">
+                        <a href="#" data-toggle="modal" data-target="#invitation-modal">
                             <img src="{% static 'assets/img/icons/add-100.png' %}" alt="invite_icon">
-                        </button>
+                        </a>
                         <p>{% trans 'Inviter' %}</p>
                     </div>
                     
@@ -116,7 +116,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">{% trans "Invite other people to join your circle" %}</h5>
+          <h5 class="modal-title text-center" id="exampleModalLabel">{% trans "Inviter les autres copropriétaires" %}</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -124,10 +124,10 @@
         <div class="modal-body text-center">
             
             <p class="text-center">{{car.id}}</p>
-            <button id="copy-btn" class="btn-kdark btn-rounded" data={{car.id}}>{% trans "Copy the invitation" %}</button>
+            <button id="copy-btn" class="btn-kbrand rounded-btn" data={{car.id}}>{% trans "Copier l'invitation" %}</button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-kdark btn-rounded" data-dismiss="modal">{% trans 'Close' %}</button>
+          <button type="button" class="btn btn-kdark rounded-btn" data-dismiss="modal">{% trans 'Fermer' %}</button>
           
         </div>
       </div>

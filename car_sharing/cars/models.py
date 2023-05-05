@@ -87,7 +87,7 @@ class PurchaseParticipation(models.Model):
     price_paid = models.FloatField(max_length=100, null=False, blank=False)
 
 class Insurance(models.Model):
-    car = models.ForeignKey(Car, related_name="insurance", blank=False, null=False, on_delete=models.CASCADE)
+    car = models.ForeignKey(Car, related_name="insurance", blank=True, null=True, on_delete=models.CASCADE)
     company = models.CharField(max_length=255, blank=False, null=False)
     price = models.FloatField(max_length=100, null=False, blank=False)
     renewal_date = models.DateField(auto_now_add=False, null=True, blank=True)

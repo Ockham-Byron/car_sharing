@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}{% trans 'Ajouter un véhicule' %}{% endblock title %}
+{% block title %}{% trans 'Ajouter une assurance' %}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
-<div class="container container-form d-flex">
+<div class="container form-container d-flex">
     <div class="abstract-form v-abstract-form mx-auto my-auto">
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -18,35 +18,32 @@
             </div>
             {% endif %}
         <div class="text-center">
-            <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="form-top-illustration">
+            <img src="{% static 'assets/img/top-illustration/insurance.svg' %}" alt="Charges sharing" class="form-top-illustration">
         </div>
-        <h3 class="text-center">{% trans 'Ajouter un véhicule' %}</h3>
+        <h3 class="text-center mt-3">{% trans 'Ajouter une assurance' %}</h3>
         <div class="row justify-content-center">
             <div class="form-content">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                         <div class="form-group">
-                            <label>{% trans 'Nom du véhicule' %}<span class="">*</span>:</label>
-                            {{ form.name }}
+                            <label>{% trans "Compagnie d'assurance" %}<span class="">*</span>:</label>
+                            {{ form.company }}
                         </div>
+                        
                         <div class="form-group">
-                            <label>{% trans 'Immatriculation' %}:</label>
-                            {{ form.immatriculation }}
-                        </div>
-                        <div class="form-group">
-                            <label>{% trans "Prix d'achat" %}<span class="">*</span>:</label>
+                            <label>{% trans "Prix" %}<span class="">*</span>:</label>
+                            <p><small>({% trans 'Vous pourrez préciser ensuite qui a payé' %})</small></p>
                             {{ form.price }}
                         </div>
 
                         <div class="form-group">
-                            <label>{% trans "Énergie" %}<span class="">*</span>:</label>
-                            {{ form.energy }}
+                            <label>{% trans "Date de renouvellement" %}<span class="">*</span>:</label>
+                            {{ form.renewal_date }}
                         </div>
 
-                        <div class="form-group">
-                            <label>{% trans "Nombre de co-propriétaires" %}<span class="">*</span>:</label>
-                            {{ form.nb_users }}
-                        </div>
+                       
+
+                        
                 
                         <p>*  {% trans 'Champs obligatoires' %}</p>
                         <div class="row justify-content-center">

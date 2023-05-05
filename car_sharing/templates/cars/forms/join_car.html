@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% trans 'Rejoindre un véhicule' %}{% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="container d-flex" style="height:100vh;">
+  <div class="abstract-form v-abstract-form mx-auto my-auto">
+  
+    {% if messages %}
+      {% for message in messages %}
+        <div class="row justify-content-center">
+          <div class="col-11 col-md-6">
+            <div class="container-fluid p-0">
+              <div class="alert {{ message.tags }} alert-dismissible" role="alert" >
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="True">&times;</span>
+              </button>
+              {{ message }}
+        </div>
+          </div>
+            </div>
+              </div>
+      {% endfor %}
+    {% endif %}
+    <div class="text-center">
+      <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="form-top-illustration">
+      <h3 class="">{% trans 'Rejoindre un véhicule' %}</h3>
+      <p><span class="icon light-color" data-icon="&#82;" style="font-size:30px; font-weight:bold;"></span> {% trans "Attention, il ne s'agit pas de l'immatriculation mais du code associé au véhicule dans l'application, lors de l'ajout du véhicule par un/e autre copropriétaire" %}
+      </p>
+    </div>
+    
+        <div class="row justify-content-center">
+        <div class="form-content">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                  <div class="form-group">
+                    <input name="uuid" class="form-control form-control-lg" placeholder="{% trans 'Code du véhicule' %}" />
+                  </div>
+                
+              
+                <div class="row justify-content-center mt-5">
+                <button type="submit" class=" btn-kdark rounded-btn">{% trans 'Monter' %}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+  
+</div>
+{% endblock content %}
