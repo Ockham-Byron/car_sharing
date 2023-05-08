@@ -363,30 +363,39 @@ def add_insurance_view(request, id):
             insurance.save()
             
             
-            return redirect('dashboard')
+            return redirect('add_insurance_participation', insurance.id)
 
     return render(request, 'cars/forms/add_insurance_form.html', {'form': form,})
 
 @login_required
-def add_insurance_participation_view(request, car, insurance):
-    car = car
+def add_insurance_participation_view(request, id):
+    insurance = Insurance.objects.get(id=id)
+    car = insurance.car
     users = car.users.all()
-    insurance = insurance
+    
     form = AddInsuranceParticipationForm()
+
+   
     
     
     if request.method == 'POST':
         form = AddInsuranceParticipationForm(request.POST)
+        user_id = request.POST.get('user')
+        user = CustomUser.objects.get(id=user_id)
         if  form.is_valid():
-            insurance_participation = form.save()
-            insurance_participation.insurance = insurance
-            insurance.save()
+            
+            insurance_participation = form
+            insurance_participation.instance.insurance = insurance
+            insurance_participation.instance.user = user
+            insurance_participation.save()
             
             
             return redirect('dashboard')
+        else:
+            print("problem")
     
 
-    return render(request, 'cars/forms/add_insurance_form.html', {'users':users, 'form': form,})
+    return render(request, 'cars/forms/add_insurance_participation_form.html', { 'form': form, 'users': users })
 
 
 @login_required

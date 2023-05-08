@@ -3,7 +3,7 @@
 {% block title %}{% trans "Partipations à l'assurance" %}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
-<div class="container container-form d-flex">
+<div class="container form-container d-flex">
     <div class="abstract-form v-abstract-form mx-auto my-auto">
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -26,12 +26,17 @@
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                         <div class="form-group">
-                            <label>{% trans 'Nom du véhicule' %}<span class="">*</span>:</label>
-                            {{ form.user }}
+                            <label>{% trans 'Copropriétaire' %}<span class="">*</span>:</label>
+                            
+                            {% for user in users %}
+                            <input type="checkbox" name="user" value="{{ user.id }}"/>{{ user.username }}</input>
+
+                            {% endfor %} 
                         </div>
                         <div class="form-group">
-                            <label>{% trans 'Immatriculation' %}:</label>
-                            {{ form.price_paid }}
+                            <label>{% trans 'A payé' %}<span class="">*</span>:</label>
+                            {{form.price_paid}}
+                            
                         </div>
                         
 

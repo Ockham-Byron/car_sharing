@@ -97,7 +97,7 @@ class Insurance(models.Model):
 
 class InsuranceParticipation(models.Model):
     insurance = models.ForeignKey(Insurance, related_name="insurance_participation", null=False, blank=False, on_delete=models.CASCADE)
-    user = models.ForeignKey(CustomUser, related_name="user_insurance_participation", blank=False, null=False, on_delete=models.PROTECT)
+    user = models.OneToOneField(CustomUser, related_name="user_insurance_participation", blank=False, null=False, on_delete=models.PROTECT)
     price_paid = models.FloatField(max_length=100, null=False, blank=False)
 
     

@@ -1,6 +1,7 @@
 import os
 from uuid import uuid4
 from django.contrib.auth.models import AbstractUser
+from django.utils.text import slugify
 from PIL import Image
 from django.db import models
 
@@ -18,12 +19,13 @@ def path_and_rename(instance, filename):
     return os.path.join(upload_to, filename)
 
 class CustomUser(AbstractUser):
-    id = models.UUIDField(primary_key=True, default = uuid4, editable=False)
+    uuid = models.UUIDField(primary_key=False, default = uuid4, editable=False)
     email = models.EmailField(unique=True)
     creation_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     avatar = models.ImageField(upload_to=path_and_rename, max_length=255, null=True, blank=True)
     is_rgpd = models.BooleanField(default=False)
+    slug = models.SlugField(max_length=255, unique= True, default=None, null=True)
     
 
     # resizing images
@@ -38,6 +40,9 @@ class CustomUser(AbstractUser):
                 img.save(self.avatar.path)
         else:
             pass
+        if not self.slug:
+            self.slug = slugify(self.username + '_' + str(self.uuid))
+        super(CustomUser, self).save(*args, **kwargs)
 
 
     def __str__(self):

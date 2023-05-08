@@ -14,7 +14,7 @@ def not_show_view(request, id):
     if all_not_show.count() >= users.count():
         post_it.delete()
 
-    return redirect('/')
+    return redirect('car_detail', car.id, car.slug)
 
 def delete_modal_view(request, id):
     post_it = PostIt.objects.get(id=id)
@@ -27,8 +27,10 @@ def delete_modal_view(request, id):
 
 def delete_postit_for_everyone(request, id):
     post_it = PostIt.objects.get(id=id)
+    car = post_it.car
     post_it.delete()
+    
 
-    return redirect('/')
+    return redirect('car_detail', car.id, car.slug)
 
 

@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 from .models import *
+from members.models import CustomUser
 
 class DateInput(forms.DateTimeInput):
     input_type = 'date'
@@ -63,7 +64,7 @@ class AddInsuranceForm(forms.ModelForm):
         fields = ['company', 'price', 'renewal_date']
 
 class AddInsuranceParticipationForm(forms.ModelForm):
-    user = forms.ChoiceField( widget=forms.CheckboxInput(attrs={'class': 'check-abstract'}), choices=CustomUser.objects.none())
+    
     price_paid = forms.FloatField(
                             required=True,
                             widget=forms.NumberInput(attrs={'placeholder': _('vous pourrez modifier'),
@@ -72,13 +73,9 @@ class AddInsuranceParticipationForm(forms.ModelForm):
     
     class Meta:
         model = InsuranceParticipation
-        fields = ['user', 'price_paid']
+        fields = [ 'price_paid']
 
-    def __init__(self, car, *args, **kwargs):
-        super(AddInsuranceParticipationForm, self).__init__(*args, **kwargs)
-        
-        
-        self.fields['user'].choices=car.users.all()
+    
 
 class AddReservationForm(forms.ModelForm):
     
