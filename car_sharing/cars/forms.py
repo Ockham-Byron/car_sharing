@@ -2,6 +2,8 @@ from django import forms
 from django.utils.translation import gettext_lazy as _
 from .models import *
 
+class DateInput(forms.DateTimeInput):
+    input_type = 'date'
 
 
 class AddCarForm(forms.ModelForm):
@@ -78,4 +80,19 @@ class AddInsuranceParticipationForm(forms.ModelForm):
         
         self.fields['user'].choices=car.users.all()
 
+class AddReservationForm(forms.ModelForm):
     
+    
+
+    reservation_start = forms.DateTimeField(widget=DateInput(attrs={'class': 'form-control'}), 
+                            required=True,
+                            )
+
+    reservation_end = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+                            required=True,
+                            )
+    
+    class Meta:
+        model = Reservation
+        fields = ['reservation_start', 'reservation_end']
+

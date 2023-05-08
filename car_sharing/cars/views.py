@@ -1,12 +1,42 @@
 from django.shortcuts import render, redirect
+from django.utils.translation import gettext_lazy as _
 import uuid
-from datetime import date
+import sweetify
+import pytz
+from datetime import date, datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from postit.models import PostIt, PostItNotShowed
 from .models import *
 from .forms import *
 from members.models import CustomUser
+from postit.models import PostIt
+
+utc = pytz.UTC
+
+def check_reservation_availibility(start_date, end_date, car):
+    qs = Reservation.objects.filter(
+        reservation_start__gte = start_date,
+        reservation_start__lte = end_date,
+        reservation_end__gte = end_date, 
+        car = car) or Reservation.objects.filter(
+        reservation_start__lte = start_date,
+        reservation_end__gte = start_date,
+        reservation_end__lte = end_date,
+        car = car) or Reservation.objects.filter(
+        reservation_start__lte = start_date,
+        reservation_end__gte = end_date,
+        car = car)
+    
+    qs = qs.exclude(status = "cancelled")
+    qs = qs.exclude(status = "rejected")
+
+    if qs.exists():
+        
+        return False
+    
+    else:
+        return True
 
 @login_required
 def car_detail_view(request, id, slug):
@@ -338,10 +368,10 @@ def add_insurance_view(request, id):
     return render(request, 'cars/forms/add_insurance_form.html', {'form': form,})
 
 @login_required
-def add_insurance_participation_view(request, car_id, insurance_id):
-    car = Car.objects.get(id=car_id)
+def add_insurance_participation_view(request, car, insurance):
+    car = car
     users = car.users.all()
-    insurance = Insurance.objects.get(id=insurance_id)
+    insurance = insurance
     form = AddInsuranceParticipationForm()
     
     
@@ -357,3 +387,47 @@ def add_insurance_participation_view(request, car_id, insurance_id):
     
 
     return render(request, 'cars/forms/add_insurance_form.html', {'users':users, 'form': form,})
+
+
+@login_required
+def add_reservation_view(request, id):
+    car = Car.objects.get(id=id)
+    form = AddReservationForm()
+    
+
+    
+    
+    if request.method == 'POST':
+        form = AddReservationForm(request.POST)
+        if  form.is_valid():
+            reservation = form
+            start = reservation.instance.reservation_start
+            start = start.replace(tzinfo=utc)
+            
+            reservation.instance.reservation_end_calendar = reservation.instance.reservation_end.date() + timedelta(days=1)
+            reservation.instance.car = car
+            reservation.instance.user = request.user
+            if start < datetime.now().replace(tzinfo=utc):
+                print ('problème')
+                sweetify.warning(request, _('Attention'), text= _('La date de début est déjà passée'))
+            elif reservation.instance.reservation_end < reservation.instance.reservation_start:
+                sweetify.warning(request, _('Attention'), text= _('La date de fin est antérieure à la date de début'))
+            else:
+                availability = check_reservation_availibility(start_date=reservation.instance.reservation_start, end_date=reservation.instance.reservation_end, car=car)
+                if availability == False:
+                    sweetify.warning(request, _('Problème'), text=_('Véhicule déjà réservé à ces dates'), persistent="OK")
+                else:
+                    reservation = reservation.save()
+                    start = reservation.reservation_start
+                    end = reservation.reservation_end
+                    post_it = PostIt()
+                    post_it.car = car
+                    post_it.sender = request.user
+                    post_it.reservation = reservation
+                    post_it.color = "#E28413"
+                    post_it.message = _("J'ai réservé du " + start.strftime('%d-%m') + " au " + end.strftime('%d-%m')) 
+                    post_it.save()
+                    return redirect('car_detail', car.id, car.slug)
+    
+
+    return render(request, 'cars/forms/add_reservation_form.html', {'form': form, 'car': car})

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #3rd party
     'mathfilters',
     'colorfield',
+    'sweetify',
 
     #Locals
     'members',
@@ -156,3 +157,6 @@ AUTHENTICATION_BACKENDS = ['members.backends.EmailBackend']
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGOUT_REDIRECT_URL = 'home'
+
+
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'

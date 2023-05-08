@@ -131,6 +131,7 @@ class Reservation(models.Model):
     demand_date = models.DateField(auto_now_add=True)
     reservation_start = models.DateTimeField(null=False, blank=False, auto_now_add=False)
     reservation_end = models.DateTimeField(null=False, blank=False, auto_now_add=False)
+    reservation_end_calendar = models.DateTimeField(null=True, blank=True, auto_now_add=False)
     status = models.CharField(max_length=32, choices = STATUS, default=PENDING)
 
     def __str__(self):

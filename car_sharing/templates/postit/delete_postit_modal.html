@@ -8,7 +8,7 @@
                     <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            {%if post_it.sender == request.user%}
+            {%if post_it.sender == request.user and post_it.reservation == None %}
             <div class="text-center pb-4">
             <a class="modal-link border-kdark text-center" href="{% url 'delete_postit_for_everyone' post_it.id %}">{% trans "Supprimer pour tout le monde" %}</a>
             </div>

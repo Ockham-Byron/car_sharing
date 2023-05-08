@@ -44,7 +44,6 @@
 
        
 
-      
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
@@ -65,6 +64,7 @@
    <!-- FullCalendar plugin -->
    <script src="{% static 'assets/js/fullcalendar-6.1.6/dist/index.global.min.js' %}"></script>
 
+ 
    <!-- menus sliding -->
 
    <script>
@@ -110,7 +110,9 @@ function close_modal(){
 	$('#modal').modal('hide');
 }
     </script>
-  
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+ {% load sweetify %}
+    {% sweetify %}
 
 {% block extrajs %}{%endblock%}
 

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
-{% load i18n static %}
-{% block title %}{% trans 'Ajouter un véhicule' %}{% endblock title %}
+{% load i18n static sweetify %}
+{% block title %}{% trans 'Réservation' %}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
 <div class="container form-container d-flex">
@@ -18,35 +18,29 @@
             </div>
             {% endif %}
         <div class="text-center">
-            <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="form-top-illustration">
+            <img src="{% static 'assets/img/top-illustration/booking.svg' %}" alt="Charges sharing" class="form-top-illustration">
         </div>
-        <h3 class="text-center">{% trans 'Ajouter un véhicule' %}</h3>
+        <h3 class="text-center mt-3">{% trans 'Effectuer une réservation' %}</h3>
         <div class="row justify-content-center">
             <div class="form-content">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                        
+                        
+
                         <div class="form-group">
-                            <label>{% trans 'Nom du véhicule' %}<span class="">*</span>:</label>
-                            {{ form.name }}
-                        </div>
-                        <div class="form-group">
-                            <label>{% trans 'Immatriculation' %}:</label>
-                            {{ form.immatriculation }}
-                        </div>
-                        <div class="form-group">
-                            <label>{% trans "Prix d'achat" %}<span class="">*</span>:</label>
-                            {{ form.price }}
+                            <label>{% trans "Début" %}<span class="">*</span>:</label>
+                            {{ form.reservation_start }}
                         </div>
 
                         <div class="form-group">
-                            <label>{% trans "Énergie" %}<span class="">*</span>:</label>
-                            {{ form.energy }}
+                            <label>{% trans "Fin" %}<span class="">*</span>:</label>
+                            {{ form.reservation_end }}
                         </div>
 
-                        <div class="form-group">
-                            <label>{% trans "Nombre de co-propriétaires" %}<span class="">*</span>:</label>
-                            {{ form.nb_users }}
-                        </div>
+                       
+
+                        
                 
                         <p>*  {% trans 'Champs obligatoires' %}</p>
                         <div class="row justify-content-center">
@@ -57,4 +51,6 @@
          </div>
     </div>
 </div>
+
+{% include 'includes/navbar-footer.html' %}
 {% endblock content %}

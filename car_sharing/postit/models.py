@@ -2,6 +2,7 @@ from uuid import uuid4
 from colorfield.fields import ColorField
 from members.models import CustomUser
 from cars.models import Car
+from cars.models import Reservation
 from django.db import models
 
 # Create your models here.
@@ -13,6 +14,7 @@ class PostIt(models.Model):
     color = ColorField(default='#219ebc')
     sent_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    reservation = models.OneToOneField(Reservation, blank = True, null=True, related_name="reservation", on_delete=models.CASCADE)
     
 
 
