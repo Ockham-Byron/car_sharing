@@ -306,10 +306,45 @@ def add_car_view(request):
             car = form.save()
             car.users.add(request.user)
             car.save()
+            
+            participation = PurchaseParticipation(car=car, user=request.user, price_paid=0 )
+            participation.save()
             messages.success(request, f'Véhicule {car.name} est bien rentré au garage', extra_tags='Parfait !')
             return redirect('dashboard')
 
     return render(request, 'cars/forms/add_car_form.html', {'form': form,})
+
+def first_update_car_participations(request, id):
+    insurance = Insurance.objects.get(id=id)
+    car = insurance.car
+    participations = InsuranceParticipation.objects.filter(insurance=insurance, first_complete=False)
+    nb_to_edit = len(participations)
+    participation = participations.all()[0]
+    
+
+    context = {
+        'insurance':insurance,
+        'participations':participations,
+        'participation':participation,
+        
+        }
+    
+    if request.method == 'POST':
+        price_paid = request.POST.get('price_paid')
+        participation.price_paid = price_paid
+        participation.first_complete = True
+        participation.save()
+        if nb_to_edit > 1:
+            return redirect('add_insurance_participation', id)
+        else:
+            return redirect('car_detail', car.id, car.slug)
+
+        
+    
+    print(nb_to_edit)
+
+    return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
+
 
 @login_required
 def join_car_view(request):
@@ -340,6 +375,7 @@ def join_car_view(request):
                 else:
                     car.users.add(request.user)    
                     car.save()
+                    participation = PurchaseParticipation(car=car, user=request.user, price_paid=0)
                     
                     return redirect('dashboard')
             
@@ -353,6 +389,7 @@ def join_car_view(request):
 
     return render(request, 'cars/forms/join_car.html')
 
+@login_required
 def insurance_create_view(request, id):
     car = Car.objects.get(id=id)
     form = AddInsuranceForm()
@@ -377,6 +414,7 @@ def insurance_create_view(request, id):
 
     return render(request, "cars/forms/add_insurance_form.html", context=context)
 
+@login_required
 def first_update_insurance_participations(request, id):
     insurance = Insurance.objects.get(id=id)
     car = insurance.car

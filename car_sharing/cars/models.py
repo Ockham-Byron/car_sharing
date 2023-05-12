@@ -85,6 +85,7 @@ class PurchaseParticipation(models.Model):
     car = models.ForeignKey(Car, related_name="purchase_participation", blank=False, null=False, on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, related_name="user_participation", blank=False, null=False, on_delete=models.PROTECT)
     price_paid = models.FloatField(max_length=100, null=False, blank=False)
+    first_complete = models.BooleanField(default=False)
 
 class Insurance(models.Model):
     car = models.ForeignKey(Car, related_name="insurance", blank=True, null=True, on_delete=models.CASCADE)

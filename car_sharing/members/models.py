@@ -19,7 +19,7 @@ def path_and_rename(instance, filename):
     return os.path.join(upload_to, filename)
 
 class CustomUser(AbstractUser):
-    uuid = models.UUIDField(primary_key=False, default = uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default = uuid4, editable=False)
     email = models.EmailField(unique=True)
     creation_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -41,7 +41,7 @@ class CustomUser(AbstractUser):
         else:
             pass
         if not self.slug:
-            self.slug = slugify(self.username + '_' + str(self.uuid))
+            self.slug = slugify(self.username + '_' + str(self.id))
         super(CustomUser, self).save(*args, **kwargs)
 
 

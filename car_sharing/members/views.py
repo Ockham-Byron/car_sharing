@@ -8,5 +8,5 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def logout_view(request):
     logout(request)
-    messages.info(request, _("Descente du véhicule effective"))
+    
     return redirect('home')
