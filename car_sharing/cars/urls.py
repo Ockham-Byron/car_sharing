@@ -9,9 +9,10 @@ urlpatterns = [
 
     #edit cars
     path('add-car', add_car_view, name='add_car'),
-    path('<id>/add-insurance', add_insurance_view, name='add_insurance'),
-    path('<id>/insurance_parts', add_insurance_participation_view, name='add_insurance_participation'),
-
+    
+    path('<id>/add_insurance_parts', first_update_insurance_participations, name='add_insurance_participation'),
+    path('<id>/create/', insurance_create_view, name='create_insurance'),
+    
     #join car
     path('<id>/invitation', invitation_view, name='invitation'),
     path('join-car', join_car_view, name='join_car'),

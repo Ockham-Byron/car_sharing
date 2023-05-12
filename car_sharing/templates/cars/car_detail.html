@@ -39,7 +39,7 @@
             {% if insurance %}
             <p>{% trans 'Assurance à renouveler le' %} : <span class="underline-brand">{{insurance.renewal_date | date:"d/ m/Y" }}</span></p>
             {% else %}
-            <a href="{% url 'add_insurance' car.id %}" class="amount-info">{% trans 'Ajouter assurance' %}</a>
+            <a href="{% url 'create_insurance' car.id %}" class="amount-info">{% trans 'Ajouter assurance' %}</a>
             {% endif %}
             <p class="mt-3">{% trans 'Partagée entre' %}
             <div class="row d-flex justify-content-center">

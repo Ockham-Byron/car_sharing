@@ -1,7 +1,30 @@
 from django import forms
+from django.forms import inlineformset_factory
+from django.forms.utils import flatatt
 from django.utils.translation import gettext_lazy as _
 from .models import *
 from members.models import CustomUser
+
+class ReadOnlyWidget(forms.Widget):
+    def render(self, name, value, attrs):
+        final_attrs = self.build_attrs(attrs, name=name)
+        if hasattr(self, 'initial'):
+            value = self.initial
+        return "%s" % (flatatt(final_attrs), value or '')
+    
+    def _has_changed(self, initial, data):
+        return False
+
+
+class ReadOnlyField(forms.FileField):
+    widget = ReadOnlyWidget
+    def __init__(self, widget=None, label=None, initial=None, help_text=None):
+        forms.Field.__init__(self, label=label, initial=initial, 
+            help_text=help_text, widget=widget)
+    
+    def clean(self, value, initial):
+        self.widget.initial = initial
+        return initial
 
 class DateInput(forms.DateTimeInput):
     input_type = 'date'
@@ -63,8 +86,8 @@ class AddInsuranceForm(forms.ModelForm):
         model = Insurance
         fields = ['company', 'price', 'renewal_date']
 
-class AddInsuranceParticipationForm(forms.ModelForm):
-    
+class InsuranceParticipationForm(forms.ModelForm):
+   
     price_paid = forms.FloatField(
                             required=True,
                             widget=forms.NumberInput(attrs={'placeholder': _('vous pourrez modifier'),
@@ -73,7 +96,11 @@ class AddInsuranceParticipationForm(forms.ModelForm):
     
     class Meta:
         model = InsuranceParticipation
-        fields = [ 'price_paid']
+        fields = [  'price_paid']
+
+InsuranceParticipationFormSet = inlineformset_factory(
+    Insurance, InsuranceParticipation, form=InsuranceParticipationForm, 
+    )
 
     
 

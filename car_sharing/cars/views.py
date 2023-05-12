@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
+from extra_views import UpdateWithInlinesView, InlineFormSetFactory
 import uuid
 import sweetify
 import pytz
+from django.forms import formset_factory
+from django.views.generic import UpdateView, CreateView
 from datetime import date, datetime, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -13,6 +16,7 @@ from members.models import CustomUser
 from postit.models import PostIt
 
 utc = pytz.UTC
+
 
 def check_reservation_availibility(start_date, end_date, car):
     qs = Reservation.objects.filter(
@@ -349,53 +353,68 @@ def join_car_view(request):
 
     return render(request, 'cars/forms/join_car.html')
 
-@login_required
-def add_insurance_view(request, id):
+def insurance_create_view(request, id):
     car = Car.objects.get(id=id)
     form = AddInsuranceForm()
-    
-    
+    formset = InsuranceParticipationFormSet
+    users = car.users.all()
+
+    context = {
+        'form':form,
+        'formset': formset,
+    }
+
     if request.method == 'POST':
         form = AddInsuranceForm(request.POST)
         if  form.is_valid():
             insurance = form.save()
             insurance.car = car
             insurance.save()
-            
-            
+            for user in users:
+                participation = InsuranceParticipation(insurance= insurance, user=user, price_paid=0)
+                participation.save()
             return redirect('add_insurance_participation', insurance.id)
 
-    return render(request, 'cars/forms/add_insurance_form.html', {'form': form,})
+    return render(request, "cars/forms/add_insurance_form.html", context=context)
 
-@login_required
-def add_insurance_participation_view(request, id):
+def first_update_insurance_participations(request, id):
     insurance = Insurance.objects.get(id=id)
     car = insurance.car
-    users = car.users.all()
+    participations = InsuranceParticipation.objects.filter(insurance=insurance, first_complete=False)
+    nb_to_edit = len(participations)
+    participation = participations.all()[0]
     
-    form = AddInsuranceParticipationForm()
 
-   
-    
+    context = {
+        'insurance':insurance,
+        'participations':participations,
+        'participation':participation,
+        
+        }
     
     if request.method == 'POST':
-        form = AddInsuranceParticipationForm(request.POST)
-        user_id = request.POST.get('user')
-        user = CustomUser.objects.get(id=user_id)
-        if  form.is_valid():
-            
-            insurance_participation = form
-            insurance_participation.instance.insurance = insurance
-            insurance_participation.instance.user = user
-            insurance_participation.save()
-            
-            
-            return redirect('dashboard')
+        price_paid = request.POST.get('price_paid')
+        participation.price_paid = price_paid
+        participation.first_complete = True
+        participation.save()
+        if nb_to_edit > 1:
+            return redirect('add_insurance_participation', id)
         else:
-            print("problem")
+            return redirect('car_detail', car.id, car.slug)
+
+        
+    
+    print(nb_to_edit)
+
+    return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
+
+
+
+
     
 
-    return render(request, 'cars/forms/add_insurance_participation_form.html', { 'form': form, 'users': users })
+
+
 
 
 @login_required

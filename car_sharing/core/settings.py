@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mathfilters',
     'colorfield',
     'sweetify',
+    'extra_views',
 
     #Locals
     'members',

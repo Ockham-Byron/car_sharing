@@ -53,6 +53,15 @@ span.underline-brand {
 	text-decoration-thickness: 3px;
 
 }
+
+span.underline-light {
+	text-decoration: underline;
+	text-decoration-color: var(--light-color);
+	text-decoration-style: dotted;
+	text-underline-offset: 4px;
+	text-decoration-thickness: 3px;
+
+}
  
 /* ==========================================================================
    Colors
