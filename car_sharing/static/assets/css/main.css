@@ -244,6 +244,13 @@ form.sign-in-form {
 	color: var(--light-color) !important;
 }
 
+
+
+a.icon-link span:hover, a.icon-link:hover{
+	text-decoration: none !important;
+	color:var(--brand-color)!important;
+	
+}
 /* input:auto-fill{
     outline: 3px solid green;   
     animation: scaleUp ease 2.87s infinite;

@@ -205,7 +205,7 @@ def costs_detail_view(request, slug, id):
     insurances_by_user = []
     if Insurance.objects.filter(car=car).exists():
         all_insurances = Insurance.objects.filter(car=car)
-        insurances = all_insurances.order_by('renewal_date')[:3]
+        insurances = all_insurances.order_by('-renewal_date')[:3]
         latest_insurance = all_insurances.latest('renewal_date')
         if latest_insurance.renewal_date > date.today():
             current_insurance = latest_insurance
@@ -445,12 +445,12 @@ def join_car_view(request):
 def insurance_create_view(request, id):
     car = Car.objects.get(id=id)
     form = AddInsuranceForm()
-    formset = InsuranceParticipationFormSet
+    
     users = car.users.all()
 
     context = {
         'form':form,
-        'formset': formset,
+        
     }
 
     if request.method == 'POST':
@@ -498,6 +498,26 @@ def first_update_insurance_participations(request, id):
 
     return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
 
+@login_required
+def insurance_update_view(request, id):
+    insurance = Insurance.objects.get(id=id)
+    car = insurance.car
+    form = AddInsuranceForm(instance=insurance)
+    
+   
+
+    context = {
+        'form':form,
+        
+    }
+
+    if request.method == 'POST':
+        form = AddInsuranceForm(request.POST, instance=insurance)
+        if  form.is_valid():
+            form.save()
+            return redirect('costs_detail', car.slug, car.id)
+
+    return render(request, "cars/forms/update_insurance_form.html", context=context)
 @login_required
 def add_reservation_view(request, id):
     car = Car.objects.get(id=id)

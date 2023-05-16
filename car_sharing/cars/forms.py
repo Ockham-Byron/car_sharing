@@ -90,10 +90,9 @@ class AddInsuranceForm(forms.ModelForm):
                                 }))
     
 
-    renewal_date = forms.DateField(widget=forms.SelectDateWidget(attrs={'class': 'date-select'}),
+    renewal_date = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
                             required=True,
                             )
-    
     class Meta:
         model = Insurance
         fields = ['company', 'price', 'renewal_date']

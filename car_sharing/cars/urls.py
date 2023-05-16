@@ -25,6 +25,7 @@ urlpatterns = [
     #charges
     path('<id>/create/', insurance_create_view, name='create_insurance'),
     path('<id>/add_insurance_parts', first_update_insurance_participations, name='add_insurance_participation'),
+    path('<id>/update/', insurance_update_view, name='update_insurance'),
     path('<id>/charges/add-energy', add_energy_view, name='add_energy'),
     path('<id>/charges/add-repair', add_repair_view, name='add_repair'),
 ]
