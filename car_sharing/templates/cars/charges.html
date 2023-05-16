@@ -8,10 +8,15 @@
     
     {% if total_charges == 0 %}
     <div class="mt-3 mb-3">
-    <a href="#" class="rounded-btn btn-kbrand">{% trans "Ajouter une dépense" %}</a>
+    <a href="{% url 'add_car_participation' car.id %}" class="rounded-btn btn-kdark">{% trans "Indiquer répartition pour l'achat" %}</a>
+    </div>
+
+    <div class="mt-3 mb-3">
+    <a href="#" class="rounded-btn btn-kbrand">{% trans "Ajouter une autre dépense" %}</a>
     </div>
     {% else %}
     <h4>{% trans 'Total des charges' %}</h4>
+    
     <p class="text-center amount-info">{{total_charges}} €</p>
     {% for total_by_user in totals_paid_by_user %}
     <div class="profile-minicard mt-3">
@@ -33,9 +38,11 @@
     <div class="chart-container">
      <canvas id="repartCharges" width="400" height="400"></canvas>
     </div>
+
+    <a href="{% url 'costs_detail' car.slug car.id %}" class="rounded-btn btn-kdark">{% trans 'Regarder sous le capot' %}</a>
     {% endif %}
     
-<a href="{% url 'costs_detail' car.slug car.id %}" class="rounded-btn btn-kdark">{% trans 'Regarder sous le capot' %}</a>
+
 
 
 </section>

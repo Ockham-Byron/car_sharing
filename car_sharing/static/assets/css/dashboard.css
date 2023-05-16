@@ -367,7 +367,9 @@ a.cost__slide__item {
     border-top: none !important;
   }
 
- 
+
+
+  
   
   .paper {
    
@@ -467,7 +469,7 @@ a.cost__slide__item {
     line-height: 1.7em;
     font-size: 19px;
     -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
-  
+    mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC); ;
     
   }
 
@@ -523,6 +525,10 @@ a.cost__slide__item {
    /* ==========================================================================
    Modals
    ========================================================================== */
+
+   .modal-dialog{
+    max-width: 700px !important;
+   }
    .modal-content {
       border-radius:25px !important;
    }
@@ -576,6 +582,29 @@ a.cost__slide__item {
     .modal-btn:hover{
       background-color: var(--brand-color);
       color:var(--dark-color);
+    }
+
+    .choice-card {
+      background-color: var(--light-color);
+      width: 200px;
+      border-radius:30px;
+      padding:10px 5px;
+  
+    }
+  
+    .choice-card .card-illustration {
+      height:80px;
+      margin-bottom:20px;
+    }
+  
+    p.choice-title {
+      color:var(--dark-color) !important;
+    }
+  
+    p.choice-title:hover, .choice-card a:hover{
+      color:var(--mid-color) !important;
+      font-weight: bold !important;
+      text-decoration: none !important;
     }
 
 /* ==========================================================================

@@ -29,25 +29,34 @@
           </button>
         </div>
         <div class="modal-body text-center">
-        <h3 class="text-center">{% trans 'Ajouter une dépense' %}</h3>
-         <div class="row mt-5">
-          <div class="col">
-            <a href={% url 'add_energy' car.id %}>
-             <div class="choice-card">
-                <img src="{% static 'assets/img/top-illustration/add_energy.svg' %}" alt="Charges sharing" class="form-top-illustration">
-                <p class="choice-title">{% trans 'Énergie' %}</p>
+          <h3 class="text-center">{% trans 'Ajouter une dépense' %}</h3>
+          <div class="row mt-5">
+            <div class="col">
+              <div class="choice-card">
+                <a href={% url 'add_energy' car.id %}>
+                  <img src="{% static 'assets/img/top-illustration/add_energy.svg' %}" alt="Charges sharing" class="card-illustration">
+                  <p class="choice-title">{% trans 'Énergie' %}</p>
+                </a>
               </div>
-            </a>
-          </div>
+            </div>
 
-          <div class="col">
-            <a href={% url 'add_energy' car.id %}>
-             <div class="choice-card">
-                <img src="{% static 'assets/img/top-illustration/add_energy.svg' %}" alt="Charges sharing" class="form-top-illustration">
-                <p class="choice-title">{% trans 'Entretien/Réparation' %}</p>
+            <div class="col">
+              <div class="choice-card">
+                <a href={% url 'add_energy' car.id %}>
+                    <img src="{% static 'assets/img/top-illustration/repair.svg' %}" alt="Charges sharing" class="card-illustration">
+                    <p class="choice-title">{% trans 'Entretien/Réparation' %}</p>
+                </a>
               </div>
-            </a>
-          </div>
+            </div>
+
+            <div class="col">
+              <div class="choice-card">
+                <a href={% url 'create_insurance' car.id %}>
+                    <img src="{% static 'assets/img/top-illustration/insurance.svg' %}" alt="Charges sharing" class="card-illustration">
+                    <p class="choice-title">{% trans 'Assurance' %}</p>
+                </a>
+              </div>
+            </div>
          </div>
             
         </div>

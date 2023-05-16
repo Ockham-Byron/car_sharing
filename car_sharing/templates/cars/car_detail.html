@@ -36,9 +36,11 @@
             {% if car.immatriculation%}
             <p class="">{{ car.immatriculation }}</p>
             {% endif %}
-            {% if insurance %}
-            <p>{% trans 'Assurance à renouveler le' %} : <span class="underline-brand">{{insurance.renewal_date | date:"d/ m/Y" }}</span></p>
+            {% if last_insurance and is_insurance_past == False %}
+            <p >{% trans 'Assurance à renouveler le' %} : <span class="underline-brand">{{last_insurance.renewal_date | date:"d/ m/Y" }}</span></p>
             {% else %}
+            <p class="brand-color"><span class="icon alert-icon brand-color" data-icon="&#228;"></span>
+            {% trans "Pas d'assurance en cours"%}</p>
             <a href="{% url 'create_insurance' car.id %}" class="amount-info">{% trans 'Ajouter assurance' %}</a>
             {% endif %}
             <p class="mt-3">{% trans 'Partagée entre' %}

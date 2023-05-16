@@ -46,13 +46,16 @@ def check_reservation_availibility(start_date, end_date, car):
 def car_detail_view(request, id, slug):
     car = Car.objects.get(id=id)
     users = car.users.all()
-    insurance_price = 0
-    insurance = None
+    last_insurance_price = 0
+    last_insurance = None
+    is_insurance_past = False
 
     #Insurance
     if Insurance.objects.filter(car=car).exists():
-        insurance = Insurance.objects.get(car=car)
-        insurance_price = insurance.price
+        last_insurance = Insurance.objects.filter(car=car).latest('renewal_date')
+        last_insurance_price = last_insurance.price
+        if last_insurance.renewal_date < date.today():
+            is_insurance_past = True
     
 
 
@@ -97,10 +100,13 @@ def car_detail_view(request, id, slug):
             user_participation = PurchaseParticipation.objects.filter(car = car, user = user)
             for i in user_participation:
                 paid_by_user += i.price_paid
-        if InsuranceParticipation.objects.filter(insurance = insurance, user = user).exists():
-            user_insurance = InsuranceParticipation.objects.filter(insurance = insurance, user = user)
-            for i in user_insurance:
-                paid_by_user += i.price_paid
+        if last_insurance != None:
+            insurances = Insurance.objects.filter(car=car)
+            for insurance in insurances:
+                if InsuranceParticipation.objects.filter(insurance = insurance, user = user).exists():
+                    user_insurance = InsuranceParticipation.objects.filter(insurance = insurance, user = user)
+                    for i in user_insurance:
+                        paid_by_user += i.price_paid
         if Energy.objects.filter(car=car, paid_by = user).exists():
             user_energy_paid = Energy.objects.filter(car = car, paid_by = user)
             for i in user_energy_paid:
@@ -155,8 +161,9 @@ def car_detail_view(request, id, slug):
 
     context={
         'car': car,
-        'insurance': insurance,
-        'insurance_price': insurance_price,
+        'last_insurance': last_insurance,
+        'last_insurance_price': last_insurance_price,
+        'is_insurance_past': is_insurance_past,
         'total_charges': total_charges,
         'totals_paid_by_user': totals_paid_by_user,
         'car_paid_by': car_paid_by,
@@ -315,15 +322,14 @@ def add_car_view(request):
     return render(request, 'cars/forms/add_car_form.html', {'form': form,})
 
 def first_update_car_participations(request, id):
-    insurance = Insurance.objects.get(id=id)
-    car = insurance.car
-    participations = InsuranceParticipation.objects.filter(insurance=insurance, first_complete=False)
+    car = Car.objects.get(id=id)
+    participations = PurchaseParticipation.objects.filter(car=car, first_complete=False)
     nb_to_edit = len(participations)
     participation = participations.all()[0]
     
 
     context = {
-        'insurance':insurance,
+        'car':car,
         'participations':participations,
         'participation':participation,
         
@@ -335,7 +341,7 @@ def first_update_car_participations(request, id):
         participation.first_complete = True
         participation.save()
         if nb_to_edit > 1:
-            return redirect('add_insurance_participation', id)
+            return redirect('add_car_participation', id)
         else:
             return redirect('car_detail', car.id, car.slug)
 
@@ -343,7 +349,7 @@ def first_update_car_participations(request, id):
     
     print(nb_to_edit)
 
-    return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
+    return render(request, "cars/forms/first_update_car_participations.html", context=context)
 
 
 @login_required
@@ -376,7 +382,7 @@ def join_car_view(request):
                     car.users.add(request.user)    
                     car.save()
                     participation = PurchaseParticipation(car=car, user=request.user, price_paid=0)
-                    
+                    participation.save()
                     return redirect('dashboard')
             
             else:
@@ -516,7 +522,7 @@ def add_energy_view(request, id):
             energy.instance.paid_by = paid_by
             energy.instance.type_energy = type_energy
             energy.save()
-            return redirect('car_detail', car.id, car.slug)
+            return redirect('costs_detail', car.slug, car.id)
     else:
         print(form.errors.as_data)
 
