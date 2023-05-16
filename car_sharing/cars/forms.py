@@ -120,3 +120,33 @@ class AddReservationForm(forms.ModelForm):
         model = Reservation
         fields = ['reservation_start', 'reservation_end']
 
+class AddEnergyForm(forms.ModelForm):
+    energy_choices = Energy._meta.get_field('type_energy').choices
+    
+    type_energy = forms.ChoiceField(choices=energy_choices, required=None)
+    
+    price = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('prix'),
+                                                        'class': 'form-control'
+                                }))
+    
+    quantity = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('combien de litres, de kw, etc ?'),
+                                                        'class': 'form-control'
+                                }))
+    
+    
+
+    paid_day = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+                            required=True,
+                            )
+    
+    class Meta:
+        model = Energy
+        fields = ['price', 'quantity', 'paid_by', 'paid_day', 'type_energy']
+
+    
+
+    

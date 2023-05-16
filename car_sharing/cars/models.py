@@ -1,5 +1,6 @@
 from django.utils.translation import gettext as _
 import os
+import datetime
 from uuid import uuid4
 from django.utils.text import slugify
 from PIL import Image
@@ -155,9 +156,9 @@ class Energy(models.Model):
     car = models.ForeignKey(Car, related_name="energy_bill", null=False, blank=False, on_delete=models.CASCADE)
     price = models.FloatField(max_length=100, null=False, blank=False, default=0)
     quantity = models.FloatField(max_length=100, null=False, blank=False, default=0)
-    paid_by = models.ForeignKey(CustomUser, null=False, blank=False, related_name="user_energy_bill", on_delete=models.PROTECT)
-    paid_day = models.DateField(auto_now_add=False)
-    type_energy = models.CharField(max_length=32, choices = ENERGY, default=ESSENCE)
+    paid_by = models.ForeignKey(CustomUser, null=True, blank=True, related_name="user_energy_bill", on_delete=models.PROTECT)
+    paid_day = models.DateField(auto_now_add=False, default=datetime.date.today, null=True, blank=True)
+    type_energy = models.CharField(max_length=32, choices = ENERGY, default=ESSENCE, null=True, blank=True)
     picture = models.ImageField(upload_to=path_and_rename_bill, max_length=255, null=True, blank = True)
     slug = models.SlugField(max_length=255, unique= True, default=None, null=True)
 
@@ -173,7 +174,7 @@ class Energy(models.Model):
         else:
             pass
         if not self.slug:
-            self.slug = slugify(self.car + '_' + self.paid_day)
+            self.slug = slugify(self.car.name + '_' + str(self.paid_day))
         super(Energy, self).save(*args, **kwargs)
 
 class Repair(models.Model):

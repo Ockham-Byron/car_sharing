@@ -83,3 +83,15 @@
         padding-top:20%;
     }
 }
+
+/* ==========================================================================
+   Modals
+   ========================================================================== */
+
+div.edit-modal {
+    background-color: var(--mid-color) !important;
+}
+
+.edit-modal .abstract-form {
+    width: 90% !important;
+}

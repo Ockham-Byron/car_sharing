@@ -19,5 +19,7 @@ urlpatterns = [
 
     #reservations
     path('<id>/reservation', add_reservation_view, name='add_reservation'),
-   
+
+    #charges
+   path('<id>/charges/add-charge', add_energy_view, name='add_energy'),
 ]

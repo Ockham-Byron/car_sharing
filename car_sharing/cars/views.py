@@ -446,15 +446,6 @@ def first_update_insurance_participations(request, id):
 
     return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
 
-
-
-
-    
-
-
-
-
-
 @login_required
 def add_reservation_view(request, id):
     car = Car.objects.get(id=id)
@@ -497,3 +488,42 @@ def add_reservation_view(request, id):
     
 
     return render(request, 'cars/forms/add_reservation_form.html', {'form': form, 'car': car})
+
+@login_required
+def add_energy_view(request, id):
+    car = Car.objects.get(id=id)
+    users = car.users.all()
+    nb_users = len(users)
+    form = AddEnergyForm()
+    print(car.energy)
+
+    if request.method == 'POST':
+        form = AddEnergyForm(request.POST)
+        if form.is_valid():
+            if car.energy != "hybride rechargeable":
+                type_energy = car.energy
+            else:
+                type_energy = request.POST.get('type_energy')
+            if nb_users == 1:
+                paid_by = request.user
+            else:
+                user_id = request.POST.get('paid_by')
+                paid_by = CustomUser.objects.get(id = user_id)
+            
+            energy=form
+            energy.save(commit=False)
+            energy.instance.car = car
+            energy.instance.paid_by = paid_by
+            energy.instance.type_energy = type_energy
+            energy.save()
+            return redirect('car_detail', car.id, car.slug)
+    else:
+        print(form.errors.as_data)
+
+
+
+    context = {'form':form,
+               'car': car,
+               'users':users,
+               'nb_users': nb_users}
+    return render(request, 'cars/forms/add_energy_form.html', context=context)
