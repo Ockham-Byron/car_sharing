@@ -49,10 +49,16 @@ def car_detail_view(request, id, slug):
     last_insurance_price = 0
     last_insurance = None
     is_insurance_past = False
+    
+    
 
     #Insurance
+    total_insurance = 0
     if Insurance.objects.filter(car=car).exists():
-        last_insurance = Insurance.objects.filter(car=car).latest('renewal_date')
+        insurances = Insurance.objects.filter(car=car)
+        for i in insurances:
+            total_insurance += i.price
+        last_insurance = insurances.latest('renewal_date')
         last_insurance_price = last_insurance.price
         if last_insurance.renewal_date < date.today():
             is_insurance_past = True
@@ -118,6 +124,8 @@ def car_detail_view(request, id, slug):
         resume_paid_by_user = ({'user':user, 'paid_by_user':paid_by_user})
         totals_paid_by_user.append(resume_paid_by_user)
 
+
+    
     total_charges = 0
     for i in totals_paid_by_user:
         total_charges += i['paid_by_user']
@@ -164,6 +172,7 @@ def car_detail_view(request, id, slug):
         'last_insurance': last_insurance,
         'last_insurance_price': last_insurance_price,
         'is_insurance_past': is_insurance_past,
+        'total_insurance': total_insurance,
         'total_charges': total_charges,
         'totals_paid_by_user': totals_paid_by_user,
         'car_paid_by': car_paid_by,
@@ -321,6 +330,7 @@ def add_car_view(request):
 
     return render(request, 'cars/forms/add_car_form.html', {'form': form,})
 
+@login_required
 def first_update_car_participations(request, id):
     car = Car.objects.get(id=id)
     participations = PurchaseParticipation.objects.filter(car=car, first_complete=False)
@@ -351,6 +361,42 @@ def first_update_car_participations(request, id):
 
     return render(request, "cars/forms/first_update_car_participations.html", context=context)
 
+@login_required
+def update_car_view(request, id):
+    car = Car.objects.get(id=id)
+    form = AddCarForm(instance=car)
+    paid_by = PurchaseParticipation.objects.filter(car=car)
+    
+    
+    if request.method == 'POST':
+        form = AddCarForm(request.POST, request.FILES, instance=car)
+        if  form.is_valid():
+            form.save()
+        if 'update_car' in request.POST:
+            messages.success(request, f'Véhicule {car.name} bien actualisé', extra_tags='Parfait !')
+            return redirect('car_detail', car.id, car.slug)
+        else:
+            part_id = request.POST.get('participation')
+            participation = PurchaseParticipation.objects.get(id=part_id)
+            return redirect('update_car_participation', participation.id)
+        
+
+    return render(request, 'cars/forms/update_car_form.html', {'form': form, 'car': car, 'paid_by': paid_by})
+
+@login_required
+def update_car_participation(request, id):
+    participation = PurchaseParticipation.objects.get(id=id)
+    
+    car = participation.car
+    form = AddPurchaseParticipationForm(instance=participation)
+
+    if request.method == 'POST':
+        form = AddPurchaseParticipationForm(request.POST, instance=participation)
+        if form.is_valid():
+            form.save()
+        return redirect('update_car', car.id)
+    
+    return render(request, 'cars/forms/update_car_participation_form.html', {'form': form, 'car': car, 'participation': participation})
 
 @login_required
 def join_car_view(request):
@@ -533,3 +579,40 @@ def add_energy_view(request, id):
                'users':users,
                'nb_users': nb_users}
     return render(request, 'cars/forms/add_energy_form.html', context=context)
+
+@login_required
+def add_repair_view(request, id):
+    car = Car.objects.get(id=id)
+    users = car.users.all()
+    nb_users = len(users)
+    form = AddRepairForm()
+    
+
+    if request.method == 'POST':
+        form = AddRepairForm(request.POST)
+        if form.is_valid():
+            
+            if nb_users == 1:
+                paid_by = request.user
+            else:
+                user_id = request.POST.get('paid_by')
+                paid_by = CustomUser.objects.get(id = user_id)
+            
+            repair=form
+            repair = repair.save(commit=False)
+            
+            repair.car = car
+            repair.paid_by = paid_by
+            
+            repair.save()
+            return redirect('costs_detail', car.slug, car.id)
+    else:
+        print(form.errors.as_data)
+
+
+
+    context = {'form':form,
+               'car': car,
+               'users':users,
+               'nb_users': nb_users}
+    return render(request, 'cars/forms/add_repair_form.html', context=context)

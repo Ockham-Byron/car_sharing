@@ -63,6 +63,18 @@ class AddCarForm(forms.ModelForm):
         model = Car
         fields = ['name', 'immatriculation', 'price', 'energy', 'nb_users']
 
+class AddPurchaseParticipationForm(forms.ModelForm):
+
+    price_paid = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('vous pourrez modifier'),
+                                                        'class': 'form-control'
+                                }))
+
+    class Meta:
+        model = PurchaseParticipation
+        fields = ['price_paid']
+
 class AddInsuranceForm(forms.ModelForm):
     
     company = forms.CharField(max_length=100, 
@@ -146,6 +158,32 @@ class AddEnergyForm(forms.ModelForm):
     class Meta:
         model = Energy
         fields = ['price', 'quantity', 'paid_by', 'paid_day', 'type_energy']
+
+class AddRepairForm(forms.ModelForm):
+    repair_choices = Repair._meta.get_field('type_repair').choices
+    
+    type_repair = forms.ChoiceField(choices=repair_choices, required=False)
+    
+    price = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('prix'),
+                                                        'class': 'form-control'
+                                }))
+    description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('courte description'),
+                                                              'class': 'form-control',
+                                                              "rows":2, "cols":20
+                                                              
+                            }))
+    
+    
+
+    paid_day = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+                            required=True,
+                            )
+    
+    class Meta:
+        model = Repair
+        fields = ['type_repair', 'price', 'paid_day', 'description']
 
     
 

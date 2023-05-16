@@ -27,8 +27,13 @@
                     </div>
                 {% endfor %}
             {% endif %}
+            <div>
+            <a href={% url 'update_car' car.id %}><span class="icon alert-icon dark-color" data-icon="&#110;"></span></a>
+            </div>
             <div class="kborder-bottom mt-5"></div>
         </div>
+
+        
 
         <!-- Insurance Card -->
         <div class="col-md-5 text-center details-card mb-5">

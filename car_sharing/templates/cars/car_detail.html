@@ -30,7 +30,7 @@
        
 
         <!-- Car informations -->
-        <div class="col-12 col-md-6 my-md-auto mt-5">
+        <div class="col-12 col-md-6  mt-5">
             <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
             <p class="">{{ car.name }}</p>
             {% if car.immatriculation%}
@@ -65,7 +65,9 @@
                 </div>
             {% endif %}
             </div>
-            
+            <div class="text-center mt-3">
+            <a href="{% url 'update_car' car.id %}" class="rounded-btn btn-kdark">{% trans 'Modifier' %}</a>
+            </div>
         </div>
 
         <!-- Calendar -->
@@ -255,7 +257,7 @@ const data = {
                 labels: ['car', 'insurance', 'energy', 'repairs'], //loop through queryset, 
                 datasets: [{
                     label: '',
-                    data: [{{car.price}}, {{insurance_price}}, {{total_energy}}, {{total_repairs}}],
+                    data: [{{car.price}}, {{total_insurance}}, {{total_energy}}, {{total_repairs}}],
                     backgroundColor: backgroundColors,
                     
                 }]

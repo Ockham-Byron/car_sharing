@@ -177,6 +177,7 @@ a.cost__slide__item {
    .col-md-6 {
     display:flex;
     flex-direction: column;
+    justify-content: space-around;
    }
 
    /* ==========================================================================

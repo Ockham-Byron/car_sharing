@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n static %}
+{% block title %}{% trans 'Ajouter une dépense' %}{% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="container form-container d-flex">
+      <div class="abstract-form v-abstract-form mx-auto my-auto">
+        
+        <div class="text-center">
+            <img src="{% static 'assets/img/top-illustration/repair.svg' %}" alt="Charges sharing" class="form-top-illustration">
+        </div>
+        <h3 class="text-center mt-3">{% trans "Ajouter une dépense d' entretien/réparation" %}</h3>
+        <div class="row justify-content-center">
+            <div class="form-content">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        
+                         <div class="form-group">
+                            <label>{% trans 'Type de dépense' %}<span class="">*</span>:</label>
+                            {{form.type_repair}}
+                            <span class="light-color">{{form.type_repair.errors}}</span>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>{% trans 'Montant' %}<span class="">*</span>:</label>
+                            {{form.price}}
+                            <span class="light-color">{{form.price.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{% trans "Description" %}<span class="">*</span>:</label>
+                            {{form.description}}
+                            <span class="light-color">{{form.description.errors}}</span>
+                        </div>
+                        {% if nb_users > 1 %}
+                        <div class="form-group">
+                            <label>{% trans "Payé par" %}<span class="">*</span>:</label>
+                            <select name="paid_by">
+                                {% for user in users %}
+                                <option value={{user.id}}>{{user.username}}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="light-color">{{form.paid_by.errors}}</span>
+                        </div>
+                        {% else %}
+                            
+                        {% endif %}
+                        <div class="form-group">
+                            <label>{% trans "Facture payée le" %}<span class="">*</span>:</label>
+                            {{form.paid_day}}
+                            <span class="light-color">{{form.paid_day.errors}}</span>
+                        </div>
+                
+                        <p>*  {% trans 'Champs obligatoires' %}</p>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                        </div>
+                </form>
+            </div>
+         </div>
+    </div>
+</div>
+{% endblock content %}

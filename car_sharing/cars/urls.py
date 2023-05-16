@@ -10,6 +10,8 @@ urlpatterns = [
     #edit cars
     path('add-car', add_car_view, name='add_car'),
     path('<id>/add_purchase_parts', first_update_car_participations, name='add_car_participation'),
+    path('<id>/update_car', update_car_view, name='update_car'),
+    path('<id>/update_contribution', update_car_participation, name='update_car_participation'),
     
     
     
@@ -23,5 +25,6 @@ urlpatterns = [
     #charges
     path('<id>/create/', insurance_create_view, name='create_insurance'),
     path('<id>/add_insurance_parts', first_update_insurance_participations, name='add_insurance_participation'),
-    path('<id>/charges/add-charge', add_energy_view, name='add_energy'),
+    path('<id>/charges/add-energy', add_energy_view, name='add_energy'),
+    path('<id>/charges/add-repair', add_repair_view, name='add_repair'),
 ]

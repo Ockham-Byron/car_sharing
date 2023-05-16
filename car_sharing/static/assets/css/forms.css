@@ -39,7 +39,7 @@
 
 }
 
-.abstract-form input {
+.abstract-form input, .abstract-form textarea {
     
     display: block;
     border-radius: 10px;
