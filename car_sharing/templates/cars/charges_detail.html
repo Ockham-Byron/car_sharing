@@ -152,7 +152,7 @@
                     <p><span class="icon energy-icon dark-color" data-icon="&#80;"> <span class="brand-color">{{bill.paid_by.username}}</span></p>
                     <p><span class="icon energy-icon dark-color" data-icon="&#70;"></span> <span class="brand-color">{{ bill.paid_day | date:'d-m-Y '}}</span></p>
                     <div class="text-right mr-3 pb-3">
-                    <a><span class="icon  dark-color" data-icon="&#110;"></span></a>
+                    <a href="{% url 'update_repair' bill.id %}"><span class="icon  dark-color" data-icon="&#110;"></span></a>
                     </div>
                 </div>
             

@@ -176,13 +176,14 @@ class AddRepairForm(forms.ModelForm):
     
     
 
-    paid_day = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+    paid_day = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
                             required=True,
                             )
-    
     class Meta:
         model = Repair
-        fields = ['type_repair', 'price', 'paid_day', 'description']
+        fields = ['type_repair', 'price', 'paid_day','paid_by', 'description']
 
     
 

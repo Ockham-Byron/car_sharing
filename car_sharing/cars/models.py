@@ -207,5 +207,5 @@ class Repair(models.Model):
         else:
             pass
         if not self.slug:
-            self.slug = slugify(self.car.name + '_' + str(self.paid_day))
+            self.slug = slugify('repair_bill' + '_' + self.car.name + '_' + str(self.paid_day))
         super(Repair, self).save(*args, **kwargs)

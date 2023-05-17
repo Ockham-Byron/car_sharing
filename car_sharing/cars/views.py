@@ -679,7 +679,7 @@ def add_repair_view(request, id):
             repair.paid_by = paid_by
             
             repair.save()
-            return redirect('costs_detail', car.slug, car.id)
+            return redirect('costs_detail', car.slug)
     else:
         print(form.errors.as_data)
 
@@ -690,3 +690,26 @@ def add_repair_view(request, id):
                'users':users,
                'nb_users': nb_users}
     return render(request, 'cars/forms/add_repair_form.html', context=context)
+
+@login_required
+def update_repair_view(request, id):
+    repair = Repair.objects.get(id=id)
+    car = repair.car
+    paid_by = repair.paid_by
+    users = car.users.all().exclude(id=paid_by.id)
+    
+    form = AddRepairForm(instance=repair)
+    
+
+    if request.method == 'POST':
+        form = AddRepairForm(request.POST, instance=repair)
+        if form.is_valid():
+            form.save()
+            return redirect('costs_detail', car.slug)
+   
+
+    context = {'form':form,
+               'car': car,
+               'users':users,
+               'paid_by': paid_by}
+    return render(request, 'cars/forms/update_repair_form.html', context=context)

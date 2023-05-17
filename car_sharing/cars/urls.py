@@ -30,4 +30,5 @@ urlpatterns = [
     path('<id>/charges/add-energy', add_energy_view, name='add_energy'),
     path('<id>/charges/update-energy', update_energy_view, name='update_energy'),
     path('<id>/charges/add-repair', add_repair_view, name='add_repair'),
+    path('<id>/charges/udpate-repair', update_repair_view, name='update_repair'),
 ]
