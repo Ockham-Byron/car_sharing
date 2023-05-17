@@ -4,21 +4,23 @@
 {% block title %}{% trans 'Charges' %}{% endblock %}
 
 {% block content %}
+{% include 'includes/header.html' %}
 <div class="container pt-5 pb-5 mb-5">
-    {% include 'includes/header.html' %}
+    
     <div class="text-center mt-3 mt-md-5 pt-md-5">
     <img src="{% static 'assets/img/top-illustration/charges.svg' %}" alt="Charges sharing" class="page-top-illustration">
     </div>
 
     <div class="row d-flex justify-content-center mt-5">
         <!-- Purchase card -->
-        <div class="col-md-5 text-center details-card mb-5">
+        <div class="col-md-5 text-center details-card mb-5 same-height-details">
         
             <h4 class="dark-color">{% trans 'Achat' %}</h4>
             <p class="text-center amount-info">{{car.price}} €</p>
             {% if car_paid_by == None %}
                 <p>Précisez qui a payé</p>
             {% else %}
+                <div>
                 {% for i in car_paid_by %}
                     <div class="profile-minicard mt-3">
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
@@ -26,17 +28,18 @@
                         <p class="amount-info">{{i.price_paid}} €</p>
                     </div>
                 {% endfor %}
+                </div>
             {% endif %}
             <div>
             <a href="{% url 'update_car' car.id %}" class="icon-link"><span class="icon alert-icon dark-color" data-icon="&#110;"></span></a>
             </div>
-            <div class="kborder-bottom mt-5"></div>
+            <hr class="kborder-bottom mt-5"></hr>
         </div>
 
         
 
         <!-- Insurance Card -->
-        <div class="col-md-5 text-center details-card mb-5">
+        <div class="col-md-5 text-center details-card mb-5 same-height-details">
        
             <h4 class="dark-color">
                 {% if current_assurance == None %}
@@ -81,11 +84,12 @@
             {% if is_more_insurances %}
             <a href="#" class="rounded-btn btn-kdark">{% trans 'Voir plus' %}</a>
             {% endif %}
-            <div class="kborder-bottom mt-5"></div>
+            <hr class="kborder-bottom mt-5"></hr>
         </div>
 
         <!-- Energy Card -->
         <div class="col-md-5 text-center details-card mb-5">
+        
             <h4 class="dark-color">{% trans 'Énergie' %}</h4>
             {% for i in energy_by_user %}
                     <div class="profile-minicard mt-3">
@@ -114,7 +118,7 @@
                     <p><span class="icon energy-icon dark-color" data-icon="&#80;"> <span class="brand-color">{{bill.paid_by.username}}</span></p>
                     <p><span class="icon energy-icon dark-color" data-icon="&#70;"></span> <span class="brand-color">{{ bill.paid_day | date:'d-m-Y '}}</span></p>
                     <div class="text-right mr-3 pb-3">
-                    <a><span class="icon  dark-color" data-icon="&#110;"></span></a>
+                    <a href="{% url 'update_energy' bill.id %}"><span class="icon  dark-color" data-icon="&#110;"></span></a>
                     </div>
                 </div>
             
@@ -122,7 +126,7 @@
             {% endfor %}
             
             </div>
-            <div class="kborder-bottom mt-5 d-block d-md-none d-lg-none d-xl-none"></div>
+            <hr class="kborder-bottom mt-5 d-block d-md-none d-lg-none d-xl-none"></hr>
         </div>
 
         <!-- Repairs Card -->

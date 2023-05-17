@@ -14,7 +14,11 @@
 
 
 .form-container {
-    height:100vh;
+    height:100%;
+}
+
+.form-container-small {
+    height: 100vh;
 }
 .abstract-form {
     background-color: var(--mid-color);

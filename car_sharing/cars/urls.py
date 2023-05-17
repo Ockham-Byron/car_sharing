@@ -28,5 +28,6 @@ urlpatterns = [
     path('<id>/update/', insurance_update_view, name='update_insurance'),
     path('<id>/update_insurance_contribution', update_insurance_participation, name='update_insurance_participation'),
     path('<id>/charges/add-energy', add_energy_view, name='add_energy'),
+    path('<id>/charges/update-energy', update_energy_view, name='update_energy'),
     path('<id>/charges/add-repair', add_repair_view, name='add_repair'),
 ]

@@ -148,7 +148,9 @@ class AddEnergyForm(forms.ModelForm):
     
     
 
-    paid_day = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+    paid_day = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
                             required=True,
                             )
     

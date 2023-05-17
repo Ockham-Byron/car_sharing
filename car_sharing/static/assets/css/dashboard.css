@@ -180,6 +180,12 @@ a.cost__slide__item {
     justify-content: space-around;
    }
 
+   .same-height-details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   }
+
   
    
 
@@ -339,13 +345,10 @@ a.cost__slide__item {
    }
 
    .kborder-bottom {
-    border-bottom: 4px solid var(--dark-color);
-    position:absolute;
-    left: 25%;
-    right: 25%;
-   }
+    border: 2px solid var(--dark-color);
+    width:30%;
 
-   
+   }
 
    .details-card > .profile-minicard img {
     width: 50px;

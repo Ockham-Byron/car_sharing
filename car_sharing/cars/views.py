@@ -627,6 +627,34 @@ def add_energy_view(request, id):
     return render(request, 'cars/forms/add_energy_form.html', context=context)
 
 @login_required
+def update_energy_view(request, id):
+    energy = Energy.objects.get(id=id)
+    car = energy.car
+    paid_by = energy.paid_by
+    users = car.users.all().exclude(id=paid_by.id)
+    
+    form = AddEnergyForm(instance=energy)
+   
+
+    if request.method == 'POST':
+        form = AddEnergyForm(request.POST, instance=energy)
+        if form.is_valid():
+            form.save()
+            
+            return redirect('costs_detail', car.slug)
+    
+
+
+
+    context = {'form':form,
+               'car': car,
+               'users':users,
+               'paid_by': paid_by
+               
+               }
+    return render(request, 'cars/forms/update_energy_form.html', context=context)
+
+@login_required
 def add_repair_view(request, id):
     car = Car.objects.get(id=id)
     users = car.users.all()
