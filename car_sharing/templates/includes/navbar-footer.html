@@ -6,7 +6,7 @@
         <div class="cost__slide">
         
             <a class="cost__slide__item" href="#" data-toggle="modal" data-target="#add-charge-modal" style="font-size:40px;">+</a>
-            <a class="cost__slide__item" href="{% url 'costs_detail' car.slug car.id %}">Tout voir</a>
+            <a class="cost__slide__item" href="{% url 'costs_detail' car.slug %}">Tout voir</a>
 
         </div>
     <a class="text-center" href="{% url 'trips_detail' car.slug car.id %}"><span class="icon" data-icon="&#38;"></span></br>{% trans 'Km' %}</a>

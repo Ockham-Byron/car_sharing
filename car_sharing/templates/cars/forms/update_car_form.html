@@ -48,20 +48,16 @@
                             {{ form.nb_users }}
                         </div>
                         
-                             <label>{% trans "Contribution à l'achat" %}<span class="">*</span>:</label>
-                             <div class="form-group text-center">
+                        <label>{% trans "Contribution à l'achat" %}<span class="">*</span>:</label>
+                        <div class="form-group text-center">
                         {% for i in paid_by %}
-
-                    <div class="profile-minicard mt-3">
-                   
-                        <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
-                        <p>{{ i.user.username }}</p>
-                        
-                        <button type="submit" class="amount-info" name="participation" value={{i.id}}>{{i.price_paid}} €</button>
-                       
-                    </div>
-                {% endfor %}
-                </div>
+                            <div class="profile-minicard mt-3">
+                                <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                                <p>{{ i.user.username }}</p>
+                                <button type="submit" class="amount-info" name="participation" value={{i.id}}>{{i.price_paid}} €</button>   
+                            </div>
+                        {% endfor %}
+                        </div>
                 
                         <p>*  {% trans 'Champs obligatoires' %}</p>
                         <div class="row justify-content-center">

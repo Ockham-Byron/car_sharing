@@ -189,8 +189,8 @@ def car_detail_view(request, id, slug):
     return render(request, 'cars/car_detail.html', context=context)
 
 @login_required
-def costs_detail_view(request, slug, id):
-    car = Car.objects.get(id=id)
+def costs_detail_view(request, slug):
+    car = Car.objects.get(slug=slug)
     users = car.users.all()
 
     car_paid_by=None
@@ -503,11 +503,14 @@ def insurance_update_view(request, id):
     insurance = Insurance.objects.get(id=id)
     car = insurance.car
     form = AddInsuranceForm(instance=insurance)
+    participations = InsuranceParticipation.objects.filter(insurance=insurance)
     
    
 
     context = {
         'form':form,
+        'participations':participations,
+        'car': car,
         
     }
 
@@ -515,9 +518,32 @@ def insurance_update_view(request, id):
         form = AddInsuranceForm(request.POST, instance=insurance)
         if  form.is_valid():
             form.save()
-            return redirect('costs_detail', car.slug, car.id)
+        if 'update_insurance' in request.POST:
+            messages.success(request, f'Assurance {car.name} bien actualisée', extra_tags='Parfait !')
+            return redirect('costs_detail', car.slug)
+        if 'participation' in request.POST:
+            part_id = request.POST['participation']
+            participation = InsuranceParticipation.objects.get(id=part_id)
+            return redirect('update_insurance_participation', participation.id)
+            
 
     return render(request, "cars/forms/update_insurance_form.html", context=context)
+
+@login_required
+def update_insurance_participation(request, id):
+    participation = InsuranceParticipation.objects.get(id=id)
+    
+    insurance = participation.insurance
+    form = InsuranceParticipationForm(instance=participation)
+
+    if request.method == 'POST':
+        form = InsuranceParticipationForm(request.POST, instance=participation)
+        if form.is_valid():
+            form.save()
+        return redirect('update_insurance', insurance.id)
+    
+    return render(request, 'cars/forms/update_insurance_participation_form.html', {'form': form, 'insurance': insurance, 'participation': participation})
+
 @login_required
 def add_reservation_view(request, id):
     car = Car.objects.get(id=id)

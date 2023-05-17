@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 {% load i18n static %}
-{% block title %}{% trans 'Ajouter une assurance' %}{% endblock title %}
+{% block title %}{% trans 'Modifier une assurance' %}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
-<div class="container form-container d-flex">
-    <div class="abstract-form v-abstract-form mx-auto my-auto">
+<div class="container form-container d-flex mt-5 pt-5">
+    <div class="abstract-form v-abstract-form mx-auto  ">
         {% if form.errors %}
             <div class="alert alert-danger alert-dismissible" role="alert">
                 <div id="form_errors">
@@ -20,34 +20,43 @@
         <div class="text-center">
             <img src="{% static 'assets/img/top-illustration/insurance.svg' %}" alt="Charges sharing" class="form-top-illustration">
         </div>
-        <h3 class="text-center mt-3">{% trans 'Ajouter une assurance' %}</h3>
+        <h3 class="text-center mt-3">{% trans "Modifier l'assurance" %}</h3>
         <div class="row justify-content-center">
             <div class="form-content">
                 <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                         <div class="form-group">
-                            <label>{% trans "Compagnie d'assurance" %}<span class="">*</span>:</label>
+                            <label>{% trans "Compagnie d'assurance" %}:</label>
                             {{ form.company }}
                         </div>
                         
                         <div class="form-group">
-                            <label>{% trans "Prix" %}<span class="">*</span>:</label>
-                            <p><small>({% trans 'Vous pourrez préciser ensuite qui a payé' %})</small></p>
+                            <label>{% trans "Prix" %}:</label>
+                            
                             {{ form.price }}
                         </div>
 
                         <div class="form-group">
-                            <label>{% trans "Date de renouvellement" %}<span class="">*</span>:</label>
+                            <label>{% trans "Date de renouvellement" %}:</label>
                             {{ form.renewal_date }}
                         </div>
-
-                       
+                        <label>{% trans "Contributions" %}<span class="">*</span>:</label>
+                       <div class="form-group text-center">
+                        {% for i in participations %}
+                            <div class="profile-minicard mt-3">
+                                <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                                <p>{{ i.user.username }}</p>
+                                <button type="submit" class="amount-info" name="participation" value={{i.id}}>{{i.price_paid}} €</button>   
+                            </div>
+                        {% endfor %}
+                        </div>
 
                         
                 
-                        <p>*  {% trans 'Champs obligatoires' %}</p>
+                       
                         <div class="row justify-content-center">
-                            <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                            <button type="submit" class="btn btn-kdark rounded-btn" name="update_insurance">{% trans 'Enregistrer' %}</button>
+                            <a href="{% url 'costs_detail' car.slug %}" class="btn btn-kbrand rounded-btn" >{% trans 'Annuler' %}</a>
                         </div>
                 </form>
             </div>

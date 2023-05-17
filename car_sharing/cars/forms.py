@@ -90,7 +90,9 @@ class AddInsuranceForm(forms.ModelForm):
                                 }))
     
 
-    renewal_date = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+    renewal_date = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
                             required=True,
                             )
     class Meta:
@@ -101,7 +103,7 @@ class InsuranceParticipationForm(forms.ModelForm):
    
     price_paid = forms.FloatField(
                             required=True,
-                            widget=forms.NumberInput(attrs={'placeholder': _('vous pourrez modifier'),
+                            widget=forms.NumberInput(attrs={'placeholder': _(''),
                                                         'class': 'form-control'
                                 }))
     
@@ -109,11 +111,7 @@ class InsuranceParticipationForm(forms.ModelForm):
         model = InsuranceParticipation
         fields = [  'price_paid']
 
-InsuranceParticipationFormSet = inlineformset_factory(
-    Insurance, InsuranceParticipation, form=InsuranceParticipationForm, 
-    )
-
-    
+ 
 
 class AddReservationForm(forms.ModelForm):
     
