@@ -1,12 +1,11 @@
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
-from extra_views import UpdateWithInlinesView, InlineFormSetFactory
+
 import uuid
 import sweetify
 import pytz
-from django.forms import formset_factory
-from django.views.generic import UpdateView, CreateView
-from datetime import date, datetime, timedelta
+
+from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from postit.models import PostIt, PostItNotShowed
@@ -43,8 +42,8 @@ def check_reservation_availibility(start_date, end_date, car):
         return True
 
 @login_required
-def car_detail_view(request, id, slug):
-    car = Car.objects.get(id=id)
+def car_detail_view(request, slug):
+    car = Car.objects.get(slug=slug)
     users = car.users.all()
     last_insurance_price = 0
     last_insurance = None
@@ -562,7 +561,7 @@ def add_reservation_view(request, id):
             reservation.instance.reservation_end_calendar = reservation.instance.reservation_end.date() + timedelta(days=1)
             reservation.instance.car = car
             reservation.instance.user = request.user
-            if start < datetime.now().replace(tzinfo=utc):
+            if start < datetime.datetime.now().replace(tzinfo=utc):
                 print ('problème')
                 sweetify.warning(request, _('Attention'), text= _('La date de début est déjà passée'))
             elif reservation.instance.reservation_end < reservation.instance.reservation_start:
@@ -582,7 +581,7 @@ def add_reservation_view(request, id):
                     post_it.color = "#E28413"
                     post_it.message = _("J'ai réservé du " + start.strftime('%d-%m') + " au " + end.strftime('%d-%m')) 
                     post_it.save()
-                    return redirect('car_detail', car.id, car.slug)
+                    return redirect('car_detail', car.slug)
     
 
     return render(request, 'cars/forms/add_reservation_form.html', {'form': form, 'car': car})
@@ -593,9 +592,6 @@ def add_trip_view(request, id):
     car = Car.objects.get(id=id)
     form = AddTripForm()
     
-
-    
-    
     if request.method == 'POST':
         form = AddTripForm(request.POST)
         if  form.is_valid():
@@ -604,14 +600,29 @@ def add_trip_view(request, id):
             trip.instance.user = request.user
             if trip.instance.end < trip.instance.start:
                 sweetify.warning(request, _('Attention'), text= _('La date de fin est antérieure à la date de début'))
+            elif trip.instance.nb_km_end < trip.instance.nb_km_start:
+                sweetify.warning(request, _('Attention'), text= _("Vous avez indiqué moins de km à la fin qu'au début"))
+            elif trip.instance.end > date.today():
+                sweetify.warning(request, _('Attention'), text= _("Vous avez indiqué une date de fin dans le futur, donc sans pouvoir connaître le nombre de km effectués."))
             else:
                 trip = trip.save()
                 return redirect('trips_detail', car.slug)
-        else:
-            print(form.errors)
-    
-
+        
     return render(request, 'cars/forms/add_trip_form.html', {'form': form, 'car': car})
+
+@login_required
+def update_trip_view(request, id):
+    trip = Trip.objects.get(id=id)
+    car= trip.car
+    form = AddTripForm(instance=trip)
+
+    if request.method == 'POST':
+        form = AddTripForm(request.POST, instance=trip)
+        if form.is_valid():
+            trip = form.save()
+            return redirect('trips_detail', car.slug)
+        
+    return render(request, 'cars/forms/update_trip_form.html', {'form':form, 'car':car})
 
 @login_required
 def add_energy_view(request, id):

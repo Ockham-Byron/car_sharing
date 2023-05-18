@@ -130,6 +130,20 @@
 .cost__slide.active{
   margin-bottom: 150px;
 }
+
+.trip__slide {
+  position: absolute;
+  left:98px;
+  margin-bottom:-300px;
+  padding-bottom:50px;
+  transition: 300ms top cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.trip__slide.active{
+  margin-bottom: 150px;
+}
+
+
 @media only screen and (max-width: 600px) {
   .menu__slide {
     width: 250px;
@@ -151,7 +165,7 @@
   padding:5px;
 }
 
-.cost__slide__item {
+.cost__slide__item, .trip__slide__item {
   display: block;
   background-color: var(--mid-color);
   
@@ -166,7 +180,9 @@
   
 }
 
-a.cost__slide__item {
+
+
+a.cost__slide__item, a.trip__slide__item {
   text-align: center;
 }
 
@@ -272,10 +288,28 @@ a.cost__slide__item {
     width:250px;
     max-width: 60%;
   }
+
+  img.car-logo {
+    height: 25px;
+  }
     /* ==========================================================================
    Profile
    ========================================================================== */
 
+   .profile-card img{
+    width:150px;
+    height: 150px;
+    border-radius: 50%;
+   }
+
+  .profile-detail-card {
+    background-color: white;
+    padding:20px;
+    border-bottom:10px solid;
+    -webkit-box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
+-moz-box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
+box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
+  }
    .profile-minicard {
     display: inline-block;
     font-size:12px;
@@ -298,6 +332,24 @@ a.cost__slide__item {
     font-size:10px;
    }
 
+   .detail-card, .info-card {
+    padding-top:5px;
+    background-color:var(--dark-color);
+    color:var(--light-color);
+    border-radius: 20px;
+   }
+
+   
+
+   .detail-card {
+    line-height: 0.5;
+    padding:10px 5px;
+   }
+
+   .info-card p {
+    padding-bottom: 5px !important;
+   }
+
       /* ==========================================================================
    Infos
    ========================================================================== */
@@ -315,6 +367,10 @@ a.cost__slide__item {
     background-color: var(--brand-color);
     color:var(--light-color);
     text-decoration: none;
+   }
+
+   span.amount-info {
+    font-size: 11px;
    }
 
   .chart-container {

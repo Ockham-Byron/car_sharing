@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 
 <div class="row d-flex justify-content-center">
         <div class="navbar header-navbar">
@@ -10,8 +10,8 @@
                         <a class="slide-item" href="#">{% trans 'Offrez-moi un café' %}</a>
                 </div>
         
-        <a class="text-center" href="#"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
+        <a class="text-center" href="{% url 'profile' request.user.id%}"><span class="icon" data-icon="&#80;"></span></br>{% trans 'Profil' %}</a>
         <a class="text-center" href="{% url 'logout' %}"><span class="icon" data-icon="&#73;"></span></br>{% trans 'Descendre' %}</a>
-        <a  class= "text-center" href="#"><span class="icon" data-icon="&#74;"></span></br>{% trans 'Notifs' %}</a>
+        <a  class= "text-center" href="{% url 'car_detail' car.slug%}"><img class="car-logo mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture"></br>{{car.name}}</a>
         </div>
 </div>

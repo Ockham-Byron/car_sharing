@@ -72,6 +72,8 @@
     const menu    = document.querySelector('.menu__slide');
     const cost__toggler = document.querySelector('.cost__toggler');
     const cost__slide = document.querySelector('.cost__slide');
+    const trip__toggler = document.querySelector('.trip__toggler');
+    const trip__slide = document.querySelector('.trip__slide');
     const footer_navbar = document.querySelector('.footer-navbar');
 
 /*
@@ -86,8 +88,13 @@ toggler.addEventListener('click', () => {
 })
 
 cost__toggler.addEventListener('click', () => {
-  cost__toggler.classList.toggle('active');
+  
   cost__slide.classList.toggle('active');
+})
+
+trip__toggler.addEventListener('click', () => {
+  
+  trip__slide.classList.toggle('active');
 })
    </script>
    

@@ -40,7 +40,7 @@
                         <p>{{ trip.user.username }}</p>
                        
                     </div>
-                        <p class="amount-info">{{trip.nb_km_end|sub:trip.nb_km_start}} km </p>
+                        <p><span class="amount-info mr-2">{{trip.nb_km_end|sub:trip.nb_km_start}} km</span><a href="{% url 'update_trip' trip.id %}" style="display:inline-block;" class="icon-link"><span class="icon  dark-color" data-icon="&#110;"></span></a></p>
                     </div>
 
                     <div class="col-4 text-right">
