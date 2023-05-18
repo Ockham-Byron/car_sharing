@@ -5,7 +5,7 @@ from .views import *
 urlpatterns = [
     path('car_detail/<id>/<slug:slug>', car_detail_view, name='car_detail'),
     path('<slug:slug>/costs', costs_detail_view, name='costs_detail'),
-    path('<slug:slug>/<id>/trips', trips_detail_view, name='trips_detail'),
+    path('<slug:slug>/trips', trips_detail_view, name='trips_detail'),
 
     #edit cars
     path('add-car', add_car_view, name='add_car'),
@@ -19,8 +19,9 @@ urlpatterns = [
     path('<id>/invitation', invitation_view, name='invitation'),
     path('join-car', join_car_view, name='join_car'),
 
-    #reservations
+    #reservations and trips
     path('<id>/reservation', add_reservation_view, name='add_reservation'),
+    path('<id>/add-trip', add_trip_view, name='add_trip'),
 
     #charges
     path('<id>/create/', insurance_create_view, name='create_insurance'),

@@ -274,8 +274,8 @@ def costs_detail_view(request, slug):
     return render(request, 'cars/charges_detail.html', context=context)
 
 @login_required
-def trips_detail_view(request, id, slug):
-    car = Car.objects.get(id=id)
+def trips_detail_view(request, slug):
+    car = Car.objects.get(slug=slug)
     users = car.users.all()
 
     trips = None
@@ -586,6 +586,32 @@ def add_reservation_view(request, id):
     
 
     return render(request, 'cars/forms/add_reservation_form.html', {'form': form, 'car': car})
+
+
+@login_required
+def add_trip_view(request, id):
+    car = Car.objects.get(id=id)
+    form = AddTripForm()
+    
+
+    
+    
+    if request.method == 'POST':
+        form = AddTripForm(request.POST)
+        if  form.is_valid():
+            trip = form
+            trip.instance.car = car
+            trip.instance.user = request.user
+            if trip.instance.end < trip.instance.start:
+                sweetify.warning(request, _('Attention'), text= _('La date de fin est antérieure à la date de début'))
+            else:
+                trip = trip.save()
+                return redirect('trips_detail', car.slug)
+        else:
+            print(form.errors)
+    
+
+    return render(request, 'cars/forms/add_trip_form.html', {'form': form, 'car': car})
 
 @login_required
 def add_energy_view(request, id):

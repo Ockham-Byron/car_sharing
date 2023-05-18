@@ -174,7 +174,7 @@ a.cost__slide__item {
    Layouts
    ========================================================================== */
 
-   .col-md-6 {
+   .same-height-around {
     display:flex;
     flex-direction: column;
     justify-content: space-around;

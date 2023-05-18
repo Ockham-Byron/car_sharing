@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n static sweetify %}
+{% block title %}{% trans 'Trajet' %}{% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="container form-container-small d-flex">
+    <div class="abstract-form v-abstract-form mx-auto my-auto">
+        
+        <div class="text-center">
+            <img src="{% static 'assets/img/top-illustration/trips.svg' %}" alt="Charges sharing" class="form-top-illustration">
+        </div>
+        <h3 class="text-center mt-3">{% trans 'Ajouter un trajet' %}</h3>
+        <div class="row justify-content-center">
+            <div class="form-content">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        
+                        
+
+                        <div class="form-group">
+                            <label>{% trans "Date de début" %}<span class="">*</span>:</label>
+                            {{ form.start }}
+                            <span class="light-color">{{form.start.errors}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{% trans "Nombre de kilomètres au début" %}<span class="">*</span>:</label>
+                            {{ form.nb_km_start }}
+                            <span class="light-color">{{form.nb_km_start.errors}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{% trans "Date de fin" %}<span class="">*</span>:</label>
+                            {{ form.end }}
+                            <span class="light-color">{{form.end.errors}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{% trans "Nombre de kilomètres à la fin" %}<span class="">*</span>:</label>
+                            {{ form.nb_km_end }}
+                            <span class="light-color">{{form.nb_km_end.errors}}</span>
+                            
+                        </div>
+
+                       
+
+                        
+                
+                        <p>*  {% trans 'Champs obligatoires' %}</p>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                        </div>
+                </form>
+            </div>
+         </div>
+    </div>
+</div>
+
+{% include 'includes/navbar-footer.html' %}
+{% endblock content %}

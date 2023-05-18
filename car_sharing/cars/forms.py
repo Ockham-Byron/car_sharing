@@ -117,17 +117,52 @@ class AddReservationForm(forms.ModelForm):
     
     
 
-    reservation_start = forms.DateTimeField(widget=DateInput(attrs={'class': 'form-control'}), 
+    reservation_start = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
                             required=True,
                             )
 
-    reservation_end = forms.DateField(widget=DateInput(attrs={'class': 'form-control'}),
+    reservation_end = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
                             required=True,
                             )
     
     class Meta:
         model = Reservation
         fields = ['reservation_start', 'reservation_end']
+
+class AddTripForm(forms.ModelForm):
+    
+    nb_km_start = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _('voir sur le tableau de bord'),
+                                                        'class': 'form-control'
+                                }))
+    
+    nb_km_end = forms.FloatField(
+                            required=True,
+                            widget=forms.NumberInput(attrs={'placeholder': _("voir sur le tableau de bord"),
+                                                        'class': 'form-control'
+                                }))
+
+    start = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
+                            required=True,
+                            )
+
+    end = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'},
+                                                    ),
+                            required=True,
+                            )
+    
+    class Meta:
+        model = Trip
+        fields = [ 'start', 'end', 'nb_km_start', 'nb_km_end']
+
 
 class AddEnergyForm(forms.ModelForm):
     energy_choices = Energy._meta.get_field('type_energy').choices
@@ -184,6 +219,9 @@ class AddRepairForm(forms.ModelForm):
     class Meta:
         model = Repair
         fields = ['type_repair', 'price', 'paid_day','paid_by', 'description']
+
+
+
 
     
 
