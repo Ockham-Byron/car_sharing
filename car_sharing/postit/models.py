@@ -14,7 +14,7 @@ class PostIt(models.Model):
     color = ColorField(default='#219ebc')
     sent_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    reservation = models.OneToOneField(Reservation, blank = True, null=True, related_name="reservation", on_delete=models.CASCADE)
+    reservation = models.ForeignKey(Reservation, blank = True, null=True, related_name="reservation", on_delete=models.CASCADE)
     
 
 

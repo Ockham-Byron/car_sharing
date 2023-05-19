@@ -627,6 +627,10 @@ def confirm_reservation_view(request, id):
 
     if request.method == 'POST':
         reservation.confirmations.add(request.user)
+       
+        reservation.save()
+        confirmations = reservation.confirmations.all()
+        print(confirmations)
         if reservation.confirmations.count() == nb_users - 1:
             reservation.status = 'confirmed'
             reservation.save()
@@ -635,10 +639,22 @@ def confirm_reservation_view(request, id):
             post_it.save()
             return redirect('car_detail', car.slug)
         else:
+            waiting_users = users
+            waiting_users = waiting_users.exclude(id = reservation.user.id)
+            
+            waiting_users_message = ""
+           
+            for user in confirmations: 
+                waiting_users = waiting_users.exclude(id=user.id)
+                for user in waiting_users:
+                    waiting_users_message += user.username + " "
+
+        
+            
             reservation.save()
             post_it = PostIt(car=car, sender=request.user, reservation=reservation, color="#E28413")
               
-            post_it.message = _("J'ai confirmé votre réservation du " + reservation.reservation_start.strftime('%d-%m') + " au " + reservation.reservation_end.strftime('%d-%m') + ". On attend la réponse des autres")
+            post_it.message = _("J'ai confirmé la réservation de " + reservation.user.username + " du " + reservation.reservation_start.strftime('%d-%m') + " au " + reservation.reservation_end.strftime('%d-%m') + ". On attend la réponse de " + waiting_users_message) 
             post_it.save()
             return redirect('car_detail', car.slug)
         
