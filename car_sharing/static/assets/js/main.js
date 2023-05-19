@@ -10,9 +10,7 @@ function open_modal(url) {
 }
 
 
-function close_modal(){
-	$('#modal').modal('hide');
-}
+
 
 
 })

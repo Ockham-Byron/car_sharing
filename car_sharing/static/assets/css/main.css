@@ -163,6 +163,17 @@ a.rounded-btn:hover{
 	color:var(--dark-color);
 }
 
+.btn-klink {
+	background-color: var(--dark-color);
+	border:none !important;
+}
+
+.inline-buttons {
+	display: flex !important;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
 /* ==========================================================================
    Authentication
    ========================================================================== */

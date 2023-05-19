@@ -31,6 +31,6 @@ def delete_postit_for_everyone(request, id):
     post_it.delete()
     
 
-    return redirect('car_detail', car.id, car.slug)
+    return redirect('car_detail', car.slug)
 
 

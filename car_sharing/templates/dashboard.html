@@ -5,27 +5,27 @@
 
 {% if cars %}
 <div class="container pt-5">
-<div class="row text-center mt-5 pt-5">
-    {% for car in cars %}
-        <div class="col-md-6">
-            <a href={% url 'car_detail' car.id car.slug %}>
-                <div class="col-12 mt-5">
-                    <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
-                    <p class="">{{ car.name }}</p>
-                    <p class="">{{ car.immatriculation }}</p>
-                    <p>{% trans 'Assurance à renouveler le '%} : <span></span>
-                    <p>{% trans 'Partagée entre' %}
-                    {% for user in car.users.all %}
-                        <div class="profile-minicard">
-                        <img src={{user.avatar.url}} alt="{{ user.username }}">
-                        <p>{{ user.username }}</p>
-                        </div>
-                    {% endfor %}
-                </div>
-            </a>
-      </div>
-    {% endfor %}
-  </div>
+    <div class="row text-center mt-5 pt-5">
+        {% for car in cars %}
+            <div class="col-md-6">
+                <a href={% url 'car_detail' car.id car.slug %}>
+                    <div class="col-12 mt-5">
+                        <img class="car-picture mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture">
+                        <p class="">{{ car.name }}</p>
+                        <p class="">{{ car.immatriculation }}</p>
+                        <p>{% trans 'Assurance à renouveler le '%} : <span></span>
+                        <p>{% trans 'Partagée entre' %}
+                        {% for user in car.users.all %}
+                            <div class="profile-minicard">
+                            <img src={{user.avatar.url}} alt="{{ user.username }}">
+                            <p>{{ user.username }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 
 
 

@@ -1,0 +1,26 @@
+{% load static i18n %}
+
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content edit-modal card-modal mx-auto">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center">
+            <div class="confirm-card">
+                <img src="{% static 'assets/img/top-illustration/add_energy.svg' %}" alt="Charges sharing" class="card-illustration">
+                <h3 class="text-center mt-5">{% trans 'Accepter la réservation' %}</h3>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <form method="POST" action="{% url 'confirm_reservation' reservation.id %}">
+            {% csrf_token %}
+                <div class="text-center inline-buttons">
+                <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Confirmer' %}</button>
+                <button type="button" class="btn btn-kbrand rounded-btn" data-dismiss="modal">{% trans 'Annuler' %}</button>
+                </div>
+            </form>
+        </div>
+      </div>
+    </div>

@@ -136,6 +136,7 @@ class Reservation(models.Model):
     reservation_end = models.DateTimeField(null=False, blank=False, auto_now_add=False)
     reservation_end_calendar = models.DateTimeField(null=True, blank=True, auto_now_add=False)
     status = models.CharField(max_length=32, choices = STATUS, default=PENDING)
+    confirmations = models.ManyToManyField(CustomUser, related_name="confirmations", blank=True)
 
     def __str__(self):
         return self.car.name + ' - ' + self.user.username + ' - ' + str(self.reservation_start)

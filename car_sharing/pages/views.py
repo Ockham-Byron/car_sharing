@@ -69,7 +69,7 @@ def dashboard_view(request):
     
         if cars.count() == 1:
             car = Car.objects.get(users__id__contains = request.user.id)
-            return redirect('car_detail', car.id, car.slug)
+            return redirect('car_detail',  car.slug)
     
     context = {
                 'cars': cars,

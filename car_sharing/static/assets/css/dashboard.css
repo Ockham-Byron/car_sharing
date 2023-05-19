@@ -292,6 +292,10 @@ a.cost__slide__item, a.trip__slide__item {
   img.car-logo {
     height: 25px;
   }
+
+  img.card-illustration {
+    height: 100px;
+  }
     /* ==========================================================================
    Profile
    ========================================================================== */
@@ -668,6 +672,14 @@ box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
       color:var(--mid-color) !important;
       font-weight: bold !important;
       text-decoration: none !important;
+    }
+
+    .card-modal {
+      width:400px;
+    }
+
+    .card-modal .modal-footer {
+      justify-content: center !important;
     }
 
 /* ==========================================================================

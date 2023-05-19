@@ -586,6 +586,64 @@ def add_reservation_view(request, id):
 
     return render(request, 'cars/forms/add_reservation_form.html', {'form': form, 'car': car})
 
+@login_required
+def update_reservation_view(request, id):
+    reservation = Reservation.objects.get(id=id)
+    car = reservation.car
+    form = AddReservationForm(instance=reservation)
+
+    if request.method == 'POST':
+        form = AddReservationForm(request.POST)
+        if  form.is_valid():
+            reservation = form
+            start = reservation.instance.reservation_start
+            start = start.replace(tzinfo=utc)
+            
+            reservation.instance.reservation_end_calendar = reservation.instance.reservation_end.date() + timedelta(days=1)
+            
+            if start < datetime.datetime.now().replace(tzinfo=utc):
+                
+                sweetify.warning(request, _('Attention'), text= _('La date de début est déjà passée'))
+            elif reservation.instance.reservation_end < reservation.instance.reservation_start:
+                sweetify.warning(request, _('Attention'), text= _('La date de fin est antérieure à la date de début'))
+            else:
+                availability = check_reservation_availibility(start_date=reservation.instance.reservation_start, end_date=reservation.instance.reservation_end, car=car)
+                if availability == False:
+                    sweetify.warning(request, _('Problème'), text=_('Véhicule déjà réservé à ces dates'), persistent="OK")
+                else:
+                    reservation = reservation.save()
+                    
+                    return redirect('car_detail', car.slug)
+    
+
+    return render(request, 'cars/forms/update_reservation_form.html', {'form': form, 'car': car})
+
+@login_required
+def confirm_reservation_view(request, id):
+    reservation = Reservation.objects.get(id=id)
+    car = reservation.car
+    users = car.users.all()
+    nb_users = len(users)
+
+    if request.method == 'POST':
+        reservation.confirmations.add(request.user)
+        if reservation.confirmations.count() == nb_users - 1:
+            reservation.status = 'confirmed'
+            reservation.save()
+            post_it = PostIt(car=car, sender=request.user, reservation=reservation, color="#E28413")
+            post_it.message = _("Tout le monde a confirmé la réservation de " + reservation.user.username + " du " + reservation.reservation_start.strftime('%d-%m') + " au " + reservation.reservation_end.strftime('%d-%m'))
+            post_it.save()
+            return redirect('car_detail', car.slug)
+        else:
+            reservation.save()
+            post_it = PostIt(car=car, sender=request.user, reservation=reservation, color="#E28413")
+              
+            post_it.message = _("J'ai confirmé votre réservation du " + reservation.reservation_start.strftime('%d-%m') + " au " + reservation.reservation_end.strftime('%d-%m') + ". On attend la réponse des autres")
+            post_it.save()
+            return redirect('car_detail', car.slug)
+        
+    return render(request, 'cars/reservations/confirm_reservation.html', {'reservation': reservation, 'car': car})
+
 
 @login_required
 def add_trip_view(request, id):

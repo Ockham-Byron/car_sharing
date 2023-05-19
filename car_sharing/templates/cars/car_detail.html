@@ -327,14 +327,14 @@ const data = {
                         
                         {% if reservation.status == "pending" %}
                         backgroundColor: 'orange',
-                        {% elif reserva.status == "confirmed" %}
-                        backgroundColor: 'brown',
-                        {% elif reserva.status == "returned" %}
+                        {% elif reservation.status == "confirmed" %}
+                        backgroundColor: '#B09F8B',
+                        {% elif reservation.status == "returned" %}
                         backgroundColor: 'pink',
-                        {% elif reserva.status == "on_going" %}
+                        {% elif reservation.status == "on_going" %}
                         backgroundColor: 'green' ,
                         {% else %}
-                        backgroundColor: 'blue',
+                        backgroundColor: 'grey',
                         {% endif %}
                         borderColor: 'transparent',
                         

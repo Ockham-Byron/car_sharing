@@ -21,6 +21,8 @@ urlpatterns = [
 
     #reservations and trips
     path('<id>/reservation', add_reservation_view, name='add_reservation'),
+    path('<id>/update-reservation', update_reservation_view, name='update_reservation'),
+    path('<id>/confirm-reservation', confirm_reservation_view, name='confirm_reservation'),
     path('<id>/add-trip', add_trip_view, name='add_trip'),
     path('<id>/update-trip', update_trip_view, name='update_trip'),
 

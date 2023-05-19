@@ -21,9 +21,13 @@
                         <p>{% trans "Demande de" %} {{reservation.user}}</p>
                         <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
                         <div class="confirm-icons">
-                            <a href="#" data-toggle="modal" data-target="#confirm-modal" class="icon-link"><span class="icon  brand-color" data-icon="&#217;"></span></a>
-                            <a href="#" data-toggle="modal" data-target="#reject-modal"class="icon-link"><span class="icon  brand-color" data-icon="&#249;"></span></a>
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
+                            
                         </div>
+                        
                         </div>
                     {% endfor %}
                 {% else %}
@@ -37,60 +41,11 @@
         </div>
     </div>
 
-    <!-- Modals -->
-
-<!-- Confirm modal-->
-
-<div class="modal fade " id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content edit-modal">
-        <div class="modal-header">
-          
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body text-center">
-          <h3 class="text-center">{% trans 'Ajouter une dépense' %}</h3>
-          <div class="row mt-5">
-            <div class="col">
-              <div class="choice-card">
-                <a href={% url 'add_energy' car.id %}>
-                  <img src="{% static 'assets/img/top-illustration/add_energy.svg' %}" alt="Charges sharing" class="card-illustration">
-                  <p class="choice-title">{% trans 'Énergie' %}</p>
-                </a>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="choice-card">
-                <a href={% url 'add_repair' car.id %}>
-                    <img src="{% static 'assets/img/top-illustration/repair.svg' %}" alt="Charges sharing" class="card-illustration">
-                    <p class="choice-title">{% trans 'Entretien/Réparation' %}</p>
-                </a>
-              </div>
-            </div>
-
-            <div class="col">
-              <div class="choice-card">
-                <a href={% url 'create_insurance' car.id %}>
-                    <img src="{% static 'assets/img/top-illustration/insurance.svg' %}" alt="Charges sharing" class="card-illustration">
-                    <p class="choice-title">{% trans 'Assurance' %}</p>
-                </a>
-              </div>
-            </div>
-         </div>
-            
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-kbrand rounded-btn" data-dismiss="modal">{% trans 'Annuler' %}</button>
-          
-        </div>
-      </div>
-    </div>
-  </div>
 
 
+
+<div class="modal fade" id="show_modal" role="dialog">
+</div>
 
 
 
