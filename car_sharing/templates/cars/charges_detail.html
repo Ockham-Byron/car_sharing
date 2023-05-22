@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n %}
+{% load static i18n avatar %}
 
 {% block title %}{% trans 'Charges' %}{% endblock %}
 
@@ -23,7 +23,11 @@
                 <div>
                 {% for i in car_paid_by %}
                     <div class="profile-minicard mt-3">
+                    {% if user.avatar %}
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                    {% else %}
+                    {{ request.user|avatar }}
+                    {% endif %}
                         <p>{{ i.user.username }}</p>
                         <p class="amount-info">{{i.price_paid}} €</p>
                     </div>
@@ -93,7 +97,11 @@
             <h4 class="dark-color">{% trans 'Énergie' %}</h4>
             {% for i in energy_by_user %}
                     <div class="profile-minicard mt-3">
+                        {% if user.avatar %}
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                    {% else %}
+                    {{ request.user|avatar }}
+                    {% endif %}
                         <p>{{ i.user.username }}</p>
                         <p class="amount-info">{{i.total_paid}} €</p>
                     </div>
@@ -134,7 +142,11 @@
             <h4 class="dark-color">{% trans 'Entretien & Réparations' %}</h4>
             {% for i in repair_by_user %}
                     <div class="profile-minicard mt-3">
+                        {% if user.avatar %}
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                        {% else %}
+                        {{ request.user|avatar }}
+                        {% endif %}
                         <p>{{ i.user.username }}</p>
                         <p class="amount-info">{{i.total_paid}} €</p>
                     </div>

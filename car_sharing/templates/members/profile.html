@@ -70,21 +70,8 @@
             <div class="col-md-3">
                 <div class="profile-detail-card brand-border">
                 <h5>{% trans "Mes dépenses" %}</h5>
-                {% if reservations_to_confirm %}
-                    {% for reservation in reservations_to_confirm %}
-                        <div class="detail-card">
-                        <p>{% trans "Demande de" %} {{reservation.user}}</p>
-                        <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
-                        <div class="confirm-icons">
-                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
-								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
-                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
-								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
-                            
-                        </div>
-                        
-                        </div>
-                    {% endfor %}
+                {% if charges != 0 %}
+                    <p class="amount-info">{{charges}} € </p>
                 {% else %}
                     <div class="info-card">
                         <p>{% trans 'Pas de dépense enregistrée' %}</p>

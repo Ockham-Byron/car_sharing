@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import *
-from cars.models import Car, Reservation, Trip
+from cars.models import Car, Reservation, Trip, PurchaseParticipation, Insurance, InsuranceParticipation, Energy, Repair
 
 @login_required
 def profile_view(request, id):
@@ -34,6 +34,41 @@ def profile_view(request, id):
                 trip_nb_km = user_trip.nb_km_end - user_trip.nb_km_start
                 nb_kms += trip_nb_km
 
+    charges = 0
+    purchase_part = 0
+    insurance_part = 0
+    energy = 0
+    repair = 0
+    for car in cars:
+        if PurchaseParticipation.objects.filter(car=car).exists():
+            purchase_parts = PurchaseParticipation.objects.filter(car=car)
+            user_purchase_part = purchase_parts.get(user=request.user)
+            purchase_part = user_purchase_part.price_paid
+        if Insurance.objects.filter(car=car).exists():
+            insurances = Insurance.objects.filter(car=car)
+            for i in insurances:
+                if InsuranceParticipation.objects.filter(insurance = i).exists():
+                    insurance_parts = InsuranceParticipation.objects.filter(insurance=i).exists()
+                    user_insurance_parts = insurance_parts.filter(user=request.user)
+                    for i in user_insurance_parts:
+                        insurance_part += i.price_paid
+        if Energy.objects.filter(car=car).exists():
+            energies = Energy.objects.filter(car=car)
+            user_energies = energies.filter(paid_by=request.user)
+            for i in user_energies:
+                energy += i.price
+        if Repair.objects.filter(car=car).exists():
+            repairs = Repair.objects.filter(car=car)
+            user_repairs = repairs.filter(paid_by=request.user)
+            for i in user_repairs:
+                repair += i.price
+
+
+            
+
+    charges = purchase_part + insurance_part + energy + repair
+    print(charges)
+
 
     context = {
         'user': user,
@@ -43,6 +78,11 @@ def profile_view(request, id):
         'waiting_reservations':waiting_reservations,
         'user_trips': user_trips,
         'nb_kms':nb_kms,
+        'charges':charges,
+        'purchase_part':purchase_part,
+        'insurance_part': insurance_part,
+        'energy': energy,
+        'repair':repair,
         }
     
     return render(request, 'members/profile.html', context=context)

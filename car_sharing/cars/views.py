@@ -725,7 +725,7 @@ def add_energy_view(request, id):
             energy.instance.paid_by = paid_by
             energy.instance.type_energy = type_energy
             energy.save()
-            return redirect('costs_detail', car.slug, car.id)
+            return redirect('costs_detail', car.slug)
     else:
         print(form.errors.as_data)
 
