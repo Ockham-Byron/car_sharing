@@ -1,9 +1,15 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, AuthenticationForm
+from django.utils.translation import gettext_lazy as _
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
 
 class CustomUserCreationForm(UserCreationForm):
     register_user = forms.BooleanField(widget=forms.HiddenInput, initial=True)
+
+    email = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': _('Courriel')}))
+    password1 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe')}))
+    username = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': _('Courriel')}))
+    password2 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe bis')}))
 
     class Meta:
         model = CustomUser
@@ -11,8 +17,8 @@ class CustomUserCreationForm(UserCreationForm):
 
 class CustomUserLoginForm(forms.Form):
     login_user = forms.BooleanField(widget=forms.HiddenInput, initial=True)
-    email = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': 'Email'}))
-    password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+    email = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': _('Courriel')}))
+    password = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe')}))
 
     class Meta:
         model = CustomUser

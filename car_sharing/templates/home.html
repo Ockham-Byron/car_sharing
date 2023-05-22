@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block content %}
 
 
 
-<div class="auth-container">
+<div class="auth-container" id="auth-container">
+
       <div class="forms-auth-container">
         <div class="signin-signup">
           <form action="#" class="sign-in-form" method="POST">
@@ -22,6 +23,8 @@
               {{login_form.password}}
             </div>
             <button type="submit"  class="rounded-btn btn-kdark solid" value="login">{% trans "C'est parti" %}</button>
+            <img class="d-block d-sm-none" src="{% static 'assets/img/home-illustration/arrow.png' %}" style="height:50px;"/>
+
             
           </form>
           <form action="#" class="sign-up-form" method="POST">
@@ -29,19 +32,19 @@
           {{ signup_form.register_user}}
             <h2 class="title">{% trans 'Monter à bord' %}<span class="brand-color">.</span></h2>
             <div class="input-field">
-              <i class="fas fa-user"></i>
+              <span class="icon lock-icon" data-icon="&#80;"></span>
               {{ signup_form.username}}
             </div>
             <div class="input-field">
-              <i class="fas fa-envelope"></i>
+              <span class="icon lock-icon" data-icon="&#193;"></span>
               {{ signup_form.email}}
             </div>
             <div class="input-field">
-              <i class="fas fa-lock"></i>
+              <span class="icon lock-icon" data-icon="&#95;"></span>
               {{ signup_form.password1}}
             </div>
             <div class="input-field">
-              <i class="fas fa-lock"></i>
+              <span class="icon lock-icon" data-icon="&#95;"></span>
               {{ signup_form.password2}}
             </div>
             <button type="submit" class="rounded-btn btn-kdark" value="Sign up">{% trans "C'est parti" %}</button>
@@ -54,10 +57,7 @@
         <div class="panel left-panel">
           <div class="content">
             <h3>{% trans 'Ici pour la première fois ?' %}</h3>
-            <p>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-              ex ratione. Aliquid!
-            </p>
+            
             <button class="rounded-btn transparent" id="sign-up-btn">
               {% trans 'Monter à bord' %}
             </button>
@@ -67,10 +67,7 @@
         <div class="panel right-panel">
           <div class="content">
             <h3>{% trans "Déjà des nôtres ?" %} </h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-              laboriosam ad deleniti.
-            </p>
+            
             <button class="rounded-btn transparent" id="sign-in-btn">
               {% trans 'En route' %}
             </button>
@@ -78,9 +75,74 @@
           
         </div>
       </div>
+</div>
+
+<section class="presentation text-center pt-3 pb-5">
+  <img class="home_logo " src="{% static 'assets/img/cocarco_logo.png' %}"/>
+  <h2 class= "dark-color">CoCarCo</h2>
+  <h4 class= "dark-color">{% trans "L'application qui facilite la gestion d'une voiture partagée" %}<span class="brand-color">.</span></h4>
+  <div class="row justify-content-center mt-1">
+    <div class="col-md-5 same-height-around">
+      <img class="presentation_illustration slide-right " src="{% static 'assets/img/home-illustration/payment.svg' %}"/>
     </div>
+    <div class="col-md-4 same-height-center">
+    <h4 class="title">{% trans "Gardez une trace des charges payées" %}<span class="brand-color">.</span></h4>
+    <p>{% trans "Essence, changement d'huile, réparation importantes, etc. "%}</p>
+    <p>{% trans "Restez à jour des montants payés par chaque personne utilisant la voiture partagée." %}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-5 flex-row-reverse">
+  <div class="col-md-5 same-height-around">
+      <img class="presentation_illustration slide-left " src="{% static 'assets/img/home-illustration/road_trip.svg' %}"/>
+    </div>
+    <div class="col-md-4 same-height-center">
+    <h4 class="title">{% trans "Gardez une trace des km effectués" %}<span class="brand-color">.</span></h4>
+    <p>{% trans "Il y en a qui traversent l'Europe, d'autres qui font un saut de puce en ville."%}</p>
+    <p>{% trans "Restez à jour des kilomètres effectués par chaque personne utilisant la voiture partagée." %}</p>
+      
+    </div>
+    
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-5 same-height-around">
+      <img class="presentation_illustration slide-right " src="{% static 'assets/img/home-illustration/graphic.svg' %}"/>
+    </div>
+    <div class="col-md-4 same-height-center">
+    <h4 class="title">{% trans "Comparez le ratio charges/utilisation" %}<span class="brand-color">.</span></h4>
+    <p>{% trans "Les bons comptes font les bons copros."%}</p>
+    <p>{% trans "Vérifiez régulièrement que la participation de chaque personne est juste par rapport à l'entente initiale." %}</p>
+    </div>
+  </div>
+
+  <div class="row justify-content-center mt-5 flex-row-reverse">
+   <div class="col-md-5 same-height-around">
+      <img class="presentation_illustration slide-left " src="{% static 'assets/img/home-illustration/Calendar.svg' %}"/>
+    </div>
+    <div class="col-md-4 same-height-center">
+    <h4 class="title">{% trans "Gérez les réservations" %}<span class="brand-color">.</span></h4>
+    <p>{% trans "Envoyez une acceptez une demande de réservation."%}</p>
+    <p>{% trans "Soyez au courant des disponibilités du véhicule partagé et des besoins des personnes qui partagent la voiture." %}</p>
+      
+    </div>
+   
+  </div>
+
+  <div class="row justify-content-center mt-5">
+    <div class="col-md-5 same-height-around">
+      <img class="presentation_illustration slide-right " src="{% static 'assets/img/home-illustration/messages.svg' %}"/>
+    </div>
+    <div class="col-md-4 same-height-center">
+    <h4 class="title">{% trans "Envoyez-vous des petits mots" %}<span class="brand-color">.</span></h4>
+    <p>{% trans "Des gâteaux dans la boîte à gants, un bruit bizarre à vérifier ?"%}</p>
+    <p>{% trans "Collez un post-it sur le tableau de bord virtuel !" %}</p>
+    </div>
+  </div>
+</section>
 
  
+
 
 
 {% endblock %}
@@ -100,6 +162,30 @@ sign_in_btn.addEventListener("click", () => {
   container.classList.remove("sign-up-mode");
 });
 
+</script>
+
+
+
+<script>
+  function reveal() {
+    var reveals = document.querySelectorAll(".slide-right, .slide-left");
+    for (var i = 0; i < reveals.length; i++) {
+    var windowHeight = window.innerHeight;
+    var elementTop = reveals[i].getBoundingClientRect().top;
+    var elementVisible = 150;
+    if (elementTop < windowHeight - elementVisible) {
+      reveals[i].classList.add("active");
+    } else {
+      reveals[i].classList.remove("active");
+    }
+  }
+
+  }
+
+  window.addEventListener("scroll", reveal);
+
+// To check the scroll position on page load
+reveal();
 </script>
 
 {% endblock %}
