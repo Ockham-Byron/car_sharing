@@ -300,6 +300,10 @@ a.cost__slide__item, a.trip__slide__item {
    Profile
    ========================================================================== */
 
+   .profile-container {
+    min-height: 100vh;
+   }
+
    .profile-card img{
     width:150px;
     height: 150px;
@@ -338,7 +342,7 @@ box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
 
    .detail-card, .info-card {
     padding-top:5px;
-    background-color:var(--dark-color);
+    background-color:var(--mid-color);
     color:var(--light-color);
     border-radius: 20px;
    }

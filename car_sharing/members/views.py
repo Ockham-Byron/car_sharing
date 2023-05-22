@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from .models import *
-from cars.models import Car, Reservation
+from cars.models import Car, Reservation, Trip
 
 @login_required
 def profile_view(request, id):
@@ -16,10 +16,23 @@ def profile_view(request, id):
 
     reservations = None
     reservations_to_confirm = None
+    waiting_reservations = None
     for car in cars:
         if Reservation.objects.filter(car=car).exists():
             reservations = Reservation.objects.filter(car=car)
             reservations_to_confirm = reservations.filter(status = "pending").exclude(user=request.user)
+            waiting_reservations = reservations.filter(status="pending", user=request.user)
+
+    trips = None
+    user_trips = None
+    nb_kms = 0
+    for car in cars:
+        if Trip.objects.filter(car=car).exists():
+            trips = Trip.objects.filter(car=car)
+            user_trips = trips.filter(user=request.user)
+            for user_trip in user_trips:
+                trip_nb_km = user_trip.nb_km_end - user_trip.nb_km_start
+                nb_kms += trip_nb_km
 
 
     context = {
@@ -27,6 +40,9 @@ def profile_view(request, id):
         'car':car,
         'reservations': reservations,
         'reservations_to_confirm':reservations_to_confirm,
+        'waiting_reservations':waiting_reservations,
+        'user_trips': user_trips,
+        'nb_kms':nb_kms,
         }
     
     return render(request, 'members/profile.html', context=context)

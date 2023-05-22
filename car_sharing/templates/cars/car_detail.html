@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n l10n static mathfilters %}
+{% load i18n l10n static mathfilters avatar %}
 {% block title %}{{car.name}}{% endblock %}
 
 {% block content %}
@@ -48,7 +48,13 @@
             {% for user in car.users.all %}
                 <div class="col-3">
                     <div class="profile-minicard">
+                    
+                    {% if user.avatar %}
                     <img src={{user.avatar.url}} alt="{{ user.username }}">
+                    {% else %}
+                    {{ request.user|avatar }}
+                    {% endif %}
+                   
                     <p>{{ user.username }}</p>
                     </div>
                 </div>
@@ -320,7 +326,10 @@ const data = {
                     {
                         id: 'reservation',
                         title:  "{{ reservation.user }}",
+                        {% if user.avatar %}
                         image_url: "{{ reservation.user.avatar.url}}",
+                        
+                        {% endif %}
                         start: '{{ reservation.reservation_start | date:"Y-m-d" }}',
                         end: '{{ reservation.reservation_end_calendar | date:"Y-m-d" }}',
                         allDay :true,

@@ -92,6 +92,10 @@ span.underline-light {
 	border-color:var(--brand-color) !important;
 }
 
+.dark-boder {
+	border-color:var(--dark-color)!important;
+}
+
 /* ==========================================================================
    Buttons
    ========================================================================== */
@@ -693,4 +697,53 @@ box-shadow: 0 0 0 30px var(--mid-color) inset !important;
 	  }
   }
   
+/*========================================
+          Avatar
+========================================*/
+
+.avatar {
+	height: 80px;
+	width: 80px;
+	border-radius:50%;
+	font-size:40px;
+	
+	
+	
+  }
   
+  .initial {
+	
+	fill:white;
+  
+  }
+  .color-1 {
+   fill: #005f73;
+  }
+  
+  .color-2 {
+	fill: #0A9396;
+  
+  }
+  .color-3 {
+	fill:#94D9BD;
+  }
+  
+  .color-4 {
+	fill:#EE9B00;
+  }
+  
+  .color-5 {
+	fill:#CA6702;
+  }
+  
+  .color-6 {
+	fill:#BB3E03;
+  }
+  
+  .color-7 {
+	fill:#AE2012;
+  }
+  
+  .color-8 {
+	fill:#9B2226;
+  }

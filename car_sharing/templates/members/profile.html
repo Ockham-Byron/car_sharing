@@ -1,17 +1,24 @@
 {% extends 'base.html' %}
-{% load static i18n %}
+{% load static i18n avatar %}
 {% block title%}{{user.username}}{%endblock%}
 {% block content %}
     {% include 'includes/header.html' %}
-    <div class="container pt-5 pb-5 mb-5">
-        <div class="row text-center pt-md-5 mt-md-5 d-flex justify-content-center">
+    <div class="container pt-5 pb-5 mb-5 d-flex profile-container" >
+        <div class="row text-center my-auto">
+
             <div class="col-12">
             <div class="profile-card">
+                    {% if user.avatar %}
                     <img src={{user.avatar.url}} alt="{{ user.username }}">
+                    {% else %}
+                    {{ request.user|avatar }}
+                    {% endif %}
                     <p>{{ user.username }}</p>
                     </div>
             
             </div>
+            <div class="col-12 mt-5">
+            <div class="row">
             <div class="col-md-3">
                 <div class="profile-detail-card brand-border">
                 <h5>{% trans "Réservations à confirmer" %}</h5>
@@ -37,6 +44,83 @@
                 {% endif %}
                 </div>
                 
+            </div>
+
+            <div class="col-md-3">
+                <div class="profile-detail-card dark-border">
+                <h5>{% trans "Mes réservations en attente" %}</h5>
+                {% if waiting_reservations %}
+                    {% for reservation in waiting_reservations %}
+                        <div class="detail-card">
+                        <p>{% trans "Demande" %}</p>
+                        <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
+                        
+                        
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="info-card">
+                        <p>{% trans 'Aucune réservation en attente' %}</p>
+                    </div>
+                {% endif %}
+                </div>
+                
+            </div>
+
+            <div class="col-md-3">
+                <div class="profile-detail-card brand-border">
+                <h5>{% trans "Mes dépenses" %}</h5>
+                {% if reservations_to_confirm %}
+                    {% for reservation in reservations_to_confirm %}
+                        <div class="detail-card">
+                        <p>{% trans "Demande de" %} {{reservation.user}}</p>
+                        <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
+                        <div class="confirm-icons">
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
+                            
+                        </div>
+                        
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="info-card">
+                        <p>{% trans 'Pas de dépense enregistrée' %}</p>
+                    </div>
+                {% endif %}
+                </div>
+                
+            </div>
+
+            <div class="col-md-3">
+                <div class="profile-detail-card brand-border">
+                <h5>{% trans "Mes trajets" %}</h5>
+                {% if user_trips %}
+                    {% for reservation in reservations_to_confirm %}
+                        <div class="detail-card">
+                        <p>{% trans "Demande de" %} {{reservation.user}}</p>
+                        <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
+                        <div class="confirm-icons">
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
+                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
+								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
+                            
+                        </div>
+                        
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="info-card">
+                        <p>{% trans 'Pas de trajet enregistré' %}</p>
+                    </div>
+                {% endif %}
+                </div>
+                
+            </div>
+            </div>
             </div>
         </div>
     </div>
