@@ -743,6 +743,10 @@ box-shadow: 0 0 0 30px var(--mid-color) inset !important;
   .color-6 {
 	fill:#BB3E03;
   }
+
+  .border-color6 {
+	border-color:#BB3E03 !important;
+  }
   
   .color-7 {
 	fill:#AE2012;

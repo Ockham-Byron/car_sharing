@@ -85,7 +85,8 @@
         margin-bottom:10%;
     }
     .abstract-form {
-        padding-top:20%;
+        padding-top:10%;
+        margin-top:30px !important;
     }
 }
 

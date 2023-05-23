@@ -48,13 +48,13 @@
             {% for user in car.users.all %}
                 <div class="col-3">
                     <div class="profile-minicard">
-                    
+                    <a href="{% url 'profile' user.id %}">
                     {% if user.avatar %}
                     <img src={{user.avatar.url}} alt="{{ user.username }}">
                     {% else %}
                     {{ user|avatar }}
                     {% endif %}
-                   
+                    </a>
                     <p>{{ user.username }}</p>
                     </div>
                 </div>

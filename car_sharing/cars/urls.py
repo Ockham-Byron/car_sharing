@@ -27,7 +27,7 @@ urlpatterns = [
     path('<id>/update-trip', update_trip_view, name='update_trip'),
 
     #charges
-    path('<id>/create/', insurance_create_view, name='create_insurance'),
+    path('<id>/add-insurance/', insurance_create_view, name='create_insurance'),
     path('<id>/add_insurance_parts', first_update_insurance_participations, name='add_insurance_participation'),
     path('<id>/update/', insurance_update_view, name='update_insurance'),
     path('<id>/update_insurance_contribution', update_insurance_participation, name='update_insurance_participation'),

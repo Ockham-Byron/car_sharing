@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% load static i18n avatar %}
+{% load static i18n avatar mathfilters %}
 {% block title%}{{user.username}}{%endblock%}
 {% block content %}
     {% include 'includes/header.html' %}
-    <div class="container pt-5 pb-5 mb-5 d-flex profile-container" >
+    <div class="container mt-5 pt-5 pb-5 mb-5 d-flex profile-container" >
         <div class="row text-center my-auto">
 
             <div class="col-12">
@@ -22,7 +22,7 @@
             </div>
             <div class="col-12 mt-5">
             <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 mt-3">
                 <div class="profile-detail-card brand-border">
                 <h5>{% trans "Réservations à confirmer" %}</h5>
                 {% if reservations_to_confirm %}
@@ -30,6 +30,7 @@
                         <div class="detail-card">
                         <p>{% trans "Demande de" %} {{reservation.user}}</p>
                         <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
+                        {% if user == request.user %}
                         <div class="confirm-icons">
                             <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
 								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
@@ -37,6 +38,7 @@
 								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
                             
                         </div>
+                        {% endif %}
                         
                         </div>
                     {% endfor %}
@@ -49,9 +51,9 @@
                 
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 mt-3">
                 <div class="profile-detail-card dark-border">
-                <h5>{% trans "Mes réservations en attente" %}</h5>
+                <h5>{% trans "Réservations en attente" %}</h5>
                 {% if waiting_reservations %}
                     {% for reservation in waiting_reservations %}
                         <div class="detail-card">
@@ -70,34 +72,55 @@
                 
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 mt-3">
                 <div class="profile-detail-card border-color1">
-                <h5>{% trans "Mes dépenses" %}</h5>
+                <h5>{% trans "Dépenses" %}</h5>
                 {% if charges != 0 %}
                     <p class="amount-info">{{charges}} € </p>
                 {% else %}
                     <div class="info-card">
+                    {% if user == request.user%}
                         <p>{% trans 'Ajouter votre première dépense' %}</p>
+                    {% else %}
+                     <p>{% trans 'Aucune dépense enregistrée' %}</p>
+                     {% endif %}
                     </div>
                 {% endif %}
                 </div>
                 
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 mt-3">
                 <div class="profile-detail-card border-color8">
-                <h5>{% trans "Mes trajets" %}</h5>
+                <h5>{% trans "Kilomètres parcourus" %}</h5>
                 {% if nb_kms != 0 %}
                     <p class="amount-info">{{nb_kms}} km </p>
                 {% else %}
                     <div class="info-card">
+                    {% if user == request.user %}
                         <p>{% trans 'Ajouter votre premier trajet' %}</p>
+                    {% else %}
+                    <p>{% trans 'Aucun trajet enregistré' %}</p>
+                    {% endif %}
                     </div>
                 {% endif %}
                 </div>
                 
             </div>
+
+        </div>
+        {% if ratio != 0 %}
+        <div class="row justify-content-center d-flex mt-3">
+            <div class="col-md-3">
+                <div class="profile-detail-card border-color6">
+                <h5>{% trans "Coût par km" %}</h5>
+                
+                <p>{{ratio}} €/km</p>
+                
+                </div>
             </div>
+        </div>
+        {% endif%}
             </div>
         </div>
     </div>

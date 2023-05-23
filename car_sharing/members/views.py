@@ -22,8 +22,8 @@ def profile_view(request, id):
     for car in cars:
         if Reservation.objects.filter(car=car).exists():
             reservations = Reservation.objects.filter(car=car)
-            reservations_to_confirm = reservations.filter(status = "pending").exclude(user=request.user)
-            waiting_reservations = reservations.filter(status="pending", user=request.user)
+            reservations_to_confirm = reservations.filter(status = "pending").exclude(user=user)
+            waiting_reservations = reservations.filter(status="pending", user=user)
 
     trips = None
     user_trips = None
@@ -31,7 +31,7 @@ def profile_view(request, id):
     for car in cars:
         if Trip.objects.filter(car=car).exists():
             trips = Trip.objects.filter(car=car)
-            user_trips = trips.filter(user=request.user)
+            user_trips = trips.filter(user=user)
             for user_trip in user_trips:
                 trip_nb_km = user_trip.nb_km_end - user_trip.nb_km_start
                 nb_kms += trip_nb_km
@@ -44,32 +44,39 @@ def profile_view(request, id):
     for car in cars:
         if PurchaseParticipation.objects.filter(car=car).exists():
             purchase_parts = PurchaseParticipation.objects.filter(car=car)
-            user_purchase_part = purchase_parts.get(user=request.user)
-            purchase_part = user_purchase_part.price_paid
+            if purchase_parts.filter(user=user).exists():
+                user_purchase_part = purchase_parts.get(user=user)
+                purchase_part = user_purchase_part.price_paid
         if Insurance.objects.filter(car=car).exists():
             insurances = Insurance.objects.filter(car=car)
             for i in insurances:
                 if InsuranceParticipation.objects.filter(insurance = i).exists():
-                    insurance_parts = InsuranceParticipation.objects.filter(insurance=i).exists()
-                    user_insurance_parts = insurance_parts.filter(user=request.user)
+                    insurance_parts = InsuranceParticipation.objects.filter(insurance=i)
+                    user_insurance_parts = insurance_parts.filter(user=user)
                     for i in user_insurance_parts:
                         insurance_part += i.price_paid
         if Energy.objects.filter(car=car).exists():
             energies = Energy.objects.filter(car=car)
-            user_energies = energies.filter(paid_by=request.user)
+            user_energies = energies.filter(paid_by=user)
             for i in user_energies:
                 energy += i.price
         if Repair.objects.filter(car=car).exists():
             repairs = Repair.objects.filter(car=car)
-            user_repairs = repairs.filter(paid_by=request.user)
+            user_repairs = repairs.filter(paid_by=user)
             for i in user_repairs:
                 repair += i.price
 
 
-            
+    
+           
 
     charges = purchase_part + insurance_part + energy + repair
-    print(charges)
+
+    ratio = 0
+    if nb_kms != 0 and charges != 0:
+        ratio = round(charges / nb_kms, 2)
+    print(ratio)
+    
 
 
     context = {
@@ -85,6 +92,7 @@ def profile_view(request, id):
         'insurance_part': insurance_part,
         'energy': energy,
         'repair':repair,
+        'ratio':ratio,
         }
     
     return render(request, 'members/profile.html', context=context)

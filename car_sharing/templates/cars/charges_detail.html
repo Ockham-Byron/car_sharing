@@ -52,7 +52,9 @@
                 {% trans 'Assurance' %}
             </h4>
             {% if current_insurance == None %}
-                <a href="#" class="rounded-btn transparent">{% trans 'Ajouter Assurance en cours' %}</a>
+                <div class="text-center">
+                <a href="{% url 'create_insurance' car.id %}" class="rounded-btn transparent">{% trans 'Ajouter Assurance en cours' %}</a>
+                </div>
             {% endif %}
             {% if insurances %}
             <table class="table table-border-less mt-3">
@@ -66,7 +68,9 @@
                         {% if user.avatar%}
                         <img class="profile-table" src={{user.avatar.url}} alt={{user.username}}>
                         {% else %}
+                        <div class="profile-table">
                          {{ user|avatar }}
+                         </div>
                         {% endif %}
                         </th>
                         {% endfor %}
@@ -149,7 +153,7 @@
             <h4 class="dark-color">{% trans 'Entretien & Réparations' %}</h4>
             {% for i in repair_by_user %}
                     <div class="profile-minicard mt-3">
-                        {% if user.avatar %}
+                        {% if i.user.avatar %}
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
                         {% else %}
                         {{ i.user|avatar }}
