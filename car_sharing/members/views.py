@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+
+from members.forms import CustomUserChangeForm
 from .models import *
 from cars.models import Car, Reservation, Trip, PurchaseParticipation, Insurance, InsuranceParticipation, Energy, Repair
 
@@ -91,4 +93,17 @@ def logout_view(request):
     logout(request)
     
     return redirect('home')
+
+@login_required
+def update_profile_view(request, id):
+    user = CustomUser.objects.get(id=id);
+    form = CustomUserChangeForm(instance = user)
+
+    if request.method == 'POST':
+        form = CustomUserChangeForm(request.POST, instance=user)
+        if form.is_valid():
+            user = form.save()
+            return redirect('profile', user.id)
+
+    return render(request, 'members/update_profile_form.html', {'form': form, 'user': user})
 

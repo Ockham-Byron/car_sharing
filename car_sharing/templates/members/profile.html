@@ -11,9 +11,12 @@
                     {% if user.avatar %}
                     <img src={{user.avatar.url}} alt="{{ user.username }}">
                     {% else %}
-                    {{ request.user|avatar }}
+                    {{ user|avatar }}
                     {% endif %}
                     <p>{{ user.username }}</p>
+                    {% if user == request.user %}
+                    <a href="{% url 'update_profile' user.id %}" style="display:inline-block;" class="icon-link"><span class="icon  dark-color" data-icon="&#110;"></span></a>
+                    {% endif %}
                     </div>
             
             </div>
@@ -68,13 +71,13 @@
             </div>
 
             <div class="col-md-3">
-                <div class="profile-detail-card brand-border">
+                <div class="profile-detail-card border-color1">
                 <h5>{% trans "Mes dépenses" %}</h5>
                 {% if charges != 0 %}
                     <p class="amount-info">{{charges}} € </p>
                 {% else %}
                     <div class="info-card">
-                        <p>{% trans 'Pas de dépense enregistrée' %}</p>
+                        <p>{% trans 'Ajouter votre première dépense' %}</p>
                     </div>
                 {% endif %}
                 </div>
@@ -82,26 +85,13 @@
             </div>
 
             <div class="col-md-3">
-                <div class="profile-detail-card brand-border">
+                <div class="profile-detail-card border-color8">
                 <h5>{% trans "Mes trajets" %}</h5>
-                {% if user_trips %}
-                    {% for reservation in reservations_to_confirm %}
-                        <div class="detail-card">
-                        <p>{% trans "Demande de" %} {{reservation.user}}</p>
-                        <p>{% trans 'du' %} {{reservation.reservation_start| date:'d-m'}} {% trans 'au' %} {{reservation.reservation_end | date:'d-m '}}</p>
-                        <div class="confirm-icons">
-                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
-								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#217;"></span></button>
-                            <button onclick="open_modal('{% url 'confirm_reservation' reservation.id %}');"
-								            type="button" class="btn-klink"><span class="icon  brand-color" data-icon="&#249;"></span></button>
-                            
-                        </div>
-                        
-                        </div>
-                    {% endfor %}
+                {% if nb_kms != 0 %}
+                    <p class="amount-info">{{nb_kms}} km </p>
                 {% else %}
                     <div class="info-card">
-                        <p>{% trans 'Pas de trajet enregistré' %}</p>
+                        <p>{% trans 'Ajouter votre premier trajet' %}</p>
                     </div>
                 {% endif %}
                 </div>

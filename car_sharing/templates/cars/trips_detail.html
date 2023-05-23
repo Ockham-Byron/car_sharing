@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static i18n mathfilters %}
+{% load static i18n mathfilters avatar %}
 
 {% block title %}{% trans 'Trajets' %}{% endblock %}
 
@@ -12,7 +12,11 @@
     <h2 class="mt-5">{% trans "Trajets" %}</h2>
     {% for i in trips_by_user %}
                     <div class="profile-minicard mt-3">
+                        {% if i.user.avatar %}
                         <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                        {% else %}
+                        {{ request.user|avatar }}
+                        {% endif %}
                         <p>{{ i.user.username }}</p>
                         <p class="amount-info">{{i.nb_km_by_user}} km <br/> {% trans 'pour' %} {{i.nb_trips_by_user}} {% trans 'trajets' %}</p>
                     </div>
@@ -36,7 +40,11 @@
 
                     <div class="col-4 text-center">
                     <div class="profile-miniminicard mt-3">
+                        {% if trip.user.avatar %}
                         <img src={{trip.user.avatar.url}} alt="{{ trip.user.username }}">
+                        {% else %}
+                        {{ request.user|avatar }}
+                        {% endif %}
                         <p>{{ trip.user.username }}</p>
                        
                     </div>

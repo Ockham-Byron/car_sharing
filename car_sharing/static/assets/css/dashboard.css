@@ -323,13 +323,14 @@ box-shadow: 10px 10px 42px -14px rgba(0,0,0,0.56);
     font-size:12px;
    }
 
-   .profile-minicard img {
+   .profile-minicard img, .profile-minicard .avatar {
     width: 80px;
     height: 80px;
     border-radius: 50%;
    }
 
-   .profile-miniminicard img {
+   .profile-miniminicard img, .profile-miniminicard .avatar {
+    font-size:15px !important;
     width: 30px;
     height: 30px;
     border-radius: 50%;

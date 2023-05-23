@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load i18n static avatar %}
+{% block title %}{% trans 'Actualiser ' %}{{car.name}}{% endblock title %}
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="container form-container-small d-flex ">
+    <div class="abstract-form v-abstract-form mx-auto my-auto ">
+        
+        <div class="text-center">
+            {% if user.avatar %}
+            <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="form-top-illustration">
+            {% else %}
+            {{ user |avatar}}
+            {% endif %}
+        </div>
+        <h3 class="text-center">{% trans 'Actualiser votre profil' %}</h3>
+        <div class="row justify-content-center">
+            <div class="form-content">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                        <div class="form-group">
+                            <label>{% trans 'Pseudo' %}:</label>
+                            {{ form.username}}
+                            <span class="light-color">{{form.username.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{% trans 'Courriel' %}:</label>
+                            {{ form.email}}
+                            <span class="light-color">{{form.email.errors}}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{% trans "Mot de passe" %}:</label>
+                            {{ form.password1 }}
+                            <span class="light-color">{{form.password1.errors}}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{% trans "Répétez le mot de passe" %}:</label>
+                            {{ form.password2 }}
+                            <span class="light-color">{{form.password2.errors}}</span>
+                        </div>
+
+                     
+                        
+                        
+                
+                        
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn-kdark rounded-btn" name="update_car">{% trans 'Enregistrer' %}</button>
+                            <a href="{% url 'profile' user.id %}" class="btn btn-kbrand rounded-btn" >{% trans 'Annuler' %}</a>
+                        </div>
+                </form>
+            </div>
+         </div>
+    </div>
+</div>
+
+   
+
+{% endblock content %}

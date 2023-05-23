@@ -1,4 +1,4 @@
-{% load i18n mathfilters %}
+{% load i18n mathfilters avatar %}
 
 <section id="charges" class="text-center mb-3 mt-5">
 
@@ -20,14 +20,17 @@
     <p class="text-center amount-info">{{total_charges}} €</p>
     {% for total_by_user in totals_paid_by_user %}
     <div class="profile-minicard mt-3">
-        <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
-                    <p>{{ total_by_user.user.username }}</p>
-                    <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
-                    {% if total_charges != 0%}
+        {% if total_by_user.user.avatar%}
+            <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
+        {% else %}
+            {{ request.user|avatar }}
+        {% endif %}
+            <p>{{ total_by_user.user.username }}</p>
+            <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
+                {% if total_charges != 0%}
                     <p>{{total_by_user.paid_by_user|mul:100|div:total_charges|floatformat:2}} %</p>
-                    
-                    {% endif %}
-                    </div>
+                {% endif %}
+    </div>
 
      
     {% endfor %}

@@ -1,4 +1,4 @@
-{% load i18n mathfilters %}
+{% load i18n mathfilters avatar %}
 
 <section id="kilometers-section" class="text-center mt-5">
 
@@ -14,7 +14,11 @@
 
     {% for trips in trips_by_user %}
     <div class="profile-minicard mt-3">
+        {% if trips.user.avatar %}
         <img src={{trips.user.avatar.url}} alt="{{ user.username }}">
+        {% else %}
+        {{ trips.user |avatar}}
+        {% endif %}
                     <p>{{ trips.user.username }}</p>
                     <p class="amount-info">{{ trips.nb_km_trip}} km</p>
                     <p>{{trips.nb_km_trip|mul:100|div:nb_km_total|floatformat:2}} %</p>
