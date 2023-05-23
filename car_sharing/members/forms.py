@@ -25,12 +25,9 @@ class CustomUserLoginForm(forms.Form):
         fields = ('email', 'login_user', 'password')
 
 class CustomUserChangeForm(UserChangeForm):
-    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': _('Courriel')}))
-    email = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': _('Courriel')}))
-    password1 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe')}))
+    username = forms.CharField(max_length=255, widget=forms.TextInput(attrs={'placeholder': _('Courriel'), 'class':"form-control"}))
+    email = forms.CharField(max_length=255, widget=forms.EmailInput(attrs={'placeholder': _('Courriel'), 'class':"form-control"}))
     
-    password2 = forms.CharField(max_length=255, widget=forms.PasswordInput(attrs={'placeholder': _('Mot de passe bis')}))
-
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password')
+        fields = ('username', 'email', 'avatar')

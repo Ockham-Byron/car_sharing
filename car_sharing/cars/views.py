@@ -352,7 +352,7 @@ def first_update_car_participations(request, id):
         if nb_to_edit > 1:
             return redirect('add_car_participation', id)
         else:
-            return redirect('car_detail', car.id, car.slug)
+            return redirect('car_detail', car.slug)
 
         
     
@@ -373,7 +373,7 @@ def update_car_view(request, id):
             form.save()
         if 'update_car' in request.POST:
             messages.success(request, f'Véhicule {car.name} bien actualisé', extra_tags='Parfait !')
-            return redirect('car_detail', car.id, car.slug)
+            return redirect('car_detail', car.slug)
         else:
             part_id = request.POST.get('participation')
             participation = PurchaseParticipation.objects.get(id=part_id)
@@ -489,7 +489,7 @@ def first_update_insurance_participations(request, id):
         if nb_to_edit > 1:
             return redirect('add_insurance_participation', id)
         else:
-            return redirect('car_detail', car.id, car.slug)
+            return redirect('car_detail',  car.slug)
 
         
     

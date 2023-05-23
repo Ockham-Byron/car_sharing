@@ -52,7 +52,7 @@
                     {% if user.avatar %}
                     <img src={{user.avatar.url}} alt="{{ user.username }}">
                     {% else %}
-                    {{ request.user|avatar }}
+                    {{ user|avatar }}
                     {% endif %}
                    
                     <p>{{ user.username }}</p>

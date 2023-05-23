@@ -89,6 +89,34 @@
     }
 }
 
+.avatar-upload {
+    width:100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.avatar-input {
+    width: 100px !important;
+  height: 100px !important;
+  
+  margin: auto;
+  
+  border-radius: 100%;
+  position: relative;
+}
+
+.change-image {
+    font-size:20px;
+    background-color: var(--light-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  position: absolute;
+  bottom: 20px;
+  left:190px;
+
+}
+
 /* ==========================================================================
    Modals
    ========================================================================== */

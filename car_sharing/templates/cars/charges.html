@@ -23,7 +23,7 @@
         {% if total_by_user.user.avatar%}
             <img src={{total_by_user.user.avatar.url}} alt="{{ total_by_user.user.username }}">
         {% else %}
-            {{ request.user|avatar }}
+            {{ total_by_user.user|avatar }}
         {% endif %}
             <p>{{ total_by_user.user.username }}</p>
             <p class="amount-info">{{total_by_user.paid_by_user}} €</p>
