@@ -1,3 +1,4 @@
+import sweetify
 from django.utils.translation import gettext as _
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -20,45 +21,46 @@ def home_page_view(request):
         }
 
         if request.method == 'POST':
-            print("Form pris en compte")
+            
             if 'login_user' in request.POST:
-                print("form_login_user")
+                
                 login_form = CustomUserLoginForm(request.POST)
                 if login_form.is_valid():
-                    print("form is valid")
+                    
                     email = request.POST.get('email')
                     password = request.POST.get('password')
                     user=authenticate(username = email, password = password )
                     if user is not None:
-                        print("on login success")
                         login(request, user)
                         return redirect('dashboard')
                     else:
-                        print("user no")
-                else:
-                    print(login_form.errors.as_data())
-            else:
-                print("pas login_user")
+                        if CustomUser.objects.filter(email=email).exists():
+                            sweetify.warning(request, _('Attention'), text= _('Le mot de passe ne correspond pas à ce courriel.'))
+                        else:
+                            sweetify.warning(request, _('Attention'), text= _('Aucun utilisateur enregistré avec ce courriel.'))
+                
+           
             
             if 'register_user' in request.POST:
-                
-                print("form_register_user")
+                print('register_user')
                 signup_form=CustomUserCreationForm(request.POST)
+                
                 if signup_form.is_valid():
-                    print("form is valid")
                     signup_form.save()
                     email = signup_form.cleaned_data['email']
                     password = signup_form.cleaned_data['password1']
                     user = authenticate(username = email, password = password)
                     login(request, user)
                     return redirect('dashboard')
-                    
                 else:
-                    print(signup_form.errors.as_data())
+                    list_errors = [(k, v[0]) for k, v in signup_form.errors.items()]
+                    errors = tuple(list_errors)
+                    message = errors[0][1]
+                    print(errors[0][1])
+                
+                    sweetify.warning(request, _('Attention'), text= message, persistent='Ok')
+                
 
-
-        else:
-            print("marche pas.")
         return render(request, 'home.html', context=context)
 
 def dashboard_view(request):
