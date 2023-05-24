@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static avatar %}
 {% block title %}{% trans 'Actualiser ' %}{{car.name}}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
@@ -32,7 +32,11 @@
                        
 
                     <div class="profile-minicard mt-3">
+                    {% if participation.user.avatar %}
                         <img src={{participation.user.avatar.url}} alt="{{ participation.user.username }}">
+                    {% else %}
+                    {{ participation.user|avatar }}
+                    {% endif %}
                         <p>{{ participation.user.username }}</p>
                          </div>
                         

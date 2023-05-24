@@ -3,20 +3,8 @@
 {% block title %}{% trans 'Ajouter un véhicule' %}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
-<div class="container form-container d-flex">
-    <div class="abstract-form v-abstract-form mx-auto my-auto">
-        {% if form.errors %}
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <div id="form_errors">
-                    {% for key, value in form.errors.items %}
-                    <strong>{{ value }}</strong>
-                    {% endfor %}
-                </div>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            {% endif %}
+<div class="container form-container d-flex mt-5 pt-5">
+    <div class="abstract-form v-abstract-form mx-auto">
         <div class="text-center">
             <img src="{% static 'assets/img/top-illustration/toy_car.svg' %}" alt="Charges sharing" class="form-top-illustration">
         </div>
@@ -28,24 +16,29 @@
                         <div class="form-group">
                             <label>{% trans 'Nom du véhicule' %}<span class="">*</span>:</label>
                             {{ form.name }}
+                            <span class="light-color">{{form.name.errors}}</span>
                         </div>
                         <div class="form-group">
                             <label>{% trans 'Immatriculation' %}:</label>
                             {{ form.immatriculation }}
+                            <span class="light-color">{{form.immatriculation.errors}}</span>
                         </div>
                         <div class="form-group">
                             <label>{% trans "Prix d'achat" %}<span class="">*</span>:</label>
                             {{ form.price }}
+                            <span class="light-color">{{form.price.errors}}</span>
                         </div>
 
                         <div class="form-group">
                             <label>{% trans "Énergie" %}<span class="">*</span>:</label>
                             {{ form.energy }}
+                            <span class="light-color">{{form.energy.errors}}</span>
                         </div>
 
                         <div class="form-group">
                             <label>{% trans "Nombre de co-propriétaires" %}<span class="">*</span>:</label>
                             {{ form.nb_users }}
+                            <span class="light-color">{{form.nb_users.errors}}</span>
                         </div>
                 
                         <p>*  {% trans 'Champs obligatoires' %}</p>

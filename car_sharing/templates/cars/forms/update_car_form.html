@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n static %}
+{% load i18n static avatar %}
 {% block title %}{% trans 'Actualiser ' %}{{car.name}}{% endblock title %}
 {% block content %}
 {% include 'includes/header.html' %}
@@ -52,7 +52,11 @@
                         <div class="form-group text-center">
                         {% for i in paid_by %}
                             <div class="profile-minicard mt-3">
+                                {% if i.user.avatar %}
                                 <img src={{i.user.avatar.url}} alt="{{ i.user.username }}">
+                                {% else %}
+                                {{ user|avatar }}
+                                {% endif %}
                                 <p>{{ i.user.username }}</p>
                                 <button type="submit" class="amount-info" name="participation" value={{i.id}}>{{i.price_paid}} €</button>   
                             </div>
