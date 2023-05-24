@@ -203,19 +203,18 @@ class AddRepairForm(forms.ModelForm):
                             widget=forms.NumberInput(attrs={'placeholder': _('prix'),
                                                         'class': 'form-control'
                                 }))
+    
     description = forms.CharField(widget=forms.Textarea(attrs={'placeholder': _('courte description'),
                                                               'class': 'form-control',
                                                               "rows":2, "cols":20
                                                               
-                            }))
+                                }))
     
     
 
-    paid_day = forms.DateField(widget=DateInput(format=('%Y-%m-%d'),
-                                                    attrs={'class': 'form-control', 'type':'date'},
-                                                    ),
-                            required=True,
-                            )
+    paid_day = forms.DateField(required=True, widget=DateInput( format=('%Y-%m-%d'),
+                                                    attrs={'class': 'form-control', 'type':'date'}
+                                                    ))
     class Meta:
         model = Repair
         fields = ['type_repair', 'price', 'paid_day','paid_by', 'description']

@@ -20,7 +20,12 @@
                         <div class="form-group">
                             <label>{% trans "Montant payé par " %} <span class="underline-light">{{participation.user}}</span><span class="">*</span>:</label>
                             
-                            <input class="text-center mx-auto" name="price_paid" placeholder={{participation.price_paid}}></input>
+                            
+                        </div>
+
+                        <div class="form-group">
+                            {{form.price_paid}}
+
                         </div>
 
                         

@@ -332,6 +332,7 @@ const data = {
                         {% endif %}
                         start: '{{ reservation.reservation_start | date:"Y-m-d" }}',
                         end: '{{ reservation.reservation_end_calendar | date:"Y-m-d" }}',
+                        url:"{% url 'profile' request.user.id %}",
                         allDay :true,
                         
                         {% if reservation.status == "pending" %}

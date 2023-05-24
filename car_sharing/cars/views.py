@@ -472,28 +472,28 @@ def first_update_insurance_participations(request, id):
     participations = InsuranceParticipation.objects.filter(insurance=insurance, first_complete=False)
     nb_to_edit = len(participations)
     participation = participations.all()[0]
+    form = InsuranceParticipationForm(instance=participation)
     
 
     context = {
         'insurance':insurance,
         'participations':participations,
         'participation':participation,
+        'form':form,
         
         }
     
     if request.method == 'POST':
-        price_paid = request.POST.get('price_paid')
-        participation.price_paid = price_paid
-        participation.first_complete = True
-        participation.save()
-        if nb_to_edit > 1:
-            return redirect('add_insurance_participation', id)
-        else:
-            return redirect('car_detail',  car.slug)
+        form = InsuranceParticipationForm(request.POST, instance = participation)
+        if form.is_valid():
+            participation = form.save(commit=False)
+            participation.first_complete = True
+            participation.save()
+            if nb_to_edit > 1:
+                return redirect('add_insurance_participation', id)
+            else:
+                return redirect('car_detail', car.slug)
 
-        
-    
-    print(nb_to_edit)
 
     return render(request, "cars/forms/first_update_insurance_participations.html", context=context)
 
@@ -770,19 +770,22 @@ def add_repair_view(request, id):
     car = Car.objects.get(id=id)
     users = car.users.all()
     nb_users = len(users)
+    
     form = AddRepairForm()
+   
     
 
     if request.method == 'POST':
+        
         form = AddRepairForm(request.POST)
+        
         if form.is_valid():
-            
             if nb_users == 1:
                 paid_by = request.user
             else:
                 user_id = request.POST.get('paid_by')
                 paid_by = CustomUser.objects.get(id = user_id)
-            
+    
             repair=form
             repair = repair.save(commit=False)
             
@@ -791,8 +794,8 @@ def add_repair_view(request, id):
             
             repair.save()
             return redirect('costs_detail', car.slug)
-    else:
-        print(form.errors.as_data)
+        else:
+            print(form.errors.as_data)
 
 
 

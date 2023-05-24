@@ -84,6 +84,15 @@ span.underline-light {
 	color: var(--dark-color);
 }
 
+.mid-color, a.mid-color {
+	color:var(--mid-color)!important;
+}
+
+a.mid-color:hover {
+	text-decoration: none !important;
+	color:var(--dark-color) !important;
+}
+
 .light-color {
 	color:var(--light-color) !important;
 	}

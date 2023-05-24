@@ -53,6 +53,7 @@
                         <p>*  {% trans 'Champs obligatoires' %}</p>
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                            <a href="{% url 'costs_detail' car.slug %}" class="btn btn-kbrand rounded-btn" >{% trans 'Annuler' %}</a>
                         </div>
                 </form>
             </div>

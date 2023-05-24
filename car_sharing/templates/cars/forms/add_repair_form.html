@@ -31,7 +31,7 @@
                             {{form.description}}
                             <span class="light-color">{{form.description.errors}}</span>
                         </div>
-                        {% if nb_users > 1 %}
+                        
                         <div class="form-group">
                             <label>{% trans "Payé par" %}<span class="">*</span>:</label>
                             <select name="paid_by">
@@ -39,11 +39,9 @@
                                 <option value={{user.id}}>{{user.username}}</option>
                                 {% endfor %}
                             </select>
-                            <span class="light-color">{{form.paid_by.errors}}</span>
-                        </div>
-                        {% else %}
                             
-                        {% endif %}
+                        </div>
+                       
                         <div class="form-group">
                             <label>{% trans "Facture payée le" %}<span class="">*</span>:</label>
                             {{form.paid_day}}
@@ -53,6 +51,7 @@
                         <p>*  {% trans 'Champs obligatoires' %}</p>
                         <div class="row justify-content-center">
                             <button type="submit" class="btn btn-kdark rounded-btn">{% trans 'Enregistrer' %}</button>
+                            <a href="{% url 'costs_detail' car.slug %}" class="btn btn-kbrand rounded-btn" >{% trans 'Annuler' %}</a>
                         </div>
                 </form>
             </div>

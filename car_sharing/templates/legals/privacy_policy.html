@@ -1,0 +1,68 @@
+{% extends 'base.html'%}
+{% load i18n %}
+
+{% block title%}{% trans 'Politique de confidentialité' %}{% endblock %}
+
+{% block content %} 
+{% include 'includes/header.html'%}
+
+<div class="container mt-5 pt-5">
+
+<h1 class="text-center pt-5 mt-5 pb-3">Politique de confidentialité</h1>
+
+    <p>Cette politique de confidentialité décrit comment nous recueillons, utilisons et protégeons les informations personnelles
+        que vous nous fournissez lorsque vous utilisez notre application web.</p>
+
+    <h2>Collecte des données</h2>
+
+    <p>Nous collectons les données suivantes :</p>
+
+    <ul>
+        <li>Votre adresse e-mail : nous l'utilisons pour la connexion et pour vous envoyer des informations relatives à notre application.</li>
+        <li>Le type de voiture que vous possédez : nous l'utilisons pour personnaliser votre expérience utilisateur.</li>
+        <li>La plaque d'immatriculation de votre voiture : nous l'utilisons pour l'afficher sur la page dédiée à votre voiture.</li>
+    </ul>
+
+    <h2>Stockage des données</h2>
+
+    <p>Toutes les données que nous collectons sont stockées sur des serveurs situés dans l'Espace économique européen (EEE).
+        Nous prenons des mesures de sécurité appropriées pour protéger vos informations personnelles contre toute perte,
+        utilisation abusive ou accès non autorisé.</p>
+
+    <h2>Utilisation des données</h2>
+
+    <p>Nous utilisons les données collectées dans le but de :</p>
+
+    <ul>
+        <li>Vous fournir les services de notre application web.</li>
+        <li>Personnaliser votre expérience utilisateur.</li>
+        <li>Communiquer avec vous et vous envoyer des informations relatives à notre application.</li>
+    </ul>
+
+    <h2>Divulgation des données</h2>
+
+    <p>Nous ne partageons vos informations personnelles avec aucun tiers.</p>
+
+   
+
+    <h2>Vos droits</h2>
+
+    <p>Vous avez les droits suivants concernant vos données personnelles :</p>
+
+    <ul>
+        <li>Accès : vous pouvez demander une copie des informations personnelles que nous détenons à votre sujet.</li>
+        <li>Rectification : vous pouvez demander la correction ou la mise à jour de vos informations personnelles inexactes
+            ou incomplètes.</li>
+        <li>Effacement : vous pouvez demander la suppression de vos informations personnelles, sous réserve de certaines
+            exceptions.</li>
+    </ul>
+
+    <h2>Contactez-nous</h2>
+
+    <p>Si vous avez des questions, des préoccupations ou des demandes concernant cette politique de confidentialité ou
+        nos pratiques en matière de confidentialité, veuillez nous contacter à l'adresse suivante :</p>
+
+    <p>
+        Adresse e-mail de contact</p>
+</div>
+{% endblock%}

@@ -79,3 +79,9 @@ def dashboard_view(request):
     
     
     return render(request, 'dashboard.html', context=context)
+
+def privacy_policy_view(request):
+    return render(request, 'legals/privacy_policy.html',)
+
+def terms_conditions_view(request):
+    return render(request, 'legals/terms_conditions.html',)

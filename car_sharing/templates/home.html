@@ -22,6 +22,7 @@
               <span class="icon lock-icon" data-icon="&#95;"></span>
               {{login_form.password}}
             </div>
+            
             <button type="submit"  class="rounded-btn btn-kdark solid" value="login">{% trans "C'est parti" %}</button>
             <img class="d-block d-sm-none" src="{% static 'assets/img/home-illustration/arrow.png' %}" style="height:50px;"/>
 
@@ -54,6 +55,8 @@
               <span class="icon lock-icon" data-icon="&#95;"></span>
               {{ signup_form.password2}}
             </div>
+            <p style="max-width:380px;">{% trans "En vous inscrivant, vous confirmez avoir lu et accepté les" %} <a class="mid-color" href="{% url 'terms_conditions' %}">{% trans "conditions d'utilisation" %}</a>
+            {% trans " et la " %}<a class="mid-color" href="{% url 'privacy_policy' %}">{% trans "politique de confidentialité" %}</a>.</p>
             <button type="submit" class="rounded-btn btn-kdark" value="Sign up">{% trans "C'est parti" %}</button>
            
           </form>
