@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block title %}{% trans 'Page inexistante' %}{% endblock%}
+
+{% block content%}
+
+<div class="container">
+    <div class="row justify-content-center p-5 ">
+        <div class="col-12">
+        <h1 class="text-center dark-color error-title" >;-(</h1>
+        </div>
+        <img class="error-img mx-auto" src="{% static 'assets/img/bouh.png' %}" alt="img_404">
+
+        <p class="text-center">{% trans 'Il semblerait que vous ayez emprunté un chemin de traverse. Parfois on découvre des choses extraordinaires, mais cette fois-ci, cela vous a amené à une impasse...' %}</p>
+        <div class="mt-5">
+            <a href ="{% url 'home' %}" class="rounded-btn btn-kdark">{% trans 'Retourner sur le droit chemin' %}</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock%}

@@ -25,3 +25,5 @@ urlpatterns = [
     path('cars/', include('cars.urls')),
     path('post-it/', include('postit.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+# handler404 = 'pages.views.page_not_found_view'
+

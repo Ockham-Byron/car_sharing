@@ -85,3 +85,6 @@ def privacy_policy_view(request):
 
 def terms_conditions_view(request):
     return render(request, 'legals/terms_conditions.html',)
+
+def page_not_found_view(request, exception):
+    return render(request, '404.html', status=404)

@@ -768,3 +768,45 @@ box-shadow: 0 0 0 30px var(--mid-color) inset !important;
   .border-color8 {
 	border-color:#9B2226 !important;
   }
+
+  /* ==========================================================================
+   Footer
+   ========================================================================== */
+
+   #footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+   }
+
+   @media only screen and (max-width: 768px) {
+	#footer {
+		position: relative !important;
+   }
+}
+
+    /* ==========================================================================
+   404
+   ========================================================================== */
+
+  img.error-img {
+	max-height:300px;
+	margin-top: -100px;
+
+  }
+
+  h1.error-title {
+	font-size: 10rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+
+	img.error-img {
+		max-height:300px;
+		margin-top: -30px;
+	
+	  }
+	h1.error-title {
+		font-size: 6rem !important;
+	  }
+  }
