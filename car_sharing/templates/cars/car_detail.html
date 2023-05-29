@@ -71,7 +71,7 @@
                 </div>
             {% endif %}
             </div>
-            <div class="text-center mt-3">
+            <div class="text-center mt-3 mb-3">
             <a href="{% url 'update_car' car.id %}" class="rounded-btn btn-kdark">{% trans 'Modifier' %}</a>
             </div>
         </div>
@@ -314,12 +314,13 @@ const data = {
     });
 </script>
 
+
 <script>
 
       document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
-          
+          locale:'fr',
           initialView: 'dayGridMonth',
           events: [
                 {% for reservation in reservations %}
@@ -354,6 +355,7 @@ const data = {
                 {% endfor %}
                 
             ],
+            lang: 'fr',
             eventContent: function(arg) {
                 let arrayOfDomNodes = []
                 // title event

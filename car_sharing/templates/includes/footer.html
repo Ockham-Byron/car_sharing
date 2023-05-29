@@ -1,11 +1,14 @@
 {% load i18n %}
 <footer id="footer">
+<svg class="divider" viewBox="0 0 100 100" preserveAspectRatio="none">
+  <path d="M0 0 L50 100 L100 0 Z"></path>
+</svg>
 <div class="row justify-content-center ">
-     <div class="col-md-3 text-center">
-        <a class="text-center mid-color"href="{% url 'terms_conditions' %}">{% trans "Conditions d'utilisation" %}</a>
+     <div class="col-md-3  text-center">
+        <a class="text-center brand-color"href="{% url 'terms_conditions' %}">{% trans "Conditions d'utilisation" %}</a>
     </div>
-    <div class="col-md-3 text-center">
-        <a class="text-center mid-color"href="{% url 'privacy_policy' %}">{% trans 'Politique de confidentialité' %}</a>
+    <div class="col-md-3  text-center">
+        <a class="text-center brand-color"href="{% url 'privacy_policy' %}">{% trans 'Politique de confidentialité' %}</a>
     </div>
 
     

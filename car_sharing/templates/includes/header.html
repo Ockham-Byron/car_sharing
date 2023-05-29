@@ -5,9 +5,9 @@
         
         <a class="active text-center menu__toggler " href="#" ><span class="icon" data-icon="&#83;"></span></br>{% trans 'Menu' %}</a>
                 <div class="menu__slide">
-                        <a class="slide-item" href="{% url 'dashboard' %}">{% trans 'Accueil' %}</a>
+                        <a class="slide-item" href="{% url 'home' %}">{% trans 'Accueil' %}</a>
                         <a class="slide-item" href="#">{% trans 'À propos' %}</a>
-                        <a class="slide-item" href="#">{% trans 'Offrez-moi un café' %}</a>
+                        <a class="slide-item" href="{% url 'support' %}">{% trans 'Offrez-moi un café' %}</a>
                 </div>
         {% if car %}
         <a  class= "text-center" href="{% url 'car_detail' car.slug%}"><img class="car-logo mx-auto" src="{% static 'assets/img/car-picture1.png' %}" alt="car_picture"></br>{{car.name}}</a>

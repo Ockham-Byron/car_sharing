@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import DeleteView
+
+from .forms import AddPostItForm
 from .models import *
 
 # Create your views here.
@@ -24,6 +26,22 @@ def delete_modal_view(request, id):
     }
 
     return render(request, 'postit/delete_postit_modal.html', context=context)
+
+def create_postit_view(request, id):
+    car = Car.objects.get(id=id)
+    form = AddPostItForm()
+
+    if request.method == 'POST':
+        form = AddPostItForm(request.POST)
+        if form.is_valid():
+            post_it = form.save(commit=False)
+            post_it.sender = request.user
+            post_it.car = car
+            post_it.save()
+            return redirect('car_detail', car.slug)
+
+    
+    return render(request, 'postit/create_postit_form.html', {'form':form, 'car':car})
 
 def delete_postit_for_everyone(request, id):
     post_it = PostIt.objects.get(id=id)

@@ -88,3 +88,6 @@ def terms_conditions_view(request):
 
 def page_not_found_view(request, exception):
     return render(request, '404.html', status=404)
+
+def support_view(request):
+    return render(request, 'legals/support.html')
