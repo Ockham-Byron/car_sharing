@@ -22,6 +22,7 @@ load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'static/assets/js', 'serviceworker.js')
 
 
 # Quick-start development settings - unsuitable for production
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'colorfield',
     'sweetify',
     'extra_views',
+    'pwa',
 
     #Locals
     'members',
@@ -167,4 +169,37 @@ LOGOUT_REDIRECT_URL = 'home'
 
 
 SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
+
+#PWA settings
+
+PWA_APP_NAME = 'CoCarCo'
+PWA_APP_DESCRIPTION = "App de gestion de voiture partagée"
+PWA_APP_THEME_COLOR = '#E28413'
+PWA_APP_BACKGROUND_COLOR = '#FFFAF3'
+PWA_APP_DISPLAY = 'standalone'
+PWA_APP_SCOPE = '/'
+PWA_APP_ORIENTATION = 'any'
+PWA_APP_START_URL = '/'
+PWA_APP_STATUS_BAR_COLOR = 'default'
+PWA_APP_ICONS = [
+	{
+		'src': 'static/assets/img/icon-160x160.png',
+		'sizes': '160x160'
+	}
+]
+PWA_APP_ICONS_APPLE = [
+	{
+		'src': 'static/assets/img/icon-160x160.png',
+		'sizes': '160x160'
+	}
+]
+PWA_APP_SPLASH_SCREEN = [
+	{
+		'src': 'static/assets/img/splash/splash-320x568.png',
+		'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
+	}
+]
+PWA_APP_DIR = 'ltr'
+PWA_APP_LANG = 'fr-FR'
+
 
