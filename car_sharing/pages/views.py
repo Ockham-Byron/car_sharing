@@ -91,3 +91,6 @@ def page_not_found_view(request, exception):
 
 def support_view(request):
     return render(request, 'legals/support.html')
+
+def comments_view(request):
+    return render(request, 'legals/comments.html')
